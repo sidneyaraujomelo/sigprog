@@ -1,0 +1,42 @@
+.error-form
+{
+	color: red;
+	font-size: small;
+}
+
+.professor-details
+{
+	min-height: 150px;
+	background-color: #eeeeee;
+}
+
+li.li-no-hover:hover {
+    background-color: #eeeeee;
+}
+
+.professor-details .row {
+    margin: 0;
+}
+
+.professor-details .col {
+	line-height: normal;
+	margin-bottom: 5px;
+}
+
+.professor-details .col a {
+	line-height: normal;
+	margin-top: 10px;
+	height: auto;
+	color: blue;
+}
+
+.profile-picture
+{
+	margin-top: 20%;
+}
+
+@media (min-width: 991px) {
+    main {
+        padding-left: 300px;
+    }
+}
