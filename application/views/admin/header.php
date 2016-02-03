@@ -15,7 +15,7 @@
 				<ul class="side-nav fixed " id="slide-out">
 <?php foreach ($itensMenu as $item) {?>
 					<li><a href="<?php echo base_url().'index.php/admin/'.$item['url']; ?>">
-						<?php echo $item['nome']; ?></p>
+						<p class="truncate"><?php echo $item['nome']; ?></p>
 					</a></li>
 <?php } ?>
 					<li><a href="<?php echo base_url().'index.php/usuario'; ?>">Sair</a></li>

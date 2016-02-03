@@ -1,7 +1,10 @@
 	<main>
 	<div class="row">
 			<div class="col s12">
-				Eixo selecionado: <?php echo $eixo['nome_eixo'];?>
+<?php foreach ($itensPath as $itemPath) { ?>
+				<a href="<?php echo $itemPath['url']; ?>"><?php echo $itemPath['nome']; ?></a>
+				>
+<?php } ?>
 			</div>
 
 			<div class="col s12">

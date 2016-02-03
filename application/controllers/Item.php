@@ -15,29 +15,43 @@ class Item extends CI_Controller {
 		$this->load->model('mregra','', TRUE);
 	}
 
-	function show($id)
+	function show($ideixo, $id)
 	{
 		if ($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$siape = $session_data['id'];
 
-			//$eixoData = $this->meixo->get($id);
+			$eixoData = $this->meixo->get($ideixo);
 			$subeixoData = $this->msubeixo->get($id);
 			$itensData = $this->mitem->getFromParent($id);
+			
 
 			$itensMenu = array();
 			for ($i=0; $i < count($itensData) ; $i++) { 
-				$itensMenu[$i] = array("url" => "item/".$itensData[$i]["id_item"], "nome"=>$itensData[$i]["nome_item"]);
+				//$itensMenu[$i] = array("url" => "item/".$itensData[$i]["id_item"], "nome"=>$itensData[$i]["nome_item"]);
+				$itensMenu[$i] = array("url" => "eixo/".$eixoData["id_eixo"]."/".$subeixoData["id_subeixo"]."/".$itensData[$i]["id_item"], "nome"=>$itensData[$i]["nome_item"]);
 			}
-			$itensMenu[count($itensMenu)] = array( "url" => "eixo", "nome" => "Voltar");
 
+			$pieces = explode('/',uri_string());
+			$backUrl = $pieces[1];
+			for ($i=2; $i < count($pieces)-1; $i++) { 
+				$backUrl = implode('/', array($backUrl,$pieces[$i]));
+			}
+			var_dump($backUrl);
+			$itensMenu[count($itensMenu)] = array( "url" => $backUrl, "nome" => "Voltar");
+
+			$itensPath = array();
+			$itensPath[count($itensPath)] = array( "url" => "..", "nome" => "Eixos");
+			$itensPath[count($itensPath)] = array( "url" => ".", "nome" => $eixoData['nome_eixo']);
+			$itensPath[count($itensPath)] = array( "url" => NULL, "nome" => $subeixoData['nome_subeixo']);
 			//var_dump($itensMenu);
 
 			//$data['eixo'] = $eixoData;
 			$data['subeixo'] = $subeixoData;
 			$data['itens'] = $itensData;
 			$data['itensMenu'] = $itensMenu;
+			$data['itensPath'] = $itensPath;
 			$this->load->view('admin/header.php', $data);
 			$this->load->view('admin/itens.php', $data);
 		}

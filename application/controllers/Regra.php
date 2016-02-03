@@ -17,15 +17,15 @@ class Regra extends CI_Controller {
 		$this->load->model('mtipoclass','', TRUE);
 	}
 
-	function show($id)
+	function show($ideixo, $idsubeixo, $id)
 	{
 		if ($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
 			$siape = $session_data['id'];
 
-			//$eixoData = $this->meixo->get($id);
-			//$subeixoData = $this->msubeixo->get($id);
+			$eixoData = $this->meixo->get($ideixo);
+			$subeixoData = $this->msubeixo->get($idsubeixo);
 			$itemData = $this->mitem->get($id);
 
 			$regrasData = $this->mregra->getRegraFromItem($id);
@@ -36,9 +36,20 @@ class Regra extends CI_Controller {
 			/*for ($i=0; $i < count($itensData) ; $i++) { 
 				$itensMenu[$i] = array("url" => "item/".$itensData[$i]["id_item"], "nome"=>$itensData[$i]["nome_item"]);
 			}*/
-			$itensMenu[count($itensMenu)] = array( "url" => "eixo", "nome" => "Voltar");
+			$pieces = explode('/',uri_string());
+			$backUrl = $pieces[1];
+			for ($i=2; $i < count($pieces)-1; $i++) { 
+				$backUrl = implode('/', array($backUrl,$pieces[$i]));
+			}
+			var_dump($backUrl);
+			$itensMenu[count($itensMenu)] = array( "url" => $backUrl, "nome" => "Voltar");
 
 			//var_dump($itensMenu);
+			$itensPath = array();
+			$itensPath[count($itensPath)] = array( "url" => "../../", "nome" => "Eixos");
+			$itensPath[count($itensPath)] = array( "url" => "..", "nome" => $eixoData['nome_eixo']);
+			$itensPath[count($itensPath)] = array( "url" => ".", "nome" => $subeixoData['nome_subeixo']);
+			$itensPath[count($itensPath)] = array( "url" => NULL, "nome" => $itemData['nome_item']);
 
 			//$data['eixo'] = $eixoData;
 			//$data['subeixo'] = $subeixoData;
@@ -47,6 +58,7 @@ class Regra extends CI_Controller {
 			$data['itensMenu'] = $itensMenu;
 			$data['metricas'] = $metricasData;
 			$data['tipoclasses'] = $tipoClassData;
+			$data['itensPath'] = $itensPath;
 			$this->load->view('admin/header.php', $data);
 			$this->load->view('admin/regras.php', $data);
 		}

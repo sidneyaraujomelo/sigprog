@@ -1,8 +1,12 @@
 	<main>
+
 	<div class="row">
-			<div class="col s12">
-				Item selecionado: <?php echo $item['nome_item'];?>
-			</div>
+		<div class="col s12">
+<?php foreach ($itensPath as $itemPath) { ?>
+				<a href="<?php echo $itemPath['url']; ?>"><?php echo $itemPath['nome']; ?></a>
+				>
+<?php } ?>
+		</div>
 
 			<div class="col s12">
 				<h4 class="center-align"><?php echo $item['nome_item'];?></h4>

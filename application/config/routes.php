@@ -52,6 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'usuario';
 $route['admin/item/(:num)'] = 'regra/show/$1';
 $route['admin/subeixo/(:num)'] = 'item/show/$1';
+$route['admin/eixo/(:num)/(:num)/(:num)'] = 'regra/show/$1/$2/$3';
+$route['admin/eixo/(:num)/(:num)'] = 'item/show/$1/$2';
 $route['admin/eixo/(:num)'] = 'subeixo/show/$1';
 $route['admin/eixo'] = 'eixo';
 $route['admin/progressao'] = 'progressao';

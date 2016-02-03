@@ -22,7 +22,7 @@ $.ajaxSetup ({
 });
 
 $(document).on('change', '.autoupdate-input', function(){
-    alert( this.value ); // or $(this).val()
+    //alert( this.value ); // or $(this).val()
 	  var attrId = $(this).closest("form").attr("id");
 	  var tabela = attrId.split('-')[0];
 	  var id = attrId.split('-')[1];
@@ -41,7 +41,7 @@ $(document).on('change', '.autoupdate-input', function(){
 	  	}, function (response)
 	  	{
 	  		//console.log(response);
-	  		alert("Atualização realizada com sucesso!");
+	  		//alert("Atualização realizada com sucesso!");
 	  	});
 	  }
 });
@@ -92,7 +92,7 @@ $(document).on("click", ".delete-button", function (event)
 			if (response)
 			{
 				//alert(response);
-				alert("Removido com sucesso!");
+				//alert("Removido com sucesso!");
 				console.log(me.closest("form"));
 				me.closest("form").parent().remove();
 				

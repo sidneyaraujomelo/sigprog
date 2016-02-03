@@ -1,7 +1,10 @@
 	<main>
 	<div class="row">
 			<div class="col s12">
-				Subeixo selecionado: <?php echo $subeixo['nome_subeixo'];?>
+<?php foreach ($itensPath as $itemPath) { ?>
+				<a href="<?php echo $itemPath['url']; ?>"><?php echo $itemPath['nome']; ?></a>
+				>
+<?php } ?>
 			</div>
 
 			<div class="col s12">
@@ -19,12 +22,12 @@
 				</div>
 
 				<div class="input-field col s2">
-		            <input id="pontuacao_maxima" name="pontuacao_maxima" type="number" class="validate">
+		            <input id="pontuacao_maxima" name="pontuacao_maxima" type="number" step="0.1" class="validate">
 		            <label for="pontuacao_maxima">Pont. Max.</label>
 				</div>
 
 				<div class="input-field col s2">
-		            <input id="quantidade_maxima" name="quantidade_maxima" type="number" class="validate">
+		            <input id="quantidade_maxima" name="quantidade_maxima" type="number" step="0.1" class="validate">
 		            <label for="quantidade_maxima">Quant. Max.</label>
 				</div>
 

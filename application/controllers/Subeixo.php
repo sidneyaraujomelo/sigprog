@@ -25,15 +25,20 @@ class Subeixo extends CI_Controller {
 
 			$itensMenu = array();
 			for ($i=0; $i < count($subeixosData) ; $i++) { 
-				$itensMenu[$i] = array("url" => "subeixo/".$subeixosData[$i]["id_subeixo"], "nome"=>$subeixosData[$i]["nome_subeixo"]);
+				$itensMenu[$i] = array("url" => "eixo/".$eixoData["id_eixo"]."/".$subeixosData[$i]["id_subeixo"], "nome"=>$subeixosData[$i]["nome_subeixo"]);
 			}
 			$itensMenu[count($itensMenu)] = array( "url" => "eixo", "nome" => "Voltar");
+
+			$itensPath = array();
+			$itensPath[count($itensPath)] = array( "url" => ".", "nome" => "Eixos");
+			$itensPath[count($itensPath)] = array( "url" => NULL, "nome" => $eixoData['nome_eixo']);
 
 			//var_dump($itensMenu);
 
 			$data['eixo'] = $eixoData;
 			$data['subeixos'] = $subeixosData;
 			$data['itensMenu'] = $itensMenu;
+			$data['itensPath'] = $itensPath;
 			$this->load->view('admin/header.php', $data);
 			$this->load->view('admin/subeixos.php', $data);
 		}
