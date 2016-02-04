@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 04-Fev-2016 às 00:22
+-- Generation Time: 04-Fev-2016 às 23:13
 -- Versão do servidor: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `tb_classificacao` (
   `id_classificacao` int(11) NOT NULL,
   `nome_classificacao` varchar(50) NOT NULL,
   `fk_tipoclassificacao` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_classificacao`
@@ -55,14 +55,22 @@ CREATE TABLE IF NOT EXISTS `tb_classificacao` (
 
 INSERT INTO `tb_classificacao` (`id_classificacao`, `nome_classificacao`, `fk_tipoclassificacao`) VALUES
 (1, 'Unidade', 1),
-(3, 'A1', 4),
-(4, 'A2', 4),
-(5, 'B1', 4),
-(6, 'B2', 4),
-(7, 'B3', 4),
-(8, 'B4', 4),
-(9, 'B5', 4),
-(10, 'C', 4);
+(3, 'A1 com JCR', 4),
+(4, 'A2 com JCR', 4),
+(5, 'B1 com JCR', 4),
+(6, 'B2 com JCR', 4),
+(7, 'B3 com JCR', 4),
+(8, 'B4 com JCR', 4),
+(9, 'B5 com JCR', 4),
+(10, 'C com JCR', 4),
+(11, 'A1 sem JCR', 4),
+(12, 'A2 sem JCR', 4),
+(13, 'B1 sem JCR', 4),
+(14, 'B2 sem JCR', 4),
+(15, 'B3 sem JCR', 4),
+(16, 'B4 sem JCR', 4),
+(17, 'B5 sem JCR', 4),
+(18, 'C sem JCR', 4);
 
 -- --------------------------------------------------------
 
@@ -92,7 +100,7 @@ INSERT INTO `tb_departamento` (`id_depto`, `nome_depto`) VALUES
 CREATE TABLE IF NOT EXISTS `tb_eixo` (
   `id_eixo` int(11) NOT NULL,
   `nome_eixo` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_eixo`
@@ -103,7 +111,8 @@ INSERT INTO `tb_eixo` (`id_eixo`, `nome_eixo`) VALUES
 (13, 'Extensão'),
 (14, 'Gestão'),
 (11, 'Orientação'),
-(12, 'Pesquisa');
+(12, 'Pesquisa'),
+(15, 'Qualificação e Capacitação Docente');
 
 -- --------------------------------------------------------
 
@@ -118,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `tb_item` (
   `quantmax_item` int(11) DEFAULT NULL,
   `fk_item` int(11) DEFAULT NULL,
   `fk_subeixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_item`
@@ -174,7 +183,21 @@ INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, 
 (64, 'Consultor “ad hoc” ou assessor técnico das agências de fomento para análise de projetos/editais (por produção/assessoria técnica)', 10.5, NULL, NULL, 11),
 (65, 'Atuação como parecerista/revisor de revistas indexadas (por análise)', NULL, NULL, NULL, 11),
 (66, 'Atuação como editor em revistas indexadas (por ano)', NULL, NULL, NULL, 11),
-(67, 'Atuação como parecerista/revisor de editoras universitárias (por análise)', NULL, NULL, NULL, 11);
+(67, 'Atuação como parecerista/revisor de editoras universitárias (por análise)', NULL, NULL, NULL, 11),
+(68, 'Cargos de direção – CD1 – reitor (por semestre)', NULL, NULL, NULL, 15),
+(69, 'Cargos de direção – CD 2, Vice-Reitor e Pró-Reitores (por semestre)', NULL, NULL, NULL, 15),
+(70, 'Cargos de direção – CD 3 (por semestre)', NULL, NULL, NULL, 15),
+(71, 'Cargos de direção – CD 4 (por semestre)', NULL, NULL, NULL, 15),
+(72, 'Cargos de direção – FG 1 (por semestre)', NULL, NULL, NULL, 15),
+(73, 'Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nos Ministérios de Educação, de Cultura e de Ciência, Tecnologia e Inovação, ou outro na esfera federal/internacional relacionado à área de atuação do docente (por semestre)', NULL, NULL, NULL, 15),
+(74, 'Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nas Secretarias de Educação, de Cultura e de Ciência e Tecnologia, ou outro na esfera estadual ou municipal relacionado à área de atuação do docente (por semestre)', NULL, NULL, NULL, 15),
+(75, 'Participação em Comissões Provisórias', 12, NULL, NULL, 15),
+(76, 'Participação em Comissões Permanentes - Comissão Própria de Avaliação (CPA), Comissão de Planejamento Acadêmico, Comissão Permanente de Pessoal Docente (CPPD), Núcleo Docente Estruturante (NDE), Comissão de Avaliação de Desempenho Acadêmico e Comitê Gestor de Pesquisa, Ensino ou Extensão, Comitê de Ética ou similares com essa natureza', 12, NULL, NULL, 15),
+(77, 'Cursos de pós-graduação lato sensu com natureza de aperfeiçoamento, capacitação ou atualização (no mínimo 360h)', 8, NULL, NULL, 17),
+(78, 'Cursos de pós-graduação stricto sensu (com afastamento parcial ou total do docente)', NULL, NULL, NULL, 17),
+(79, 'Pós-doutorado (com afastamento parcial ou total do docente)', NULL, NULL, NULL, 17),
+(80, 'Programa de Ambientação de Docentes da UFMA, oferecido pela Pró-Reitoria de Ensino e Pró-Reitoria de Recursos Humanos (mínimo de 60h)', NULL, NULL, NULL, 17),
+(81, 'Formação Continuada da UFMA, oferecida pela Pró-Reitoria de Ensino (mínimo de 60h)', 4, NULL, NULL, 17);
 
 -- --------------------------------------------------------
 
@@ -302,7 +325,6 @@ INSERT INTO `tb_progressao` (`id_progressao`, `fk_nivel_anterior`, `fk_nivel_seg
 CREATE TABLE IF NOT EXISTS `tb_regra` (
   `id_item` int(11) NOT NULL,
   `fk_metrica` int(11) NOT NULL,
-  `fk_classificacao` int(11) NOT NULL,
   `pontmax_regra` int(11) NOT NULL,
   `formula_regra` text NOT NULL,
   `quantidade_decorrente` int(11) NOT NULL,
@@ -313,57 +335,139 @@ CREATE TABLE IF NOT EXISTS `tb_regra` (
 -- Extraindo dados da tabela `tb_regra`
 --
 
-INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `fk_classificacao`, `pontmax_regra`, `formula_regra`, `quantidade_decorrente`, `fk_tipoclass`) VALUES
-(18, 1, 0, 0, '=(valor_informado/15) *1.5', 0, 2),
-(19, 0, 0, 0, '=((valor_informado)/15)*2', 0, 0),
-(20, 2, 0, 0, '=(valor_informado*3)', 0, 0),
-(21, 2, 0, 0, '=(valor_informado*3)', 0, 0),
-(22, 3, 0, 0, '=(2)', 0, 0),
-(23, 3, 0, 0, '=(1)', 0, 0),
-(24, 4, 0, 0, '=(valor_informado*1)', 0, 0),
-(25, 4, 0, 0, '=(valor_informado*2)', 0, 0),
-(26, 4, 0, 0, '=(valor_informado*2)', 0, 0),
-(27, 3, 0, 0, '=(valor_informado*2)', 0, 0),
-(28, 3, 0, 0, '=(valor_informado*2)', 0, 0),
-(29, 4, 0, 0, '=(valor_informado*1.5)', 0, 0),
-(30, 4, 0, 0, '=(valor_informado)', 0, 0),
-(31, 3, 0, 0, '=(4)', 0, 0),
-(32, 3, 0, 0, '=(3)', 0, 0),
-(33, 3, 0, 0, '=(1.5)', 0, 0),
-(34, 3, 0, 0, '=(8)', 0, 0),
-(35, 3, 0, 0, '=(6)', 0, 0),
-(36, 3, 0, 0, '=(3)', 0, 0),
-(37, 3, 0, 0, '=(8)', 0, 0),
-(38, 0, 0, 0, '=(4)', 0, 0),
-(39, 3, 0, 0, '=(6)', 0, 0),
-(40, 3, 0, 0, '=(3)', 0, 0),
-(41, 3, 0, 0, '=(3)', 0, 0),
-(42, 3, 0, 0, '=(1.5)', 0, 0),
-(43, 3, 0, 0, '35', 0, 0),
-(44, 3, 0, 0, '10', 0, 0),
-(45, 3, 0, 0, '15', 0, 0),
-(46, 3, 0, 0, '=(1.5)', 0, 0),
-(47, 3, 0, 0, '=(2)', 0, 0),
-(48, 3, 0, 0, '=(2)', 0, 0),
-(49, 3, 0, 0, '=(3)', 0, 0),
-(50, 3, 0, 0, '=(3)', 0, 0),
-(51, 3, 0, 0, '=(3)', 0, 0),
-(52, 3, 0, 0, '=(1.5)', 0, 0),
-(53, 3, 0, 0, '=(1.5)', 0, 0),
-(54, 3, 0, 0, '=(1.5)', 0, 0),
-(55, 3, 0, 0, '=(1.5)', 0, 0),
-(56, 3, 0, 0, '=(1.5)', 0, 0),
-(57, 3, 0, 0, '=(1.5)', 0, 0),
-(58, 4, 0, 0, '=(valor_informado*2)', 0, 0),
-(59, 4, 0, 0, '=(valor_informado)', 0, 0),
-(60, 4, 0, 0, '=(valor_informado)', 0, 0),
-(61, 4, 0, 0, '=(valor_informado)', 0, 0),
-(62, 4, 0, 0, '=(valor_informado)', 0, 0),
-(63, 4, 0, 0, '=(valor_informado)', 0, 0),
-(64, 3, 0, 0, '=(1.5)', 0, 0),
-(65, 3, 0, 0, '=(qualis_informado/2)', 0, 4),
-(66, 0, 0, 0, '', 0, 0),
-(67, 0, 0, 0, '', 0, 0);
+INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra`, `quantidade_decorrente`, `fk_tipoclass`) VALUES
+(18, 1, 0, '=(valor_informado/15) *1.5', 0, 1),
+(19, 1, 0, '=((valor_informado)/15)*2', 0, 1),
+(20, 2, 0, '=(valor_informado*3)', 0, 1),
+(21, 2, 0, '=(valor_informado*3)', 0, 1),
+(22, 3, 0, '=(2)', 0, 1),
+(23, 3, 0, '=(1)', 0, 1),
+(24, 4, 0, '=(valor_informado*1)', 0, 1),
+(25, 4, 0, '=(valor_informado*2)', 0, 1),
+(26, 4, 0, '=(valor_informado*2)', 0, 1),
+(27, 3, 0, '=(valor_informado*2)', 0, 1),
+(28, 3, 0, '=(valor_informado*2)', 0, 1),
+(29, 4, 0, '=(valor_informado*1.5)', 0, 1),
+(30, 4, 0, '=(valor_informado)', 0, 1),
+(31, 3, 0, '=(4)', 0, 1),
+(32, 3, 0, '=(3)', 0, 1),
+(33, 3, 0, '=(1.5)', 0, 1),
+(34, 3, 0, '=(8)', 0, 1),
+(35, 3, 0, '=(6)', 0, 1),
+(36, 3, 0, '=(3)', 0, 1),
+(37, 3, 0, '=(8)', 0, 1),
+(38, 3, 0, '=(4)', 0, 1),
+(39, 3, 0, '=(6)', 0, 1),
+(40, 3, 0, '=(3)', 0, 1),
+(41, 3, 0, '=(3)', 0, 1),
+(42, 3, 0, '=(1.5)', 0, 1),
+(43, 3, 0, '35', 0, 1),
+(44, 3, 0, '10', 0, 1),
+(45, 3, 0, '15', 0, 1),
+(46, 3, 0, '=(1.5)', 0, 1),
+(47, 3, 0, '=(2)', 0, 1),
+(48, 3, 0, '=(2)', 0, 1),
+(49, 3, 0, '=(3)', 0, 1),
+(50, 3, 0, '=(3)', 0, 1),
+(51, 3, 0, '=(3)', 0, 1),
+(52, 3, 0, '=(1.5)', 0, 1),
+(53, 3, 0, '=(1.5)', 0, 1),
+(54, 3, 0, '=(1.5)', 0, 1),
+(55, 3, 0, '=(1.5)', 0, 1),
+(56, 3, 0, '=(1.5)', 0, 1),
+(57, 3, 0, '=(1.5)', 0, 1),
+(58, 4, 0, '=(valor_informado*2)', 0, 1),
+(59, 4, 0, '=(valor_informado)', 0, 1),
+(60, 4, 0, '=(valor_informado)', 0, 1),
+(61, 4, 0, '=(valor_informado)', 0, 1),
+(62, 4, 0, '=(valor_informado)', 0, 1),
+(63, 4, 0, '=(valor_informado)', 0, 1),
+(64, 3, 0, '=(1.5)', 0, 1),
+(65, 3, 0, '=(qualis_informado/2)', 0, 4),
+(66, 3, 0, '=(valor_informado*qualis_informado/2)', 0, 4),
+(67, 3, 0, '=(qualis_informado/2)', 0, 4),
+(68, 4, 0, '=(valor_informado*17.5)', 0, 1),
+(69, 4, 0, '=(valor_informado*15)', 0, 1),
+(70, 4, 0, '=(valor_informado*12.5)', 0, 1),
+(71, 4, 0, '=(valor_informado*10.5)', 0, 1),
+(72, 4, 0, '=(valor_informado*8.5)', 0, 1),
+(73, 4, 0, '=(valor_informado*4)', 0, 1),
+(74, 4, 0, '=(valor_informado*4)', 0, 1),
+(75, 3, 0, '=(1.5)', 0, 1),
+(76, 4, 0, '=(valor_informado*3)', 0, 1),
+(77, 4, 0, '=(valor_informado*4)', 0, 1),
+(78, 4, 0, '=(valor_informado*15)', 0, 1),
+(79, 4, 0, '=(valor_informado*10)', 0, 1),
+(80, 4, 0, '=(valor_informado*2)', 0, 1),
+(81, 4, 0, '=(valor_informado)', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_regra_classificacao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_regra_classificacao` (
+  `id_regra_classificacao` int(11) NOT NULL,
+  `fk_regra` int(11) NOT NULL,
+  `fk_classificacao` int(11) NOT NULL,
+  `valor` float NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_regra_classificacao`
+--
+
+INSERT INTO `tb_regra_classificacao` (`id_regra_classificacao`, `fk_regra`, `fk_classificacao`, `valor`) VALUES
+(1, 64, 3, 20),
+(5, 65, 3, 30),
+(6, 65, 4, 26),
+(7, 65, 5, 21),
+(8, 65, 6, 16),
+(9, 65, 7, 12),
+(10, 65, 8, 10),
+(11, 65, 9, 8),
+(12, 65, 10, 3),
+(13, 65, 11, 20),
+(14, 65, 12, 17),
+(15, 65, 13, 14),
+(16, 65, 14, 11),
+(17, 65, 15, 8),
+(18, 65, 16, 6),
+(19, 65, 17, 4),
+(20, 65, 18, 2),
+(21, 66, 3, 30),
+(22, 66, 4, 26),
+(23, 66, 5, 21),
+(24, 66, 6, 16),
+(25, 66, 7, 12),
+(26, 66, 8, 10),
+(27, 66, 9, 8),
+(28, 66, 10, 3),
+(29, 66, 11, 20),
+(30, 66, 12, 17),
+(31, 66, 13, 14),
+(32, 66, 14, 11),
+(33, 66, 15, 8),
+(34, 66, 16, 6),
+(35, 66, 17, 4),
+(36, 66, 18, 2),
+(37, 67, 3, 30),
+(38, 67, 4, 26),
+(39, 67, 5, 21),
+(40, 67, 6, 16),
+(41, 67, 7, 12),
+(42, 67, 8, 10),
+(43, 67, 9, 8),
+(44, 67, 10, 3),
+(45, 67, 11, 20),
+(46, 67, 12, 17),
+(47, 67, 13, 14),
+(48, 67, 14, 11),
+(49, 67, 15, 8),
+(50, 67, 16, 6),
+(51, 67, 17, 4),
+(52, 67, 18, 2);
 
 -- --------------------------------------------------------
 
@@ -376,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `tb_subeixo` (
   `nome_subeixo` varchar(60) NOT NULL,
   `pontmax_subeixo` int(11) NOT NULL,
   `fk_eixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_subeixo`
@@ -394,7 +498,8 @@ INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_e
 (13, 'Produção Artística por Unidade', 60, 12),
 (14, 'Bancas Examinadoras por Unidade', 30, 12),
 (15, 'Administração Universitária ou Equivalente', 70, 14),
-(16, 'Representação Institucional ou de Categorias Universitárias ', 12, 14);
+(16, 'Representação Institucional ou de Categorias Universitárias ', 12, 14),
+(17, 'Cursos', 60, 15);
 
 -- --------------------------------------------------------
 
@@ -503,6 +608,12 @@ ALTER TABLE `tb_regra`
   ADD PRIMARY KEY (`id_item`);
 
 --
+-- Indexes for table `tb_regra_classificacao`
+--
+ALTER TABLE `tb_regra_classificacao`
+  ADD PRIMARY KEY (`id_regra_classificacao`), ADD UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`);
+
+--
 -- Indexes for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
@@ -528,7 +639,7 @@ ALTER TABLE `tb_titulo`
 -- AUTO_INCREMENT for table `tb_classificacao`
 --
 ALTER TABLE `tb_classificacao`
-  MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tb_departamento`
 --
@@ -538,12 +649,12 @@ ALTER TABLE `tb_departamento`
 -- AUTO_INCREMENT for table `tb_eixo`
 --
 ALTER TABLE `tb_eixo`
-  MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tb_item`
 --
 ALTER TABLE `tb_item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=68;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT for table `tb_metrica`
 --
@@ -560,10 +671,15 @@ ALTER TABLE `tb_nivel`
 ALTER TABLE `tb_progressao`
   MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
 --
+-- AUTO_INCREMENT for table `tb_regra_classificacao`
+--
+ALTER TABLE `tb_regra_classificacao`
+  MODIFY `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
+--
 -- AUTO_INCREMENT for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
-  MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tb_tipoclassificacao`
 --

@@ -4,7 +4,7 @@
 		<div class="col s12">
 <?php foreach ($itensPath as $itemPath) { ?>
 				<a href="<?php echo $itemPath['url']; ?>"><?php echo $itemPath['nome']; ?></a>
-				>
+				
 <?php } ?>
 		</div>
 
@@ -30,11 +30,12 @@
 		}
 ?>
 				</select>
+				<label for="fk_metrica">Métrica</label>
 
 			</div>
 
 			<div class="input-field col s12">
-				<select name="fk_tipoclass" class="autoupdate-input" form="<?php echo $formid;?>">
+				<select name="fk_tipoclass" class="autoupdate-input tipoclass-input" form="<?php echo $formid;?>">
 					<option value="" disabled>Escolha o tipo de classificação</option>
 <?php 
 		foreach ($tipoclasses as $tipoclass) {
@@ -46,7 +47,7 @@
 		}
 ?>
 				</select>
-
+				<label for="fk_tipoclass">Tipo de Classificação</label>
 			</div>
 
 <!--  INICIO DO INPUT FIELD FORMULA DA FORMULÁRIO DE EDIÇÃO DE REGRAS DE ITEM !-->
@@ -57,6 +58,75 @@
 <!--  INICIO DO FIM FIELD FORMULA DA FORMULÁRIO DE EDIÇÃO DE REGRAS DE ITEM !-->
 
 			</form>
+			</div>
+
+<?php
+$visible_regrasclass = 'none';
+if ($regra['fk_tipoclass']!=1)
+{
+	$visible_regrasclass = 'block';
+} ?>
+			<div id="regras_classificacao" style="display: <?php echo $visible_regrasclass; ?>">
+				<table class="col s3 offset-s2">
+					<thead>
+						<tr>
+							<th data-field="classificacao">Classificação</th>
+							<th data-field="valor">Valor</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+<?php
+		for ($i=0; $i < count($classes) ; $i=$i+2) { 
+			$classe = $classes[$i];
+?>
+						<tr>
+							<td><?php echo $classe['nome_classificacao'];?></td>
+							<td>
+								<form id="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" class="editItem">
+									<input type="hidden" id="regra" value="<?php echo $regra['id_item']; ?>">
+									<input type="hidden" id="classe" value="<?php echo $classe['id_classificacao']; ?>">
+									<input class="autoupdate-regraclass" form="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" name="valor" value="<?php echo $classe['valor'];?>" type="number" step="0.1">
+								</form>
+							</td>
+						</tr>
+<?php
+		}
+?>
+					</tbody>
+				</table>
+
+				<table class="col s3 offset-s2">
+					<thead>
+						<tr>
+							<th data-field="classificacao">Classificação</th>
+							<th data-field="valor">Valor</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+<?php
+	if (count($classes)>1)
+		for ($i=1; $i < count($classes) ; $i=$i+2) { 
+			$classe = $classes[$i];
+?>
+						<tr>
+							<td><?php echo $classe['nome_classificacao'];?></td>
+							<td>
+								<form id="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" class="editItem">
+									<input type="hidden" id="regra" value="<?php echo $regra['id_item']; ?>">
+									<input type="hidden" id="classe" value="<?php echo $classe['id_classificacao']; ?>">
+									<input class="autoupdate-regraclass" form="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" name="valor" value="<?php echo $classe['valor'];?>" type="number" step="0.1">
+								</form>
+							</td>
+						</tr>
+<?php
+		}
+?>
+					</tbody>
+				</table>
 			</div>
 	</div>
 

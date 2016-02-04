@@ -15,6 +15,7 @@ class Admin extends CI_Controller {
 		$this->load->model('msubeixo','',TRUE);
 		$this->load->model('mitem','',TRUE);
 		$this->load->model('mregra','',TRUE);
+		$this->load->model('mregraclassificacao','',TRUE);
 	}
 
 	function index()

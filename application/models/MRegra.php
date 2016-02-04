@@ -30,6 +30,24 @@ Class MRegra extends CI_Model
 		return $query->row_array();
 	}
 
+	public function getAllFromClasses($id, $idtipoclass)
+	{
+		$sql="
+			SELECT rc.id_regra_classificacao, rc.fk_regra, id_classificacao, rc.valor, nome_classificacao, fk_tipoclassificacao
+			FROM 
+				(SELECT *
+			     FROM tb_regra_classificacao
+			     WHERE fk_regra =".$id.") as rc
+			RIGHT JOIN tb_classificacao
+			ON fk_classificacao=id_classificacao
+			WHERE fk_tipoclassificacao=".$idtipoclass."
+			ORDER BY nome_classificacao";
+
+		$query = $this->db->query($sql);
+
+		return $query->result_array();
+	}
+
 	public function getFromParent($id)
 	{
 		$this->db->select('*');
@@ -60,7 +78,9 @@ Class MRegra extends CI_Model
 public function start($data)
 	{
 		$regra = array(
-			'id_item' => $data['id']);
+			'id_item' => $data['id'],
+			'fk_tipoclass' => 1,
+			'fk_metrica' => 1);
 		if ($this->db->insert('tb_regra',$regra))
 		{
 			return $this->db->insert_id();

@@ -28,7 +28,7 @@ $(document).on('change', '.autoupdate-input', function(){
 	  var id = attrId.split('-')[1];
 	  var col = $(this).attr("name");
 	  var val = $(this).val();
-	  //console.log(tabela+" "+id+" "+col+" "+val);
+	  console.log(tabela+" "+id+" "+col+" "+val);
 
 	  if (tabela!=null && id != null && col!=null && val != null)
 	  {
@@ -40,10 +40,51 @@ $(document).on('change', '.autoupdate-input', function(){
 	  		'val' : val
 	  	}, function (response)
 	  	{
-	  		//console.log(response);
+	  		console.log(response);
 	  		//alert("Atualização realizada com sucesso!");
 	  	});
 	  }
+});
+
+$(document).on('change', '.autoupdate-regraclass', function(){
+    //alert( this.value ); // or $(this).val()
+	  var attrId = $(this).closest("form").attr("id");
+	  
+	  var tabela = attrId.split('-')[0];
+	  var regra = $(this).closest("form").find("#regra").val();
+	  var classe = $(this).closest("form").find("#classe").val();
+	  var val = $(this).val();
+
+	  console.log(tabela+" "+regra+" "+classe+" "+val);
+
+	  if (tabela!=null && regra != null && classe!=null && val != null)
+	  {
+	  	$.post("http://localhost/sigprog/index.php/regraclassificacao/updateregraclasse",
+	  	{
+	  		'tabela' : tabela,
+	  		'regra' : regra,
+	  		'classe' : classe,
+	  		'val' : val
+	  	}, function (response)
+	  	{
+	  		console.log(response);
+	  		//alert("Atualização realizada com sucesso!");
+	  	});
+	  }
+});
+
+$(document).on('change', '.tipoclass-input', function(){
+    //alert( this.value ); // or $(this).val()
+    var val = $(this).val();
+    console.log(val);
+    if (val == 1)	
+    {
+    	$( "#regras_classificacao" ).css( "display", "none" );
+    }
+    else if (val==4)			
+    {
+    	$( "#regras_classificacao" ).css( "display", "block" );
+    }
 });
 
 $(document).on('submit', '.add-input', function(){
@@ -102,6 +143,7 @@ $(document).on("click", ".delete-button", function (event)
 	})
 
 jQuery(document).ready(function($) 
+
 {
 	
 
