@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 04-Fev-2016 às 23:13
+-- Generation Time: 05-Fev-2016 às 14:39
 -- Versão do servidor: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -100,7 +100,7 @@ INSERT INTO `tb_departamento` (`id_depto`, `nome_depto`) VALUES
 CREATE TABLE IF NOT EXISTS `tb_eixo` (
   `id_eixo` int(11) NOT NULL,
   `nome_eixo` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_eixo`
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `tb_item` (
   `quantmax_item` int(11) DEFAULT NULL,
   `fk_item` int(11) DEFAULT NULL,
   `fk_subeixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_item`
@@ -480,14 +480,14 @@ CREATE TABLE IF NOT EXISTS `tb_subeixo` (
   `nome_subeixo` varchar(60) NOT NULL,
   `pontmax_subeixo` int(11) NOT NULL,
   `fk_eixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_subeixo`
 --
 
 INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_eixo`) VALUES
-(2, 'Atividades de Ensino', 81, 8),
+(2, 'Atividades de Ensino', 80, 8),
 (6, 'Orientação na Graduação', 30, 11),
 (7, 'Orientação na Pós-Graduação', 30, 11),
 (8, 'Produção Científica por Unidade', 120, 12),
@@ -649,12 +649,12 @@ ALTER TABLE `tb_departamento`
 -- AUTO_INCREMENT for table `tb_eixo`
 --
 ALTER TABLE `tb_eixo`
-  MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `tb_item`
 --
 ALTER TABLE `tb_item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `tb_metrica`
 --
@@ -679,7 +679,7 @@ ALTER TABLE `tb_regra_classificacao`
 -- AUTO_INCREMENT for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
-  MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT for table `tb_tipoclassificacao`
 --
