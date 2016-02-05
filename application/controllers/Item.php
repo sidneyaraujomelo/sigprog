@@ -87,6 +87,7 @@ class Item extends CI_Controller {
 			'id_item' => $id);
 
 		$result = $this->mitem->delete($key);
+		$this->mregra->delete($key);
 
 		echo json_encode($result);
 	}

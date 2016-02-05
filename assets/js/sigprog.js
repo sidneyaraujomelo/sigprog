@@ -41,6 +41,7 @@ $(document).on('change', '.autoupdate-input', function(){
 	  	}, function (response)
 	  	{
 	  		console.log(response);
+	  		Materialize.toast('Atualizado com sucesso!', 4000);
 	  		//alert("Atualização realizada com sucesso!");
 	  	});
 	  }
@@ -68,6 +69,7 @@ $(document).on('change', '.autoupdate-regraclass', function(){
 	  	}, function (response)
 	  	{
 	  		console.log(response);
+	  		Materialize.toast('Atualizado com sucesso!', 4000);
 	  		//alert("Atualização realizada com sucesso!");
 	  	});
 	  }
@@ -111,6 +113,29 @@ $(document).on('submit', '.add-input', function(){
 					$("#listItens").append(response2);
 					$('select').material_select();
 					$('input#input_text, textarea#textarea1').characterCounter();
+					
+					var nameNewMenuItem = formArray[0]["value"];
+					for (var i = 0; i < formArray.length; i++) {
+						if (formArray[i]["name"] == "nome")
+							nameNewMenuItem = formArray[i]["value"];
+					};
+					//console.log(nameNewMenuItem);
+					var sideMenu = $("#slide-out");
+					var sibling;
+					var liInnerHtmls = sideMenu.find(".truncate").each(function () {
+						var currentMenuItem = $(this).html();
+						var n = currentMenuItem.localeCompare(nameNewMenuItem)
+						if(n == -1)
+						{
+							console.log($(this).html());
+							sibling = $(this).closest("li");
+						}
+					});
+					var newMenuItemHtml = "<li><a href=\""+document.URL+"/"+response+"\"><p class='truncate'>"+nameNewMenuItem+"</p></a></li>";
+					console.log(newMenuItemHtml);
+					if (typeof sibling === 'undefined')	$(sideMenu).prepend(newMenuItemHtml);
+					else				$(sibling).after(newMenuItemHtml);
+					Materialize.toast('Adicionado com sucesso!', 4000);
 				});
 				//$("#listItens").find(":last").clone().appendTo("#listItens");
 				//$("#listItens").append(alert);
@@ -133,10 +158,21 @@ $(document).on("click", ".delete-button", function (event)
 			if (response)
 			{
 				//alert(response);
-				//alert("Removido com sucesso!");
-				console.log(me.closest("form"));
+				//alert("");
+				nameMenuItem = me.closest("form").find(".autoupdate-input:first").val();
+				//console.log(me.closest("form"));
 				me.closest("form").parent().remove();
-				
+
+				var sideMenu = $("#slide-out");
+				var liInnerHtmls = sideMenu.find(".truncate").each(function () {
+					var currentMenuItem = $(this).html();
+					var n = currentMenuItem.localeCompare(nameMenuItem)
+					if(n == 0)
+					{
+						$(this).closest("li").remove();
+					}
+				});
+				Materialize.toast('Removido com sucesso!', 4000);
 			}
 		});
 			
