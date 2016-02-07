@@ -4,7 +4,7 @@
 		<div class="col s12">
 <?php foreach ($itensPath as $itemPath) { ?>
 				<a href="<?php echo $itemPath['url']; ?>"><?php echo $itemPath['nome']; ?></a>
-				
+				>
 <?php } ?>
 		</div>
 
@@ -49,6 +49,13 @@
 				</select>
 				<label for="fk_tipoclass">Tipo de Classificação</label>
 			</div>
+
+<!--  INICIO DO INPUT FIELD QUANTIDADE DE PRODUÇÔES DECORRENTES DA FORMULÁRIO DE EDIÇÃO DE REGRAS DE ITEM !-->
+			<div class="input-field col s12">
+	            <input class="autoupdate-input decorrente-input" name="quantidade_decorrente" value="<?php echo $regra['quantidade_decorrente'];?>" type="number" class="validate">
+	            <label for="quantidade_decorrente">Quantidade Máxima de Produções Decorrentes</label>
+			</div>
+<!--  INICIO DO FIM FIELD FORMULA DA FORMULÁRIO DE EDIÇÃO DE REGRAS DE ITEM !-->
 
 <!--  INICIO DO INPUT FIELD FORMULA DA FORMULÁRIO DE EDIÇÃO DE REGRAS DE ITEM !-->
 			<div class="input-field col s12">
@@ -127,6 +134,57 @@ if ($regra['fk_tipoclass']!=1)
 ?>
 					</tbody>
 				</table>
+				<div class="col s2"></div>
+			</div>
+<?php
+$visible_regras_decorrentes = 'none';
+if ($regra['quantidade_decorrente']>=1)
+{
+	$visible_regras_decorrentes = 'block';
+} ?>
+			<div id="regras_decorrentes" style="display: <?php echo $visible_regras_decorrentes; ?>">
+				<h6  class="center-align col s12" style="padding-top:50px;">Itens decorrentes</h6>
+				<form id ="addDecorrente" class="add-input" name="regradecorrente">
+					<input type="hidden" id="item_principal" name="item_principal" value="<?php echo $regra['id_item']; ?>">
+					<div class="input-field col s11">
+						<select name="select_regras_decorrentes" class="">
+							<option value="" disabled>Escolha o tipo de regra</option>
+<?php 
+		foreach ($todosItens as $item) {
+?>
+							<option  value="<?php echo $item['id_item'];?>"><?php echo $item['nome_item'];?></option>
+<?php
+		}
+?>
+						</select>
+						<label for="lista_regras_decorrentes">Selecione um item e o adicione à lista de possíveis itens decorrentes</label>
+					</div>
+					<div class="col s1">
+						<button class="btn-floating btn-medium waves-effect waves-light" type="submit">
+							<i class="material-icons right">add</i>
+				  		</button>				
+					</div>
+				</form>
+				<div id="listItens">
+					<h6  class="center-align col s12">Lista de Itens Decorrentes</h6>
+<?php if (isset($itensDecorrentes)) { 
+	foreach ($itensDecorrentes as $item_decorrente) {
+		$formid = 'regradecorrente-'.$item_decorrente['id_decorrencia'];	?>
+					<div class="col s12">
+						<form id="<?php echo $formid;?>">
+							<div class="col s11">
+								<p><?php echo $item_decorrente['nome_item']; ?></p>
+							</div>
+							<div class="col s1">
+								<button class="btn-floating btn-medium waves-effect waves-light delete-button" type="submit">
+									<i class="material-icons right">remove</i>
+						  		</button>				
+							</div>
+						</form>
+					</div>
+<?php } 
+} ?>
+				</div>
 			</div>
 	</div>
 

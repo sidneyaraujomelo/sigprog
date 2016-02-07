@@ -80,7 +80,8 @@ public function start($data)
 		$regra = array(
 			'id_item' => $data['id'],
 			'fk_tipoclass' => 1,
-			'fk_metrica' => 1);
+			'fk_metrica' => 1,
+			'formula_regra' => '=(valor_informado)');
 		if ($this->db->insert('tb_regra',$regra))
 		{
 			return $this->db->insert_id();

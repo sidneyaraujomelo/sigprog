@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Fev-2016 às 14:39
--- Versão do servidor: 5.6.24
--- PHP Version: 5.6.8
+-- Generation Time: 08-Fev-2016 às 00:16
+-- Versão do servidor: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -44,7 +44,7 @@ INSERT INTO `tb_admin` (`fk_professor`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_classificacao` (
-  `id_classificacao` int(11) NOT NULL,
+`id_classificacao` int(11) NOT NULL,
   `nome_classificacao` varchar(50) NOT NULL,
   `fk_tipoclassificacao` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
@@ -79,7 +79,7 @@ INSERT INTO `tb_classificacao` (`id_classificacao`, `nome_classificacao`, `fk_ti
 --
 
 CREATE TABLE IF NOT EXISTS `tb_departamento` (
-  `id_depto` int(11) NOT NULL,
+`id_depto` int(11) NOT NULL,
   `nome_depto` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -98,7 +98,7 @@ INSERT INTO `tb_departamento` (`id_depto`, `nome_depto`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_eixo` (
-  `id_eixo` int(11) NOT NULL,
+`id_eixo` int(11) NOT NULL,
   `nome_eixo` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
@@ -121,83 +121,92 @@ INSERT INTO `tb_eixo` (`id_eixo`, `nome_eixo`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_item` (
-  `id_item` int(11) NOT NULL,
+`id_item` int(11) NOT NULL,
   `nome_item` text CHARACTER SET utf8 NOT NULL,
   `pontmax_item` float DEFAULT NULL,
   `quantmax_item` int(11) DEFAULT NULL,
-  `fk_item` int(11) DEFAULT NULL,
   `fk_subeixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_item`
 --
 
-INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, `fk_item`, `fk_subeixo`) VALUES
-(18, 'Na Graduação', NULL, NULL, NULL, 2),
-(19, 'Na Pós-Graduação', NULL, NULL, NULL, 2),
-(20, 'Coordenação de projetos de ensino, eixos de componentes curriculares, preceptores de residência ou similares', NULL, NULL, NULL, 2),
-(21, 'Coordenação institucional em programas acadêmicos (CsF, PIBID, PET), por programa', NULL, NULL, NULL, 2),
-(22, 'Orientação finalizada em Iniciação Científica, por plano de trabalho do aluno aprovado no PIBIC ou em projeto de pesquisa aprovador por agência de fomento', NULL, NULL, NULL, 6),
-(23, 'Orientação finalizada no Programa Jovens Talentos ou PIBITI, por plano de trabalho do aluno', NULL, NULL, NULL, 6),
-(24, 'Orientação de Monitoria, por projeto (por semestre)', NULL, NULL, NULL, 6),
-(25, 'Orientação em Programa de Iniciação à Docência (PIBID), por projeto (por semestre)', NULL, NULL, NULL, 6),
-(26, 'Orientação em grupos (PET, grupos de trabalho), por semestre', NULL, NULL, NULL, 6),
-(27, 'Orientação finalizada de Monografias na graduação, por unidade ', NULL, NULL, NULL, 6),
-(28, 'Orientação da produção intelectual de alunos em projetos de extensão ou PIBITI (por unidade de projeto - coletivo ou individual)', NULL, NULL, NULL, 6),
-(29, 'Coordenação de estágio obrigatório (por semestre)', NULL, NULL, NULL, 6),
-(30, 'Supervisão de estágio obrigatório (por semestre) ', NULL, NULL, NULL, 6),
-(31, 'Apresentação de trabalhos em forma oral em eventos internacionais ou coordenação/participação em mesas de discussão, ou minicursos', NULL, NULL, NULL, 10),
-(32, 'Apresentação de trabalhos em forma oral em eventos nacionais ou coordenação/participação em mesas de discussão, ou minicursos', NULL, NULL, NULL, 10),
-(33, 'Apresentação de trabalhos em forma oral em eventos regionais ou coordenação/participação em mesas de discussão, ou minicursos', NULL, NULL, NULL, 10),
-(34, 'Palestras /conferências ministradas em eventos científicos internacionais como conferencista convidado', NULL, NULL, NULL, 10),
-(35, 'Palestras /conferências ministradas em eventos científicos nacionais como conferencista convidado', NULL, NULL, NULL, 10),
-(36, 'Palestras /conferências ministradas em eventos científicos regionais como conferencista convidado', NULL, NULL, NULL, 10),
-(37, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais, internacionais, envolvendo o intercâmbio de diversos países (por unidade) (por evento com termo de concessão de agência de fomento) ', NULL, NULL, NULL, 10),
-(38, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais, internacionais, envolvendo o intercâmbio de diversos países (por unidade) (por evento sem termo de concessão de agência de fomento) ', NULL, NULL, NULL, 10),
-(39, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais nacionais, envolvendo o intercâmbio de diversos Estados, por unidade (por evento com termo de concessão de agência de fomento) ', NULL, NULL, NULL, 10),
-(40, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais nacionais, envolvendo o intercâmbio de diversos Estados, por unidade (por evento sem termo de concessão de agência de fomento) ', NULL, NULL, NULL, 10),
-(41, 'Coordenação da comissão organizadora de eventos científicos, de extensão ou artísticos culturais regionais/locais, envolvendo o intercâmbio de diversos Estados, por unidade  (por evento com termo de concessão de agência de fomento) ', NULL, NULL, NULL, 10),
-(42, 'Coordenação da comissão organizadora de eventos científicos, de extensão ou artísticos culturais regionais/locais, envolvendo o intercâmbio de diversos Estados, por unidade  (por evento sem termo de concessão de agência de fomento) ', NULL, NULL, NULL, 10),
-(43, 'Patentes concedidas (por unidade)', NULL, NULL, NULL, 12),
-(44, 'Patentes depositadas (por unidade) ', NULL, NULL, NULL, 12),
-(45, 'Registros por unidade (Desenho Industrial, Software, Cultivar, Marcas e Indicações Geográficas)', NULL, NULL, NULL, 12),
-(46, 'Monografia de graduação e especialização', NULL, NULL, NULL, 14),
-(47, 'Qualificação de mestrado', NULL, NULL, NULL, 14),
-(48, 'Dissertação de mestrado ', NULL, NULL, NULL, 14),
-(49, 'Qualificação de doutorado', NULL, NULL, NULL, 14),
-(50, 'Tese de doutorado', NULL, NULL, NULL, 14),
-(51, 'Concurso público para ingresso na carreira do Magistério Superior', NULL, NULL, NULL, 14),
-(52, 'Processo seletivo simplificado para professor substituto do Magistério Superior', NULL, NULL, NULL, 14),
-(53, 'Banca para processo seletivo para ingresso de alunos nos Programas de Pós-Graduação stricto sensu', NULL, NULL, NULL, 14),
-(54, 'Banca de comissão julgadora para distinção de mérito acadêmico-científico-cultural', NULL, NULL, NULL, 14),
-(55, 'Banca em Exame de Habilidade Específica em Música ou outro curso', NULL, NULL, NULL, 14),
-(56, 'Banca em Exame de Proficiência em Língua Estrangeira', NULL, NULL, NULL, 14),
-(57, 'Avaliação de cursos de graduação, avaliação institucional e avaliação de programas de pós-graduação no âmbito do Sistema Nacional de Avaliação da Educação Superior (SINAES) ou Sistemas Estaduais de Ensino', NULL, NULL, NULL, 14),
-(58, 'Representação no CONSUN, CONSEPE, CONSAD, Câmaras Técnicas e Conselho Diretor (por semestre) ', NULL, NULL, NULL, 16),
-(59, 'Participação em Conselho de Unidade Acadêmica, Assembleia Departamental e Colegiado de curso de graduação e pós-graduação (por semestre)', NULL, NULL, NULL, 16),
-(60, 'Representação em Conselhos Nacionais, vinculados aos Ministérios de Educação, de Cultura e de Ciência e Tecnologia (por semestre)', NULL, NULL, NULL, 16),
-(61, 'Representação em Conselhos de Educação, de Ciência e Tecnologia e outros relacionados com o campo de atuação do docente, no âmbito do nível administrativo do Estado do Maranhão ou municipal (por semestre)', NULL, NULL, NULL, 16),
-(62, 'Representação em diretorias de entidades sindicais (por semestre)', NULL, NULL, NULL, 16),
-(63, 'Representação em diretoria de entidades profissionais e científicas (por semestre)', NULL, NULL, NULL, 16),
-(64, 'Consultor “ad hoc” ou assessor técnico das agências de fomento para análise de projetos/editais (por produção/assessoria técnica)', 10.5, NULL, NULL, 11),
-(65, 'Atuação como parecerista/revisor de revistas indexadas (por análise)', NULL, NULL, NULL, 11),
-(66, 'Atuação como editor em revistas indexadas (por ano)', NULL, NULL, NULL, 11),
-(67, 'Atuação como parecerista/revisor de editoras universitárias (por análise)', NULL, NULL, NULL, 11),
-(68, 'Cargos de direção – CD1 – reitor (por semestre)', NULL, NULL, NULL, 15),
-(69, 'Cargos de direção – CD 2, Vice-Reitor e Pró-Reitores (por semestre)', NULL, NULL, NULL, 15),
-(70, 'Cargos de direção – CD 3 (por semestre)', NULL, NULL, NULL, 15),
-(71, 'Cargos de direção – CD 4 (por semestre)', NULL, NULL, NULL, 15),
-(72, 'Cargos de direção – FG 1 (por semestre)', NULL, NULL, NULL, 15),
-(73, 'Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nos Ministérios de Educação, de Cultura e de Ciência, Tecnologia e Inovação, ou outro na esfera federal/internacional relacionado à área de atuação do docente (por semestre)', NULL, NULL, NULL, 15),
-(74, 'Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nas Secretarias de Educação, de Cultura e de Ciência e Tecnologia, ou outro na esfera estadual ou municipal relacionado à área de atuação do docente (por semestre)', NULL, NULL, NULL, 15),
-(75, 'Participação em Comissões Provisórias', 12, NULL, NULL, 15),
-(76, 'Participação em Comissões Permanentes - Comissão Própria de Avaliação (CPA), Comissão de Planejamento Acadêmico, Comissão Permanente de Pessoal Docente (CPPD), Núcleo Docente Estruturante (NDE), Comissão de Avaliação de Desempenho Acadêmico e Comitê Gestor de Pesquisa, Ensino ou Extensão, Comitê de Ética ou similares com essa natureza', 12, NULL, NULL, 15),
-(77, 'Cursos de pós-graduação lato sensu com natureza de aperfeiçoamento, capacitação ou atualização (no mínimo 360h)', 8, NULL, NULL, 17),
-(78, 'Cursos de pós-graduação stricto sensu (com afastamento parcial ou total do docente)', NULL, NULL, NULL, 17),
-(79, 'Pós-doutorado (com afastamento parcial ou total do docente)', NULL, NULL, NULL, 17),
-(80, 'Programa de Ambientação de Docentes da UFMA, oferecido pela Pró-Reitoria de Ensino e Pró-Reitoria de Recursos Humanos (mínimo de 60h)', NULL, NULL, NULL, 17),
-(81, 'Formação Continuada da UFMA, oferecida pela Pró-Reitoria de Ensino (mínimo de 60h)', 4, NULL, NULL, 17);
+INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, `fk_subeixo`) VALUES
+(18, 'Na Graduação', NULL, NULL, 2),
+(19, 'Na Pós-Graduação', NULL, NULL, 2),
+(20, 'Coordenação de projetos de ensino, eixos de componentes curriculares, preceptores de residência ou similares', NULL, NULL, 2),
+(21, 'Coordenação institucional em programas acadêmicos (CsF, PIBID, PET), por programa', NULL, NULL, 2),
+(22, 'Orientação finalizada em Iniciação Científica, por plano de trabalho do aluno aprovado no PIBIC ou em projeto de pesquisa aprovador por agência de fomento', NULL, NULL, 6),
+(23, 'Orientação finalizada no Programa Jovens Talentos ou PIBITI, por plano de trabalho do aluno', NULL, NULL, 6),
+(24, 'Orientação de Monitoria, por projeto (por semestre)', NULL, NULL, 6),
+(25, 'Orientação em Programa de Iniciação à Docência (PIBID), por projeto (por semestre)', NULL, NULL, 6),
+(26, 'Orientação em grupos (PET, grupos de trabalho), por semestre', NULL, NULL, 6),
+(27, 'Orientação finalizada de Monografias na graduação, por unidade ', NULL, NULL, 6),
+(28, 'Orientação da produção intelectual de alunos em projetos de extensão ou PIBITI (por unidade de projeto - coletivo ou individual)', NULL, NULL, 6),
+(29, 'Coordenação de estágio obrigatório (por semestre)', NULL, NULL, 6),
+(30, 'Supervisão de estágio obrigatório (por semestre) ', NULL, NULL, 6),
+(31, 'Apresentação de trabalhos em forma oral em eventos internacionais ou coordenação/participação em mesas de discussão, ou minicursos', NULL, NULL, 10),
+(32, 'Apresentação de trabalhos em forma oral em eventos nacionais ou coordenação/participação em mesas de discussão, ou minicursos', NULL, NULL, 10),
+(33, 'Apresentação de trabalhos em forma oral em eventos regionais ou coordenação/participação em mesas de discussão, ou minicursos', NULL, NULL, 10),
+(34, 'Palestras /conferências ministradas em eventos científicos internacionais como conferencista convidado', NULL, NULL, 10),
+(35, 'Palestras /conferências ministradas em eventos científicos nacionais como conferencista convidado', NULL, NULL, 10),
+(36, 'Palestras /conferências ministradas em eventos científicos regionais como conferencista convidado', NULL, NULL, 10),
+(37, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais, internacionais, envolvendo o intercâmbio de diversos países (por unidade) (por evento com termo de concessão de agência de fomento) ', NULL, NULL, 10),
+(38, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais, internacionais, envolvendo o intercâmbio de diversos países (por unidade) (por evento sem termo de concessão de agência de fomento) ', NULL, NULL, 10),
+(39, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais nacionais, envolvendo o intercâmbio de diversos Estados, por unidade (por evento com termo de concessão de agência de fomento) ', NULL, NULL, 10),
+(40, 'Coordenação da comissão organizadora de eventos científicos ou artísticos culturais nacionais, envolvendo o intercâmbio de diversos Estados, por unidade (por evento sem termo de concessão de agência de fomento) ', NULL, NULL, 10),
+(41, 'Coordenação da comissão organizadora de eventos científicos, de extensão ou artísticos culturais regionais/locais, envolvendo o intercâmbio de diversos Estados, por unidade  (por evento com termo de concessão de agência de fomento) ', NULL, NULL, 10),
+(42, 'Coordenação da comissão organizadora de eventos científicos, de extensão ou artísticos culturais regionais/locais, envolvendo o intercâmbio de diversos Estados, por unidade  (por evento sem termo de concessão de agência de fomento) ', NULL, NULL, 10),
+(43, 'Patentes concedidas (por unidade)', NULL, NULL, 12),
+(44, 'Patentes depositadas (por unidade) ', NULL, NULL, 12),
+(45, 'Registros por unidade (Desenho Industrial, Software, Cultivar, Marcas e Indicações Geográficas)', NULL, NULL, 12),
+(46, 'Monografia de graduação e especialização', NULL, NULL, 14),
+(47, 'Qualificação de mestrado', NULL, NULL, 14),
+(48, 'Dissertação de mestrado ', NULL, NULL, 14),
+(49, 'Qualificação de doutorado', NULL, NULL, 14),
+(50, 'Tese de doutorado', NULL, NULL, 14),
+(51, 'Concurso público para ingresso na carreira do Magistério Superior', NULL, NULL, 14),
+(52, 'Processo seletivo simplificado para professor substituto do Magistério Superior', NULL, NULL, 14),
+(53, 'Banca para processo seletivo para ingresso de alunos nos Programas de Pós-Graduação stricto sensu', NULL, NULL, 14),
+(54, 'Banca de comissão julgadora para distinção de mérito acadêmico-científico-cultural', NULL, NULL, 14),
+(55, 'Banca em Exame de Habilidade Específica em Música ou outro curso', NULL, NULL, 14),
+(56, 'Banca em Exame de Proficiência em Língua Estrangeira', NULL, NULL, 14),
+(57, 'Avaliação de cursos de graduação, avaliação institucional e avaliação de programas de pós-graduação no âmbito do Sistema Nacional de Avaliação da Educação Superior (SINAES) ou Sistemas Estaduais de Ensino', NULL, NULL, 14),
+(58, 'Representação no CONSUN, CONSEPE, CONSAD, Câmaras Técnicas e Conselho Diretor (por semestre) ', NULL, NULL, 16),
+(59, 'Participação em Conselho de Unidade Acadêmica, Assembleia Departamental e Colegiado de curso de graduação e pós-graduação (por semestre)', NULL, NULL, 16),
+(60, 'Representação em Conselhos Nacionais, vinculados aos Ministérios de Educação, de Cultura e de Ciência e Tecnologia (por semestre)', NULL, NULL, 16),
+(61, 'Representação em Conselhos de Educação, de Ciência e Tecnologia e outros relacionados com o campo de atuação do docente, no âmbito do nível administrativo do Estado do Maranhão ou municipal (por semestre)', NULL, NULL, 16),
+(62, 'Representação em diretorias de entidades sindicais (por semestre)', NULL, NULL, 16),
+(63, 'Representação em diretoria de entidades profissionais e científicas (por semestre)', NULL, NULL, 16),
+(64, 'Consultor “ad hoc” ou assessor técnico das agências de fomento para análise de projetos/editais (por produção/assessoria técnica)', 10.5, NULL, 11),
+(65, 'Atuação como parecerista/revisor de revistas indexadas (por análise)', NULL, NULL, 11),
+(66, 'Atuação como editor em revistas indexadas (por ano)', NULL, NULL, 11),
+(67, 'Atuação como parecerista/revisor de editoras universitárias (por análise)', NULL, NULL, 11),
+(68, 'Cargos de direção – CD1 – reitor (por semestre)', NULL, NULL, 15),
+(69, 'Cargos de direção – CD 2, Vice-Reitor e Pró-Reitores (por semestre)', NULL, NULL, 15),
+(70, 'Cargos de direção – CD 3 (por semestre)', NULL, NULL, 15),
+(71, 'Cargos de direção – CD 4 (por semestre)', NULL, NULL, 15),
+(72, 'Cargos de direção – FG 1 (por semestre)', NULL, NULL, 15),
+(73, 'Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nos Ministérios de Educação, de Cultura e de Ciência, Tecnologia e Inovação, ou outro na esfera federal/internacional relacionado à área de atuação do docente (por semestre)', NULL, NULL, 15),
+(74, 'Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nas Secretarias de Educação, de Cultura e de Ciência e Tecnologia, ou outro na esfera estadual ou municipal relacionado à área de atuação do docente (por semestre)', NULL, NULL, 15),
+(75, 'Participação em Comissões Provisórias', 12, NULL, 15),
+(76, 'Participação em Comissões Permanentes - Comissão Própria de Avaliação (CPA), Comissão de Planejamento Acadêmico, Comissão Permanente de Pessoal Docente (CPPD), Núcleo Docente Estruturante (NDE), Comissão de Avaliação de Desempenho Acadêmico e Comitê Gestor de Pesquisa, Ensino ou Extensão, Comitê de Ética ou similares com essa natureza', 12, NULL, 15),
+(77, 'Cursos de pós-graduação lato sensu com natureza de aperfeiçoamento, capacitação ou atualização (no mínimo 360h)', 8, NULL, 17),
+(78, 'Cursos de pós-graduação stricto sensu (com afastamento parcial ou total do docente)', NULL, NULL, 17),
+(79, 'Pós-doutorado (com afastamento parcial ou total do docente)', NULL, NULL, 17),
+(80, 'Programa de Ambientação de Docentes da UFMA, oferecido pela Pró-Reitoria de Ensino e Pró-Reitoria de Recursos Humanos (mínimo de 60h)', NULL, NULL, 17),
+(81, 'Formação Continuada da UFMA, oferecida pela Pró-Reitoria de Ensino (mínimo de 60h)', 4, NULL, 17),
+(83, 'Coordenação de projeto de pesquisa em  desenvolvimento, aprovado por agência de fomento, por  ano', NULL, NULL, 9),
+(84, 'Coordenação de projeto de pesquisa em  desenvolvimento, não aprovado por agência de fomento,  por ano', NULL, 2, 9),
+(85, 'Participação em projeto de pesquisa em  desenvolvimento, se aprovado por agência de fomento,  por ano', NULL, NULL, 9),
+(86, 'Participação em projeto de pesquisa em  desenvolvimento, se não aprovado por agência de  fomento, por ano', NULL, 2, 9),
+(87, 'Relatório final de projeto de pesquisa sob  coordenação do docente, finalizado no interstício,  contendo resultado de pesquisa comprovado envolvendo o  coordenador como autor (por relatório)', NULL, NULL, 9),
+(92, 'Coordenação de programa, projeto ou curso de  extensão em desenvolvimento, aprovado por agência de  fomento (por ano)', NULL, NULL, 57),
+(93, 'Coordenação de programa, projeto ou curso de  extensão em desenvolvimento, não aprovado por agência  de fomento (por ano)', NULL, NULL, 57),
+(94, 'Participação em programa, projeto ou curso de  extensão em desenvolvimento (por ano), se aprovado por  agência de fomento', NULL, NULL, 57),
+(95, 'Participação em programa, projeto ou curso de  extensão em desenvolvimento (por ano), se não aprovado  por agência de fomento', NULL, NULL, 57),
+(96, 'Relatório final de programa, projeto ou curso de  extensão sob coordenação do docente, finalizado no  interstício, contendo resultado comprovado envolvendo o  coordenador como autor (por relatório)', NULL, NULL, 57);
 
 -- --------------------------------------------------------
 
@@ -206,7 +215,7 @@ INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, 
 --
 
 CREATE TABLE IF NOT EXISTS `tb_metrica` (
-  `id_metrica` int(11) NOT NULL,
+`id_metrica` int(11) NOT NULL,
   `nome_metrica` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -227,7 +236,7 @@ INSERT INTO `tb_metrica` (`id_metrica`, `nome_metrica`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_nivel` (
-  `id_nivel` int(11) NOT NULL,
+`id_nivel` int(11) NOT NULL,
   `cod_nivel` varchar(5) NOT NULL,
   `nome_nivel` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
@@ -298,7 +307,7 @@ INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `regime_trabalho`,
 --
 
 CREATE TABLE IF NOT EXISTS `tb_progressao` (
-  `id_progressao` int(11) NOT NULL,
+`id_progressao` int(11) NOT NULL,
   `fk_nivel_anterior` int(11) NOT NULL,
   `fk_nivel_seguinte` int(11) NOT NULL,
   `duracao_intersticio` int(11) NOT NULL,
@@ -399,7 +408,17 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 (78, 4, 0, '=(valor_informado*15)', 0, 1),
 (79, 4, 0, '=(valor_informado*10)', 0, 1),
 (80, 4, 0, '=(valor_informado*2)', 0, 1),
-(81, 4, 0, '=(valor_informado)', 0, 1);
+(81, 4, 0, '=(valor_informado)', 0, 1),
+(83, 2, 0, '=(valor_informado*6)', 0, 1),
+(84, 2, 0, '=(valor_informado*3)', 0, 1),
+(85, 2, 0, '=(valor_informado*2.5)', 0, 1),
+(86, 2, 0, '=(valor_informado*2)', 0, 1),
+(87, 3, 0, '=(producao_decorrente/2)', 1, 1),
+(92, 2, 0, '=(valor_informado*6)', 0, 1),
+(93, 2, 0, '=(valor_informado*3)', 0, 1),
+(94, 2, 0, '=(valor_informado*2.5)', 0, 1),
+(95, 2, 0, '=(valor_informado*2)', 0, 1),
+(96, 1, 0, '=(producao_informada/2)', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -408,7 +427,7 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regra_classificacao` (
-  `id_regra_classificacao` int(11) NOT NULL,
+`id_regra_classificacao` int(11) NOT NULL,
   `fk_regra` int(11) NOT NULL,
   `fk_classificacao` int(11) NOT NULL,
   `valor` float NOT NULL
@@ -472,15 +491,27 @@ INSERT INTO `tb_regra_classificacao` (`id_regra_classificacao`, `fk_regra`, `fk_
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tb_regra_decorrente`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_regra_decorrente` (
+`id_decorrencia` int(11) NOT NULL,
+  `fk_item_principal` int(11) NOT NULL,
+  `fk_item_decorrente` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `tb_subeixo`
 --
 
 CREATE TABLE IF NOT EXISTS `tb_subeixo` (
-  `id_subeixo` int(11) NOT NULL,
+`id_subeixo` int(11) NOT NULL,
   `nome_subeixo` varchar(60) NOT NULL,
   `pontmax_subeixo` int(11) NOT NULL,
   `fk_eixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_subeixo`
@@ -499,7 +530,8 @@ INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_e
 (14, 'Bancas Examinadoras por Unidade', 30, 12),
 (15, 'Administração Universitária ou Equivalente', 70, 14),
 (16, 'Representação Institucional ou de Categorias Universitárias ', 12, 14),
-(17, 'Cursos', 60, 15);
+(17, 'Cursos', 60, 15),
+(57, 'Atividades de Extensão', 30, 13);
 
 -- --------------------------------------------------------
 
@@ -508,7 +540,7 @@ INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_e
 --
 
 CREATE TABLE IF NOT EXISTS `tb_tipoclassificacao` (
-  `id_tipoclass` int(11) NOT NULL,
+`id_tipoclass` int(11) NOT NULL,
   `nome_tipoclass` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -529,7 +561,7 @@ INSERT INTO `tb_tipoclassificacao` (`id_tipoclass`, `nome_tipoclass`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_titulo` (
-  `id_titulo` int(11) NOT NULL,
+`id_titulo` int(11) NOT NULL,
   `nome_titulo` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -551,85 +583,91 @@ INSERT INTO `tb_titulo` (`id_titulo`, `nome_titulo`) VALUES
 -- Indexes for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
-  ADD PRIMARY KEY (`fk_professor`);
+ ADD PRIMARY KEY (`fk_professor`);
 
 --
 -- Indexes for table `tb_classificacao`
 --
 ALTER TABLE `tb_classificacao`
-  ADD PRIMARY KEY (`id_classificacao`);
+ ADD PRIMARY KEY (`id_classificacao`);
 
 --
 -- Indexes for table `tb_departamento`
 --
 ALTER TABLE `tb_departamento`
-  ADD PRIMARY KEY (`id_depto`);
+ ADD PRIMARY KEY (`id_depto`);
 
 --
 -- Indexes for table `tb_eixo`
 --
 ALTER TABLE `tb_eixo`
-  ADD PRIMARY KEY (`id_eixo`), ADD UNIQUE KEY `nome_eixo` (`nome_eixo`);
+ ADD PRIMARY KEY (`id_eixo`), ADD UNIQUE KEY `nome_eixo` (`nome_eixo`);
 
 --
 -- Indexes for table `tb_item`
 --
 ALTER TABLE `tb_item`
-  ADD PRIMARY KEY (`id_item`);
+ ADD PRIMARY KEY (`id_item`);
 
 --
 -- Indexes for table `tb_metrica`
 --
 ALTER TABLE `tb_metrica`
-  ADD PRIMARY KEY (`id_metrica`);
+ ADD PRIMARY KEY (`id_metrica`);
 
 --
 -- Indexes for table `tb_nivel`
 --
 ALTER TABLE `tb_nivel`
-  ADD PRIMARY KEY (`id_nivel`);
+ ADD PRIMARY KEY (`id_nivel`);
 
 --
 -- Indexes for table `tb_professor`
 --
 ALTER TABLE `tb_professor`
-  ADD PRIMARY KEY (`siape`), ADD UNIQUE KEY `email` (`email`);
+ ADD PRIMARY KEY (`siape`), ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `tb_progressao`
 --
 ALTER TABLE `tb_progressao`
-  ADD PRIMARY KEY (`id_progressao`), ADD UNIQUE KEY `fk_nivel_anterior` (`fk_nivel_anterior`,`fk_nivel_seguinte`);
+ ADD PRIMARY KEY (`id_progressao`), ADD UNIQUE KEY `fk_nivel_anterior` (`fk_nivel_anterior`,`fk_nivel_seguinte`);
 
 --
 -- Indexes for table `tb_regra`
 --
 ALTER TABLE `tb_regra`
-  ADD PRIMARY KEY (`id_item`);
+ ADD PRIMARY KEY (`id_item`);
 
 --
 -- Indexes for table `tb_regra_classificacao`
 --
 ALTER TABLE `tb_regra_classificacao`
-  ADD PRIMARY KEY (`id_regra_classificacao`), ADD UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`);
+ ADD PRIMARY KEY (`id_regra_classificacao`), ADD UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`);
+
+--
+-- Indexes for table `tb_regra_decorrente`
+--
+ALTER TABLE `tb_regra_decorrente`
+ ADD PRIMARY KEY (`id_decorrencia`), ADD UNIQUE KEY `fk_item_principal` (`fk_item_principal`,`fk_item_decorrente`);
 
 --
 -- Indexes for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
-  ADD PRIMARY KEY (`id_subeixo`);
+ ADD PRIMARY KEY (`id_subeixo`);
 
 --
 -- Indexes for table `tb_tipoclassificacao`
 --
 ALTER TABLE `tb_tipoclassificacao`
-  ADD PRIMARY KEY (`id_tipoclass`);
+ ADD PRIMARY KEY (`id_tipoclass`);
 
 --
 -- Indexes for table `tb_titulo`
 --
 ALTER TABLE `tb_titulo`
-  ADD PRIMARY KEY (`id_titulo`);
+ ADD PRIMARY KEY (`id_titulo`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -639,57 +677,62 @@ ALTER TABLE `tb_titulo`
 -- AUTO_INCREMENT for table `tb_classificacao`
 --
 ALTER TABLE `tb_classificacao`
-  MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tb_departamento`
 --
 ALTER TABLE `tb_departamento`
-  MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_eixo`
 --
 ALTER TABLE `tb_eixo`
-  MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
+MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT for table `tb_item`
 --
 ALTER TABLE `tb_item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
+MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
 --
 -- AUTO_INCREMENT for table `tb_metrica`
 --
 ALTER TABLE `tb_metrica`
-  MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_nivel`
 --
 ALTER TABLE `tb_nivel`
-  MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tb_progressao`
 --
 ALTER TABLE `tb_progressao`
-  MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `tb_regra_classificacao`
 --
 ALTER TABLE `tb_regra_classificacao`
-  MODIFY `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
+MODIFY `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
+--
+-- AUTO_INCREMENT for table `tb_regra_decorrente`
+--
+ALTER TABLE `tb_regra_decorrente`
+MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
-  MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=57;
+MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `tb_tipoclassificacao`
 --
 ALTER TABLE `tb_tipoclassificacao`
-  MODIFY `id_tipoclass` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_tipoclass` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_titulo`
 --
 ALTER TABLE `tb_titulo`
-  MODIFY `id_titulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_titulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

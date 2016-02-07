@@ -16,6 +16,7 @@ class Regra extends CI_Controller {
 		$this->load->model('mmetrica','', TRUE);
 		$this->load->model('mtipoclass','', TRUE);
 		$this->load->model('mclassificacao', '', TRUE);
+		$this->load->model('mregradecorrente', '', TRUE);
 	}
 
 	function show($ideixo, $idsubeixo, $id)
@@ -28,6 +29,8 @@ class Regra extends CI_Controller {
 			$eixoData = $this->meixo->get($ideixo);
 			$subeixoData = $this->msubeixo->get($idsubeixo);
 			$itemData = $this->mitem->get($id);
+			$itensData = $this->mitem->getAll();
+			$itensDecorrentesData = $this->mregradecorrente->getDecorrentes($id);
 
 			$regrasData = $this->mregra->getRegraFromItem($id);
 			$metricasData = $this->mmetrica->getAll();
@@ -63,6 +66,8 @@ class Regra extends CI_Controller {
 			//$data['eixo'] = $eixoData;
 			//$data['subeixo'] = $subeixoData;
 			$data['item'] = $itemData;
+			$data['todosItens'] = $itensData;
+			$data['itensDecorrentes'] = $itensDecorrentesData;
 			$data['regra'] = $regrasData;
 			$data['itensMenu'] = $itensMenu;
 			$data['metricas'] = $metricasData;

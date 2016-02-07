@@ -89,6 +89,20 @@ $(document).on('change', '.tipoclass-input', function(){
     }
 });
 
+$(document).on('change', '.decorrente-input', function(){
+    //alert( this.value ); // or $(this).val()
+    var val = $(this).val();
+    console.log(val);
+    if (val <= 0)	
+    {
+    	$( "#regras_decorrentes" ).css( "display", "none" );
+    }
+    else			
+    {
+    	$( "#regras_decorrentes" ).css( "display", "block" );
+    }
+});
+
 $(document).on('submit', '.add-input', function(){
 		event.preventDefault();
 		var form = $(this).find(':input');
@@ -114,27 +128,34 @@ $(document).on('submit', '.add-input', function(){
 					$('select').material_select();
 					$('input#input_text, textarea#textarea1').characterCounter();
 					
-					var nameNewMenuItem = formArray[0]["value"];
-					for (var i = 0; i < formArray.length; i++) {
-						if (formArray[i]["name"] == "nome")
-							nameNewMenuItem = formArray[i]["value"];
-					};
-					//console.log(nameNewMenuItem);
-					var sideMenu = $("#slide-out");
-					var sibling;
-					var liInnerHtmls = sideMenu.find(".truncate").each(function () {
-						var currentMenuItem = $(this).html();
-						var n = currentMenuItem.localeCompare(nameNewMenuItem)
-						if(n == -1)
-						{
-							console.log($(this).html());
-							sibling = $(this).closest("li");
-						}
-					});
-					var newMenuItemHtml = "<li><a href=\""+document.URL+"/"+response+"\"><p class='truncate'>"+nameNewMenuItem+"</p></a></li>";
-					console.log(newMenuItemHtml);
-					if (typeof sibling === 'undefined')	$(sideMenu).prepend(newMenuItemHtml);
-					else				$(sibling).after(newMenuItemHtml);
+					if (table != "regradecorrente")
+					{
+						var nameNewMenuItem = formArray[0]["value"];
+						for (var i = 0; i < formArray.length; i++) {
+							if (formArray[i]["name"] == "nome")
+								nameNewMenuItem = formArray[i]["value"];
+						};
+						//console.log(nameNewMenuItem);
+						var sideMenu = $("#slide-out");
+						var sibling;
+						var liInnerHtmls = sideMenu.find(".truncate").each(function () {
+							var currentMenuItem = $(this).html();
+							var n = currentMenuItem.localeCompare(nameNewMenuItem)
+							if(n == -1)
+							{
+								console.log($(this).html());
+								sibling = $(this).closest("li");
+							}
+						});
+						var newMenuItemHtml = "<li><a href=\""+document.URL+"/"+response+"\"><p class='truncate'>"+nameNewMenuItem+"</p></a></li>";
+						console.log(newMenuItemHtml);
+						if (typeof sibling === 'undefined')	$(sideMenu).prepend(newMenuItemHtml);
+						else				$(sibling).after(newMenuItemHtml);
+					}
+					else
+					{
+						console.log("não precisa mexer com menu");
+					}
 					Materialize.toast('Adicionado com sucesso!', 4000);
 				});
 				//$("#listItens").find(":last").clone().appendTo("#listItens");
@@ -163,15 +184,19 @@ $(document).on("click", ".delete-button", function (event)
 				//console.log(me.closest("form"));
 				me.closest("form").parent().remove();
 
-				var sideMenu = $("#slide-out");
-				var liInnerHtmls = sideMenu.find(".truncate").each(function () {
-					var currentMenuItem = $(this).html();
-					var n = currentMenuItem.localeCompare(nameMenuItem)
-					if(n == 0)
-					{
-						$(this).closest("li").remove();
-					}
-				});
+				if (nameMenuItem)
+				{
+					var sideMenu = $("#slide-out");
+					var liInnerHtmls = sideMenu.find(".truncate").each(function () {
+						var currentMenuItem = $(this).html();
+						var n = currentMenuItem.localeCompare(nameMenuItem)
+						if(n == 0)
+						{
+							$(this).closest("li").remove();
+						}
+					});
+				}
+				else console.log("não tem que deletar menu");
 				Materialize.toast('Removido com sucesso!', 4000);
 			}
 		});
@@ -179,9 +204,23 @@ $(document).on("click", ".delete-button", function (event)
 	})
 
 jQuery(document).ready(function($) 
-
 {
 	
+	$("#slide-out").on({
+		mouseenter: function()
+		{
+			$(this).width("auto");
+			autoWidth = $(this).width();
+			if (autoWidth < 240)
+			{
+				$(this).width("240px");
+			}
+		},
+		mouseleave: function()
+		{
+			$(this).width("240px");
+		}
+});
 
 	
 
