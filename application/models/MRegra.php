@@ -41,7 +41,7 @@ Class MRegra extends CI_Model
 			RIGHT JOIN tb_classificacao
 			ON fk_classificacao=id_classificacao
 			WHERE fk_tipoclassificacao=".$idtipoclass."
-			ORDER BY nome_classificacao";
+			ORDER BY id_classificacao";
 
 		$query = $this->db->query($sql);
 

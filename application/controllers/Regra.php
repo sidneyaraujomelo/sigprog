@@ -55,13 +55,12 @@ class Regra extends CI_Controller {
 			$itensPath[count($itensPath)] = array( "url" => ".", "nome" => $subeixoData['nome_subeixo']);
 			$itensPath[count($itensPath)] = array( "url" => NULL, "nome" => $itemData['nome_item']);
 
-			$regraClassesData = NULL;
-			//Se regra possui tipoclassificação diferente de 1
-			if ($regrasData['fk_tipoclass']==4)
-			{
-				$regraClassesData = $this->mregra->getAllFromClasses($id, $regrasData['fk_tipoclass']);
-				//var_dump($regraClassesData);
+			$regraClassesData = array();
+			foreach ($tipoClassData as $tipoclass) {
+				$regraClassesData[$tipoclass['nome_tipoclass']] = $this->mregra->getAllFromClasses($id, $tipoclass['id_tipoclass']);
 			}
+
+			//var_dump($regraClassesData);
 
 			//$data['eixo'] = $eixoData;
 			//$data['subeixo'] = $subeixoData;
@@ -72,7 +71,7 @@ class Regra extends CI_Controller {
 			$data['itensMenu'] = $itensMenu;
 			$data['metricas'] = $metricasData;
 			$data['tipoclasses'] = $tipoClassData;
-			$data['classes'] = $regraClassesData;
+			$data['regraclasses'] = $regraClassesData;
 			$data['itensPath'] = $itensPath;
 			$this->load->view('admin/header.php', $data);
 			$this->load->view('admin/regras.php', $data);

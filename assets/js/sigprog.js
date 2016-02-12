@@ -79,14 +79,13 @@ $(document).on('change', '.tipoclass-input', function(){
     //alert( this.value ); // or $(this).val()
     var val = $(this).val();
     console.log(val);
-    if (val == 1)	
+    if (val == null || val == "") return;
+    $(".regraclassificacao").css("display", "none");
+    if (val != 1)
     {
-    	$( "#regras_classificacao" ).css( "display", "none" );
-    }
-    else if (val==4)			
-    {
-    	$( "#regras_classificacao" ).css( "display", "block" );
-    }
+    	console.log("#regras_classificacao-"+val);
+		$( "#regras_classificacao-"+val ).css( "display", "block" );
+	}
 });
 
 $(document).on('change', '.decorrente-input', function(){
@@ -214,6 +213,10 @@ jQuery(document).ready(function($)
 			if (autoWidth < 240)
 			{
 				$(this).width("240px");
+			}
+			else if (autoWidth > screen.width*0.8)
+			{
+				$(this).width("80%");	
 			}
 		},
 		mouseleave: function()

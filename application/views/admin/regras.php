@@ -68,12 +68,14 @@
 			</div>
 
 <?php
-$visible_regrasclass = 'none';
-if ($regra['fk_tipoclass']!=1)
-{
-	$visible_regrasclass = 'block';
-} ?>
-			<div id="regras_classificacao" style="display: <?php echo $visible_regrasclass; ?>">
+foreach ($regraclasses as $classes) {
+	$visible_regrasclass = 'none';
+	if (count($classes)<=0)	continue;
+	if ($regra['fk_tipoclass']!=1 && $regra['fk_tipoclass']==$classes[0]['fk_tipoclassificacao'])
+	{
+		$visible_regrasclass = 'block';
+	} ?>
+			<div id="regras_classificacao-<?php echo $classes[0]['fk_tipoclassificacao']; ?>" class="regraclassificacao" style="display: <?php echo $visible_regrasclass; ?>">
 				<table class="col s3 offset-s2">
 					<thead>
 						<tr>
@@ -85,8 +87,8 @@ if ($regra['fk_tipoclass']!=1)
 					<tbody>
 
 <?php
-		for ($i=0; $i < count($classes) ; $i=$i+2) { 
-			$classe = $classes[$i];
+	for ($i=0; $i < count($classes)/2 ; $i++) { 
+		$classe = $classes[$i];
 ?>
 						<tr>
 							<td><?php echo $classe['nome_classificacao'];?></td>
@@ -99,7 +101,7 @@ if ($regra['fk_tipoclass']!=1)
 							</td>
 						</tr>
 <?php
-		}
+	}
 ?>
 					</tbody>
 				</table>
@@ -116,7 +118,7 @@ if ($regra['fk_tipoclass']!=1)
 
 <?php
 	if (count($classes)>1)
-		for ($i=1; $i < count($classes) ; $i=$i+2) { 
+		for ($i=(count($classes)/2); $i < count($classes) ; $i++) { 
 			$classe = $classes[$i];
 ?>
 						<tr>
@@ -131,12 +133,14 @@ if ($regra['fk_tipoclass']!=1)
 						</tr>
 <?php
 		}
+
 ?>
 					</tbody>
 				</table>
 				<div class="col s2"></div>
 			</div>
 <?php
+}
 $visible_regras_decorrentes = 'none';
 if ($regra['quantidade_decorrente']>=1)
 {
