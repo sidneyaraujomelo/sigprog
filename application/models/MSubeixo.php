@@ -25,6 +25,18 @@ Class MSubeixo extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tb_subeixo');
 		$this->db->where('fk_eixo', $id);
+		$this->db->order_by('nome_subeixo', 'ASC');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getReducedFromParent($id)
+	{
+		$this->db->select('id_subeixo, nome_subeixo');
+		$this->db->from('tb_subeixo');
+		$this->db->where('fk_eixo', $id);
+		$this->db->order_by('nome_subeixo', 'ASC');
 		$query = $this->db->get();
 
 		return $query->result_array();

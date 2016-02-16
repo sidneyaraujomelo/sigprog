@@ -21,6 +21,15 @@ $.ajaxSetup ({
 	cache: false
 });
 
+$(document).on('change', '.addProd_eixo', function(){
+	var val = $(this).val();
+	$("div[id^='sub-de-']").each(function(){
+		$(this).css("display", "none");
+	});
+	$("#sub-de-"+val).css("display", "block");
+	console.log(val);
+});
+
 $(document).on('change', '.autoupdate-input', function(){
     //alert( this.value ); // or $(this).val()
 	  var attrId = $(this).closest("form").attr("id");
@@ -129,7 +138,7 @@ $(document).on('submit', '.add-input', function(){
 					$('select').material_select();
 					$('input#input_text, textarea#textarea1').characterCounter();
 					
-					if (table != "regradecorrente")
+					if (table != "regradecorrente" && table != "progressao")
 					{
 						var nameNewMenuItem = formArray[0]["value"];
 						for (var i = 0; i < formArray.length; i++) {

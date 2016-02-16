@@ -5,6 +5,17 @@ Class MEixo extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('tb_eixo');
+		$this->db->order_by('nome_eixo', 'ASC');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getReducedAll()
+	{
+		$this->db->select('id_eixo, nome_eixo');
+		$this->db->from('tb_eixo');
+		$this->db->order_by('nome_eixo', 'ASC');
 		$query = $this->db->get();
 
 		return $query->result_array();

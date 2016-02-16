@@ -7,11 +7,16 @@
 .professor-details
 {
 	min-height: 150px;
-	background-color: #eeeeee;
+	background-color: #0d47a1;
+}
+
+.professor-details span
+{
+	color: white;
 }
 
 li.li-no-hover:hover {
-    background-color: #eeeeee;
+    background-color: #0d47a1;
 }
 
 .professor-details .row {
@@ -27,12 +32,36 @@ li.li-no-hover:hover {
 	line-height: normal;
 	margin-top: 10px;
 	height: auto;
-	color: blue;
+	color: white;
 }
 
 .profile-picture
 {
 	margin-top: 20%;
+}
+
+li .active
+{
+	line-height: inherit;
+}
+
+.side-nav li.active
+{
+	line-height: inherit;
+}
+
+.vertical-aligned
+{
+	vertical-align: inherit;
+}
+
+.li-option
+{
+	vertical-align: middle;
+	border-left: 2px;
+	border-left-style: solid;
+	border-left-color: black;
+
 }
 
 @media (min-width: 991px) {
