@@ -33,7 +33,7 @@ Class MRegra extends CI_Model
 	public function getAllFromClasses($id, $idtipoclass)
 	{
 		$sql="
-			SELECT rc.id_regra_classificacao, rc.fk_regra, id_classificacao, rc.valor, nome_classificacao, fk_tipoclassificacao
+			SELECT rc.id_regra_classificacao, rc.fk_regra, id_classificacao, rc.valor, rc.pontuacao_maxima, nome_classificacao, fk_tipoclassificacao
 			FROM 
 				(SELECT *
 			     FROM tb_regra_classificacao

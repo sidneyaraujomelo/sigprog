@@ -55,8 +55,9 @@ $(document).on('change', '.autoupdate-regraclass', function(){
 	  var regra = $(this).closest("form").find("#regra").val();
 	  var classe = $(this).closest("form").find("#classe").val();
 	  var val = $(this).val();
+	  var col = $(this).attr("name");
 
-	  console.log(tabela+" "+regra+" "+classe+" "+val);
+	  console.log(tabela+" "+regra+" "+classe+" "+col+" "+val);
 
 	  if (tabela!=null && regra != null && classe!=null && val != null)
 	  {
@@ -65,6 +66,7 @@ $(document).on('change', '.autoupdate-regraclass', function(){
 	  		'tabela' : tabela,
 	  		'regra' : regra,
 	  		'classe' : classe,
+	  		'col' : col,
 	  		'val' : val
 	  	}, function (response)
 	  	{

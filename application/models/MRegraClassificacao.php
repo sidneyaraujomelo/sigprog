@@ -2,15 +2,13 @@
 Class MRegraClassificacao extends CI_Model
 {
 
-public function setRegraToClasse($idregra, $idclasse, $valor)
+public function setRegraToClasse($idregra, $idclasse, $col, $valor)
 	{
-		$data = array(
-			'fk_regra' => $idregra,
-			'fk_classificacao' => $idclasse,
-			'valor' => $valor
-			);
+		$data = array($col => $valor);
 
-		return($this->db->replace('tb_regra_classificacao',$data));
+		$this->db->where('fk_regra',  $idregra);
+		$this->db->where('fk_classificacao', $idclasse);
+		return($this->db->update('tb_regra_classificacao',$data));
 	}
 
 }

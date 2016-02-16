@@ -18,8 +18,11 @@ class RegraClassificacao extends CI_Controller {
 		$regra = $_POST['regra'];
 		$classe = $_POST['classe'];
 		$val = $_POST['val'];
+		$col = $_POST['col'];
 
-		$this->mregraclassificacao->setRegraToClasse($regra, $classe, $val);
+		if ($col=='pontuacao_maxima' && $val==0) $val=NULL;
+
+		$this->mregraclassificacao->setRegraToClasse($regra, $classe, $col, $val);
 	}
 }
 ?>

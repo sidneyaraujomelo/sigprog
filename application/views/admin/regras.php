@@ -81,6 +81,7 @@ foreach ($regraclasses as $classes) {
 						<tr>
 							<th data-field="classificacao">Classificação</th>
 							<th data-field="valor">Valor</th>
+							<th data-field="valor">Pontuação Máxima</th>
 						</tr>
 					</thead>
 
@@ -99,6 +100,13 @@ foreach ($regraclasses as $classes) {
 									<input class="autoupdate-regraclass" form="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" name="valor" value="<?php echo $classe['valor'];?>" type="number" step="0.1">
 								</form>
 							</td>
+							<td>
+								<form id="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" class="editItem">
+									<input type="hidden" id="regra" value="<?php echo $regra['id_item']; ?>">
+									<input type="hidden" id="classe" value="<?php echo $classe['id_classificacao']; ?>">
+									<input class="autoupdate-regraclass" form="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" name="pontuacao_maxima" value="<?php echo $classe['pontuacao_maxima'];?>" type="number">
+								</form>
+							</td>
 						</tr>
 <?php
 	}
@@ -111,6 +119,7 @@ foreach ($regraclasses as $classes) {
 						<tr>
 							<th data-field="classificacao">Classificação</th>
 							<th data-field="valor">Valor</th>
+							<th data-field="valor">Pontuação Máxima</th>
 						</tr>
 					</thead>
 
@@ -128,6 +137,13 @@ foreach ($regraclasses as $classes) {
 									<input type="hidden" id="regra" value="<?php echo $regra['id_item']; ?>">
 									<input type="hidden" id="classe" value="<?php echo $classe['id_classificacao']; ?>">
 									<input class="autoupdate-regraclass" form="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" name="valor" value="<?php echo $classe['valor'];?>" type="number" step="0.1">
+								</form>
+							</td>
+							<td>
+								<form id="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" class="editItem">
+									<input type="hidden" id="regra" value="<?php echo $regra['id_item']; ?>">
+									<input type="hidden" id="classe" value="<?php echo $classe['id_classificacao']; ?>">
+									<input class="autoupdate-regraclass" form="<?php echo 'regra_classificacao-'.$classe['id_classificacao']; ?>" name="pontuacao_maxima" value="<?php echo $classe['pontuacao_maxima'];?>" type="number">
 								</form>
 							</td>
 						</tr>
