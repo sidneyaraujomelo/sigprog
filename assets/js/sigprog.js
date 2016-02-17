@@ -23,11 +23,28 @@ $.ajaxSetup ({
 
 $(document).on('change', '.addProd_eixo', function(){
 	var val = $(this).val();
-	$("div[id^='sub-de-']").each(function(){
-		$(this).css("display", "none");
-	});
-	$("#sub-de-"+val).css("display", "block");
-	console.log(val);
+	if (val != '')
+	{
+		$("div[id^='sub-de-']").each(function(){
+			console.log($(this));
+			$(this).css("display", "none");
+		});
+		$("#sub-de-"+val).css("display", "block");
+	}
+	
+});
+
+$(document).on('change', '.addProd_subeixo', function(){
+	var val = $(this).val();
+	if (val != '')
+	{
+		$("div[id^='item-de-']").each(function(){
+			console.log($(this));
+			$(this).css("display", "none");
+		});
+		$("#item-de-"+val).css("display", "block");
+	}
+	
 });
 
 $(document).on('change', '.autoupdate-input', function(){

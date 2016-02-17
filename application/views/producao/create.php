@@ -43,6 +43,22 @@
 				</div>
 <?php }?>
 
+<?php foreach ($infoproducao as $eixo) {
+		foreach ($eixo['subeixo'] as $subeixo) {
+?>
+				<div class="input-field col s12" id="item-de-<?php echo $subeixo['id_subeixo']; ?>" name="item" style="display: none">
+					<select name="item" class="addProd_item" form="addProducao">
+						<option value="0" selected>Selecione um item</option>
+<?php 	foreach ($subeixo['item'] as $item) {
+?>
+						<option value="<?php echo $item['id_item']; ?>"><?php echo $item['nome_item'];?></option>
+<?php 	}?>						
+					</select>
+					<label for="item">Item</label>
+				</div>
+<?php 	}
+	  }?>
+
 			
 				<div class="col s12 file-field input-field">
 			    	<div class="btn">
