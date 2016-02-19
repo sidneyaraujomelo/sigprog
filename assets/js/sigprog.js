@@ -29,9 +29,14 @@ $(document).on('change', '.addProd_eixo', function(){
 			console.log($(this));
 			$(this).css("display", "none");
 		});
+		$("div[id^='item-de-']").each(function(){
+			console.log($(this));
+			$(this).css("display", "none");
+		});
+		$('#submit-button').css("display", "none");
 		$("#sub-de-"+val).css("display", "block");
+		$("#input-quantidade").empty();
 	}
-	
 });
 
 $(document).on('change', '.addProd_subeixo', function(){
@@ -42,9 +47,29 @@ $(document).on('change', '.addProd_subeixo', function(){
 			console.log($(this));
 			$(this).css("display", "none");
 		});
+		$('#submit-button').css("display", "none");
 		$("#item-de-"+val).css("display", "block");
+		$("#input-quantidade").empty();
 	}
-	
+});
+
+$(document).on('change', '.addProd_item', function(){
+	var val = $(this).val();
+
+	if (val != '' && val!=null)
+	{
+		$.post("http://localhost/sigprog/index.php/regra/generateProdForm/",
+		{
+			'id' : val
+		},function(response)
+		{
+			console.log(response);
+			$("#input-quantidade").empty().append(response);
+			$('select').material_select();
+    		$('select').material_select('update');
+    		$('#submit-button').css("display", "block");
+		});
+	}
 });
 
 $(document).on('change', '.autoupdate-input', function(){

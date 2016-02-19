@@ -5,8 +5,9 @@
 			</div>
 
 			<div class="col s12">
-				<form id="addProducao" class="add-input" name="producao" action="#">
+				<form id="addProducao" class="" method="post" name="producao" action="#">
 
+				<hr>
 				<div class="input-field col s8">
 		            <input id="nome" name="nome" type="text" class="validate">
 		            <label for="nome">Alias</label>
@@ -58,18 +59,26 @@
 				</div>
 <?php 	}
 	  }?>
+	  			<hr>
+			    <div id="input-quantidade">
+				</div>
 
-			
 				<div class="col s12 file-field input-field">
 			    	<div class="btn">
-			        	<span>Documentação</span>
+			        	<span>Anexar Documentação Comprobatória</span>
 			        	<input type="file">
 			      	</div>
 			      	<div class="file-path-wrapper">
 			        	<input class="file-path validate" type="text">
 			      	</div>
 			    </div>
-		    
+			    <hr>
+			    <div class="col s12" id="submit-button" style="display: none">
+		    		<button class="btn waves-effect waves-light green darken-4" type="submit" name="action">Adicionar
+						<i class="material-icons right">add</i>
+					</button>
+				</div>
+
 				</form>
 			</div>
 		</div>

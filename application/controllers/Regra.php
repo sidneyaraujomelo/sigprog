@@ -146,4 +146,67 @@ class Regra extends CI_Controller {
 
 		echo $form;
 	}
+
+	public function generateProdForm()
+	{
+		$id = $_POST["id"];
+		$regra = $this->mregra->get($id);
+
+		$regra['fk_metrica'] = $this->mmetrica->get($regra['fk_metrica']);
+		$regra['fk_tipoclass'] = $this->mtipoclass->get($regra['fk_tipoclass']);
+		if ($regra['fk_tipoclass']['id_tipoclass']!=1)
+		{
+			$regra['classificacoes'] = $this->mclassificacao->getAllFrom($regra['fk_tipoclass']['id_tipoclass']);	
+		}
+		if ($regra['quantidade_decorrente']>0)
+		{
+			$regra['decorrentes'] = $this->mregradecorrente->getDecorrentes($id);
+		}
+
+		$form='';
+		if ($regra['fk_metrica']['id_metrica'] != 3)
+		{
+			$form=$form.'
+<div class="col s12 center"><h4 class="center-align">Quantidade</h4></div>
+<div class="input-field col s12">
+	<input form="addProducao" name="quantidade" type="number" required>
+	<label for="quantidade">'.$regra['fk_metrica']['nome_metrica'].'</label>
+</div>';
+		}
+		if ($regra['fk_tipoclass']['id_tipoclass'] != 1)
+		{
+			$form=$form.'
+<div class="col s12 center"><h4 class="center-align">'.$regra['fk_tipoclass']['nome_tipoclass'].'</h4></div>
+<select name="classificacao" form="addProducao" required>
+	<option value="0" selected>Selecione uma classificação</option>';
+			foreach ($regra['classificacoes'] as $classe) {
+					$form=$form.'
+	<option value="'.$classe['id_classificacao'].'">'.$classe['nome_classificacao'].'</option>';
+						
+			}
+			$form=$form.'
+</select>
+<label for="eixo">Classificacao</label>';
+		}
+		if ($regra['quantidade_decorrente'] > 0)
+		{
+			$form=$form.'
+<div class="col s12 center"><h4 class="center-align">Produções associaveis</h4></div>';
+			for ($i = 0; $i < $regra['quantidade_decorrente']; $i++)
+			{
+				$form=$form.'
+<select name="decorrente-'.$i.'" form="addProducao">
+	<option value="0" selected>Selecione uma Produção</option>';
+				foreach ($regra['decorrentes'] as $decorrente) {
+					$form=$form.'
+	<option value="'.$decorrente['id_item'].'">'.$decorrente['nome_item'].'</option>';
+						
+				}
+				$form=$form.'
+</select>
+<label for="eixo">Producao Decorrente '.$i.'</label>';
+			}
+		}
+		echo $form;
+	}
 }

@@ -54,4 +54,9 @@ class Producao extends CI_Controller {
 			redirect('login', 'refresh');
 		}
 	}
+
+	public function addProducao()
+	{
+		echo json_encode($_POST);
+	}
 }

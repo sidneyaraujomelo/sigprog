@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/materialize.min.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/sigprog.js"></script>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 
 <body>

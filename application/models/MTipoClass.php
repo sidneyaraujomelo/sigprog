@@ -9,4 +9,14 @@ Class MTipoClass extends CI_Model
 
 		return $query->result_array();
 	}
+
+	public function get($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tb_tipoclassificacao');
+		$this->db->where('id_tipoclass', $id);
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
 }

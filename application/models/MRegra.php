@@ -14,7 +14,7 @@ Class MRegra extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('tb_regra');
-		$this->db->where('id_regra', $id);
+		$this->db->where('id_item', $id);
 		$query = $this->db->get();
 
 		return $query->row_array();
