@@ -5,7 +5,7 @@
 			</div>
 
 			<div class="col s12">
-				<form id="addProducao" class="" method="post" name="producao" action="#">
+				<form id="addProducao" class="" method="post" name="producao" action="addProducao">
 
 				<hr>
 				<div class="input-field col s8">
@@ -14,7 +14,7 @@
 				</div>
 
 				<div class="input-field col s4">
-					<input type="date" class="datepicker" id="data_producao" name="data_producao">
+					<input type="text" class="datepicker" id="data_producao" name="data_producao">
 					<label for="data_producao">Data da Produção</label>
 				</div>
 
@@ -33,7 +33,7 @@
 <?php foreach ($infoproducao as $eixo) {
 ?>
 				<div class="input-field col s12" id="sub-de-<?php echo $eixo['id_eixo']; ?>" name="subeixo" style="display: none">
-					<select name="subeixo" class="addProd_subeixo" form="addProducao">
+					<select name="sub-de-<?php echo $eixo['id_eixo']; ?>" class="addProd_subeixo" form="addProducao">
 						<option value="0" selected>Selecione um subeixo</option>
 <?php 	foreach ($eixo['subeixo'] as $subeixo) {
 ?>
@@ -48,7 +48,7 @@
 		foreach ($eixo['subeixo'] as $subeixo) {
 ?>
 				<div class="input-field col s12" id="item-de-<?php echo $subeixo['id_subeixo']; ?>" name="item" style="display: none">
-					<select name="item" class="addProd_item" form="addProducao">
+					<select name="item-de-<?php echo $subeixo['id_subeixo']; ?>" class="addProd_item" form="addProducao">
 						<option value="0" selected>Selecione um item</option>
 <?php 	foreach ($subeixo['item'] as $item) {
 ?>
@@ -81,7 +81,10 @@
 
 				</form>
 			</div>
+
+
 		</div>
+		<div style="height: 40%"></div>
 	</main>
 </body>
 

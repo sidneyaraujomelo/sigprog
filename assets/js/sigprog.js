@@ -155,6 +155,35 @@ $(document).on('change', '.decorrente-input', function(){
     }
 });
 
+$(document).on('submit', '#addProducao', function(){
+	event.preventDefault();
+
+	//ASSIM EH TRABALHO DEMACACO
+	var alias = $(this).find("#nome").val();
+	console.log(alias);
+
+	var date = $(this).find("#data_producao").val();
+	console.log(date);
+
+	var datesubmit = $(this).find("[name='data_producao_submit']").val();
+	console.log(datesubmit);
+
+	var eixo = $(this).find("[name='eixo']").val();
+	console.log(eixo);
+
+	var subeixo = $(this).find("[name='sub-de-"+eixo+"']").val();
+	console.log(subeixo);
+
+	var item = $(this).find("[name='item-de-"+subeixo+"']").val();
+	console.log(item);
+
+	//FILTRAR PELOS ATIVOS IA SER TESÃO
+	$(this).find(":input").each(function(){
+ 		var input = $(this); // This is the jquery object of the input, do what you will
+ 		console.log(input.val());
+	});
+});
+
 $(document).on('submit', '.add-input', function(){
 		event.preventDefault();
 		var form = $(this).find(':input');
