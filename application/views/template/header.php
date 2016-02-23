@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="<?php echo asset_url();?>/css/materialize.css">
 	<link rel="stylesheet" href="<?php echo asset_url();?>/css/sigprog.css">
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/materialize.min.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/sigprog.js"></script>
 </head>
@@ -39,7 +40,7 @@
 			<li>Minhas Progressões</li>
 			<li><a href="<?php echo base_url(); ?>index.php/usuario/logout">Logout</a></li>
 <?php if ($admin) {?>
-			<li><a href="admin">Administrador</a></li>
+			<li><a href="<?php echo base_url(); ?>index.php/admin">Administrador</a></li>
 <?php } ?>
 
 		</ul>
