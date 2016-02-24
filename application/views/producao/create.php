@@ -5,7 +5,8 @@
 			</div>
 
 			<div class="col s12">
-				<form id="addProducao" class="" method="post" name="producao" action="addProducao">
+				<form id="addProducao" class="" method="post" name="producao" action="addProducao" enctype="multipart/form-data">
+				<input type="hidden" name="token" value="<?php echo $token; ?>" />
 
 				<hr>
 				<div class="input-field col s8">
@@ -37,7 +38,7 @@
 						<option value="0" selected>Selecione um subeixo</option>
 <?php 	foreach ($eixo['subeixo'] as $subeixo) {
 ?>
-						<option value="<?php echo $subeixo['id_subeixo']; ?>"><?php echo $subeixo['nome_subeixo'];?></option>
+						<option name="<?php echo $subeixo['id_subeixo']; ?>" value="<?php echo $subeixo['id_subeixo']; ?>"><?php echo $subeixo['nome_subeixo'];?></option>
 <?php 	}?>						
 					</select>
 					<label for="subeixo">Subeixo</label>
@@ -66,7 +67,7 @@
 				<div class="col s12 file-field input-field">
 			    	<div class="btn">
 			        	<span>Anexar Documentação Comprobatória</span>
-			        	<input type="file">
+			        	<input type="file" name="fileToUpload" id="fileToUpload">
 			      	</div>
 			      	<div class="file-path-wrapper">
 			        	<input class="file-path validate" type="text">

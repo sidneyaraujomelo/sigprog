@@ -177,16 +177,18 @@ class Regra extends CI_Controller {
 		{
 			$form=$form.'
 <div class="col s12 center"><h4 class="center-align">'.$regra['fk_tipoclass']['nome_tipoclass'].'</h4></div>
-<select name="classificacao" form="addProducao" required>
-	<option value="0" selected>Selecione uma classificação</option>';
+<div class="input-field col s12">
+	<select name="classificacao" form="addProducao" required>
+		<option value="0" selected>Selecione uma classificação</option>';
 			foreach ($regra['classificacoes'] as $classe) {
 					$form=$form.'
-	<option value="'.$classe['id_classificacao'].'">'.$classe['nome_classificacao'].'</option>';
+		<option value="'.$classe['id_classificacao'].'">'.$classe['nome_classificacao'].'</option>';
 						
 			}
 			$form=$form.'
-</select>
-<label for="eixo">Classificacao</label>';
+	</select>
+	<label for="classificacao">Classificacao</label>
+</div>';
 		}
 		if ($regra['quantidade_decorrente'] > 0)
 		{
@@ -195,16 +197,18 @@ class Regra extends CI_Controller {
 			for ($i = 0; $i < $regra['quantidade_decorrente']; $i++)
 			{
 				$form=$form.'
-<select name="decorrente-'.$i.'" form="addProducao">
-	<option value="0" selected>Selecione uma Produção</option>';
+<div class="input-field col s12">
+	<select name="decorrente-'.$i.'" form="addProducao">
+		<option value="0" selected>Selecione uma Produção</option>';
 				foreach ($regra['decorrentes'] as $decorrente) {
 					$form=$form.'
-	<option value="'.$decorrente['id_item'].'">'.$decorrente['nome_item'].'</option>';
+		<option value="'.$decorrente['id_item'].'">'.$decorrente['nome_item'].'</option>';
 						
 				}
 				$form=$form.'
-</select>
-<label for="eixo">Producao Decorrente '.$i.'</label>';
+	</select>
+	<label for="decorrente-'.$i.'">Producao Decorrente '.$i.'</label>
+</div>';
 			}
 		}
 		echo $form;
