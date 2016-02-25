@@ -17,6 +17,7 @@ class Regra extends CI_Controller {
 		$this->load->model('mtipoclass','', TRUE);
 		$this->load->model('mclassificacao', '', TRUE);
 		$this->load->model('mregradecorrente', '', TRUE);
+		$this->load->model('mproducao', '', TRUE);
 	}
 
 	function show($ideixo, $idsubeixo, $id)
@@ -149,6 +150,9 @@ class Regra extends CI_Controller {
 
 	public function generateProdForm()
 	{
+		$session_data = $this->session->userdata('logged_in');
+		$siape = $session_data['id'];
+
 		$id = $_POST["id"];
 		$regra = $this->mregra->get($id);
 
@@ -160,7 +164,20 @@ class Regra extends CI_Controller {
 		}
 		if ($regra['quantidade_decorrente']>0)
 		{
+			$producoes_decorrentes = array();
+			$j = 0;
 			$regra['decorrentes'] = $this->mregradecorrente->getDecorrentes($id);
+			if (count($regra['decorrentes']) > 0)
+			{
+				foreach ($regra['decorrentes'] as $regra_decorrente) {
+					$producoes_da_regra = $this->mproducao->getAllByItem($siape, $regra_decorrente['id_item']);
+					foreach ($producoes_da_regra as $producao_associavel) {
+						$producoes_decorrentes[$j] = $producao_associavel;
+						$j++;
+					}
+				}
+			}
+			$regra['decorrentes'] = $producoes_decorrentes;
 		}
 
 		$form='';
@@ -202,7 +219,7 @@ class Regra extends CI_Controller {
 		<option value="0" selected>Selecione uma Produção</option>';
 				foreach ($regra['decorrentes'] as $decorrente) {
 					$form=$form.'
-		<option value="'.$decorrente['id_item'].'">'.$decorrente['nome_item'].'</option>';
+		<option value="'.$decorrente['id_producao'].'">'.$decorrente['nome_producao'].'</option>';
 						
 				}
 				$form=$form.'

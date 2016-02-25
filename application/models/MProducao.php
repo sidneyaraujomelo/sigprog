@@ -6,7 +6,30 @@ Class MProducao extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('view_producao');
+		$this->db->where('id_producao', $id);
+
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
+	public function getByProfessor($id)
+	{
+		$this->db->select('*');
+		$this->db->from('view_producao');
 		$this->db->where('fk_professor', $id);
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function getAllByItem($idprofessor, $iditem)
+	{
+		$this->db->select('*');
+		$this->db->from('view_producao');
+		$this->db->where('fk_professor', $idprofessor);
+		$this->db->where('id_item', $iditem);
 
 		$query = $this->db->get();
 
@@ -24,4 +47,12 @@ Class MProducao extends CI_Model
 			return false;
 		}
   	}
+
+  	public function updatefield($key, $col, $val)
+	{
+		$this->db->set($col, $val);
+		$this->db->where('id_producao', $key);
+		$this->db->update('tb_producao');
+	}
 }
+?>

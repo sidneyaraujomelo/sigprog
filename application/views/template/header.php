@@ -1,13 +1,14 @@
 <html>
 <head>
 	<title>SIGPROG</title>
-	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="<?php echo asset_url();?>/css/icons.css" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo asset_url();?>/css/materialize.css">
 	<link rel="stylesheet" href="<?php echo asset_url();?>/css/sigprog.css">
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/materialize.min.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/sigprog.js"></script>
+	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery.quickfit.js"></script>
 </head>
 
 <body>
@@ -32,15 +33,15 @@
 				
 			</li>
 			<li class="li-option">
-				<a href="<?php echo base_url();?>index.php/usuario" class="vertical-aligned">Minhas Produções</a>
+				<a href="<?php echo base_url();?>index.php/usuario" class="vertical-aligned"><p class="truncate">Minhas Produções</p></a>
 			</li>
 			<li class="li-option">
-				<a href="<?php echo base_url();?>index.php/producao/create">Adicionar Nova Produção</a>
+				<a href="<?php echo base_url();?>index.php/producao/create"><p class="truncate">Adicionar Nova Produção</p></a>
 			</li>
 			<li>Minhas Progressões</li>
-			<li><a href="<?php echo base_url(); ?>index.php/usuario/logout">Logout</a></li>
+			<li><a href="<?php echo base_url(); ?>index.php/usuario/logout"><p class="truncate">Logout</p></a></li>
 <?php if ($admin) {?>
-			<li><a href="<?php echo base_url(); ?>index.php/admin">Administrador</a></li>
+			<li><a href="<?php echo base_url(); ?>index.php/admin"><p class="truncate">Administrador</p></a></li>
 <?php } ?>
 
 		</ul>

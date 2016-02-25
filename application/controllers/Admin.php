@@ -16,6 +16,8 @@ class Admin extends CI_Controller {
 		$this->load->model('mitem','',TRUE);
 		$this->load->model('mregra','',TRUE);
 		$this->load->model('mregraclassificacao','',TRUE);
+		$this->load->model('mproducao','', TRUE);
+		$this->load->model('mproducaodecorrente','', TRUE);
 	}
 
 	function index()
@@ -80,5 +82,11 @@ class Admin extends CI_Controller {
 		{
 			$this->mregra->updatefield($id, $col, $val);
 		}
+		elseif ($tabela == "tb_producao") {
+			$this->mproducao->updatefield($id, $col, $val);
+		}
+		elseif ($tabela == "tb_producaodecorrente"){
+			$this->mproducaodecorrente->updatefield($id, $col, $val);
+		}
 	}
-}
+} ?>

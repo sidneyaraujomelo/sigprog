@@ -73,6 +73,49 @@ $(document).on('change', '.addProd_item', function(){
 	}
 });
 
+$(document).on('change', '.autoupdate-producao', function(){
+    //alert( this.value ); // or $(this).val()
+	  var attrId = $(this).closest("form").attr("id");
+	  var form = $(this).closest("form");
+	  var tabela = attrId.split('-')[0];
+	  var id = attrId.split('-')[1];
+	  var col = $(this).attr("name");
+	  var val = $(this).val();
+	  console.log(tabela+" "+id+" "+col+" "+val);
+
+	  if (tabela!=null && id != null && col!=null && val != null)
+	  {
+	  	if (id != '')
+	  	{
+		  	$.post("http://localhost/sigprog/index.php/producao/update",
+		  	{
+		  		'tabela' : tabela,
+		  		'id' : id,
+		  		'col' : col,
+		  		'val' : val
+		  	}, function (response)
+		  	{
+		  		console.log(response);
+		  		Materialize.toast('Atualizado com sucesso!', 4000);
+		  		//alert("Atualização realizada com sucesso!");
+		  	});
+	  	}
+	  	else
+	  	{
+	  		var id_principal = $(this).closest("form").find("#fk_producao_principal").val();
+	  		$.post("http://localhost/sigprog/index.php/producao/addDecorrente",
+	  		{
+	  			'fk_producao_principal'	: id_principal,
+	  			'fk_producao_decorrente' : val
+	  		}, function (response)
+	  		{
+	  			Materialize.toast('Atualizado com sucesso!', 4000);
+	  			form.attr("id", attrId+response);
+	  		});
+	  	}
+	  }
+});
+
 $(document).on('change', '.autoupdate-input', function(){
     //alert( this.value ); // or $(this).val()
 	  var attrId = $(this).closest("form").attr("id");

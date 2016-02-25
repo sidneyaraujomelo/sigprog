@@ -16,6 +16,10 @@ class Producao extends CI_Controller {
 		$this->load->model('mitem','', TRUE);
 		$this->load->model('mregra','', TRUE);
 		$this->load->model('mproducao','', TRUE);
+		$this->load->model('mtipoclass','', TRUE);
+		$this->load->model('mclassificacao','',TRUE);
+		$this->load->model('mregradecorrente','', TRUE);
+		$this->load->model('mproducaodecorrente','', TRUE);
 	}
 
 	public function index()
@@ -26,29 +30,50 @@ class Producao extends CI_Controller {
 			$siape = $session_data['id'];
 
 			$professorData = $this->mprofessor->get($siape);
-			$producaoData = $this->mproducao->get($siape);	
+			$producaoData = $this->mproducao->getByProfessor($siape);	
+
+			for ($i = 0; $i < count($producaoData); $i++)
+			{
+				if ($producaoData[$i]['id_classificacao']!=NULL)
+				{
+					$producaoData[$i]['id_tipoclass'] = $this->mclassificacao->getTipoClassificacao($producaoData[$i]['id_classificacao'])["fk_tipoclassificacao"];
+				}
+
+				$regraData = $this->mregra->get($producaoData[$i]['id_item']);
+				$producaoData[$i]['ndecorrentes'] = $regraData['quantidade_decorrente'];
+
+				$producoes_associaveis = array();
+				$j = 0;
+				$regras_decorrentes = $this->mregradecorrente->getDecorrentes($producaoData[$i]['id_item']);
+				if (count($regras_decorrentes) > 0)
+				{
+					foreach ($regras_decorrentes as $regra_decorrente) {
+						$producoes_da_regra = $this->mproducao->getAllByItem($siape, $regra_decorrente['id_item']);
+						foreach ($producoes_da_regra as $producao_associavel) {
+							$producoes_associaveis[$j] = $producao_associavel;
+							$j++;
+						}
+					}
+				}
+				$producaoData[$i]['associaveis'] = $producoes_associaveis;
+
+				$producaoData[$i]['decorrentes'] = $this->mproducaodecorrente->getDecorrentes($producaoData[$i]['id_producao']);
+			}
+
+			$tipoClassData = $this->mtipoclass->getAll();
+			$classesData = array();
+			foreach ($tipoClassData as $tipoclass) {
+				$classesData[$tipoclass['id_tipoclass']] = $this->mclassificacao->getAllFrom($tipoclass['id_tipoclass']);
+			}
+
 			$data['professor'] = $professorData;
 			$data['admin'] = $session_data['admin'];
 			$data['producoes'] = $producaoData;
-
+			$data['classes'] = $classesData;
+			
 			$this->load->view('template/header.php', $data);
 			$this->load->view('producao/view.php', $data);
 		}
-	}
-
-	function generateListForm($producao)
-	{
-
-
-		if (isset($producao['id_classificacao']))
-		{
-			$form=$form.'
-<div class="input-field col s6">
-	<input id="quantidade" name="quantidade" type="text" value="'.$producao['quantidade_producao'].'" class="autoupdate-input validate">
-    <label for="quantidade">Quantidade</label>
-</div>';			
-		}
-		return $form;
 	}
 
 	public function create()
@@ -133,7 +158,7 @@ class Producao extends CI_Controller {
 						{
 							$infoProducao['fk_classificacao'] = $_POST['classificacao'];
 						}
-						if (isset($_FILES))
+						if (!empty($_FILES['fileToUpload']['name']))
 						{
 							$config['upload_path']          = './uploads/';
 			                $config['allowed_types']        = 'pdf';
@@ -145,7 +170,7 @@ class Producao extends CI_Controller {
 			                if ( ! $this->upload->do_upload('fileToUpload'))
 			                {
 			                        $error = array('error' => $this->upload->display_errors());
-			                        echo json_encode($error);
+			                        echo $error;
 			                        return;
 			                }
 			                else
@@ -164,6 +189,14 @@ class Producao extends CI_Controller {
 							if (isset($_POST['decorrente-'.$ndecorrente]))
 							{
 								$infoProducao['decorrente-'.$ndecorrente] = $_POST['decorrente-'.$ndecorrente];
+								var_dump($infoProducao);
+								$producaoAssociada = $this->mproducao->get($infoProducao['decorrente-'.$ndecorrente]);
+								var_dump($producaoAssociada);
+								if (isset($producaoAssociada['id_producao']))
+								{
+									$data = array('producao_principal' => $idproducao, 'select_producoes_decorrentes' => $producaoAssociada['id_producao'] );
+									$this->mproducaodecorrente->insert($data);
+								}
 								$ndecorrente++;
 							}
 							else
@@ -181,4 +214,28 @@ class Producao extends CI_Controller {
 			
 		}
 	}
+
+	function update()
+	{
+		$tabela = "tb_".$_POST["tabela"];
+		$id = $_POST["id"];
+		$col = $_POST["col"];
+		$val = $_POST["val"];
+
+		if ($tabela == "tb_producao") {
+			$this->mproducao->updatefield($id, $col, $val);
+		}
+		elseif ($tabela == "tb_producaodecorrente"){
+			$this->mproducaodecorrente->updatefield($id, $col, $val);
+		}
+	}
+
+	function addDecorrente()
+	{
+		$data = array(
+			'fk_producao_principal' => $_POST['fk_producao_principal'],
+			'fk_producao_decorrente' => $_POST['fk_producao_decorrente'] );
+		echo $this->mproducaodecorrente->insert($data);
+	}
 }
+?>

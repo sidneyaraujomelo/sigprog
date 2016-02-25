@@ -22,15 +22,15 @@
 		</div> 
 
 		<div class="row">
-			<ul class="collapsible" data-collapsible="accordion" style="line-height: 3rem;">
+			<ul class="collapsible" data-collapsible="accordion" style="line-height: 3rem; width:auto;">
 		    	<li>
-		    		<div class="collapsible-header" style="line-height: 3rem; font-weight: bold;">
-			      		<div class="col s1">Data</div>
-			      		<div class="col s1">Eixo</div>
-			      		<div class="col s1">Subeixo</div>
-			      		<div class="col s4">Item</div>
-			      		<div class="col s4">Alias</div>
-			      		<div class="col s1">Documentacao</div>
+		    		<div class="collapsible-header blue darken-4" style="line-height: 3rem; font-weight: bold; color:white">
+			      		<div class="col s1"><span class="truncate">Data</span></div>
+			      		<div class="col s1"><span class="truncate">Eixo</span></div>
+			      		<div class="col s2"><span class="truncate">Subeixo</span></div>
+			      		<div class="col s3"><span class="truncate">Item</span></div>
+			      		<div class="col s3"><span class="truncate">Alias</span></div>
+			      		<div class="col s2"><span class="truncate">Documentacao</span></div>
 		      		</div>
 			    </li>
 <?php foreach ($producoes as $producao) {
@@ -38,74 +38,95 @@
 				
 			    <li>
 			      	<div class="collapsible-header col s12">
-			      		<div class="col s1"><p class="truncate"><?php echo $producao['data_producao']; ?></p></div>
+			      		<div class="col s1"><p class="quickfit"><?php echo $producao['data_producao']; ?></p></div>
 			      		<div class="col s1"><p class="truncate"><?php echo $producao['nome_eixo']; ?></p></div>
-			      		<div class="col s1"><p class="truncate"><?php echo $producao['nome_subeixo']; ?></p></div>
-			      		<div class="col s4"><p class="truncate"><?php echo $producao['nome_item']; ?></p></div>
-			      		<div class="col s4"><p class="truncate"><?php echo $producao['nome_producao']; ?></p></div>
-			      		<div class="col s1"><p class="truncate"><?php echo $producao['documento_producao']; ?></p></div>
+			      		<div class="col s2"><p class="truncate"><?php echo $producao['nome_subeixo']; ?></p></div>
+			      		<div class="col s3"><p class="truncate"><?php echo $producao['nome_item']; ?></p></div>
+			      		<div class="col s3"><p class="truncate"><?php echo $producao['nome_producao']; ?></p></div>
+			      		<div class="col s2"><p class="truncate"><?php echo (isset($producao['documento_producao']) ? $producao['documento_producao'] : 'pendente');?></p></div>
 			      	</div>
-			      	<div class="collapsible-body col s12">
-						<div class="input-field col s12" style="margin-top: 50px;">
-						    <input id="alias" name="alias" type="text" value="<?php echo $producao['nome_producao']; ?>" class="autoupdate-input validate">
-						    <label for="alias">Alias</label>
+			      	<div class="collapsible-body col s12 blue lighten-5">
+			      		<form id="<?php echo $formid;?>" class="editProducao">
+						<div class="input-field col s12" style="margin-top: 3em;">
+						    <input id="nome_producao" name="nome_producao" type="text" value="<?php echo $producao['nome_producao']; ?>" class="autoupdate-producao validate">
+						    <label for="nome_producao">Alias</label>
 						</div>
 <?php 	if (isset($producao['quantidade_producao'])) {?>
-						<div class="input-field col s6" style="margin-top: 50px;">
-							<input id="quantidade" name="quantidade" type="text" value="<?php echo  $producao['quantidade_producao']; ?>" class="autoupdate-input validate">
-						    <label for="quantidade">Quantidade</label>
+						<div class="input-field col s6" style="margin-top: 3em;">
+							<input id="quantidade_producao" name="quantidade_producao" type="text" value="<?php echo  $producao['quantidade_producao']; ?>" class="autoupdate-producao validate">
+						    <label for="quantidade_producao">Quantidade</label>
 						</div>
 <?php 	} else { ?>
-						<div class="input-field col s6" style="margin-top: 50px;">
-							<input id="quantidade" name="quantidade" type="text" class="autoupdate-input validate" disabled>
-						    <label for="quantidade">Quantidade Indisponível</label>
+						<div class="input-field col s6" style="margin-top: 3em;">
+							<input id="quantidade_producao" name="quantidade_producao" type="text" class="autoupdate-producao validate" disabled>
+						    <label for="quantidade_producao">Quantidade Indisponível</label>
 						</div>
 <?php		} 
  		if (isset($producao['id_classificacao'])) {?>
-						<div class="input-field col s12">
-							<!-- AQUI VEM A PARTE DE SELECIONAR A CLASSIFICAÇÃO -->
+						<div class="input-field col s6" style="margin-top: 3em;">
+							<select name="fk_classificacao" class="autoupdate-producao">
+								<option value="" disabled>Escolha o tipo de regra</option>
+<?php 		foreach ($classes[$producao['id_tipoclass']] as $classe ) {
+				$selected = '';
+				if ($producao['id_classificacao'] == $classe['id_classificacao'])	$selected = 'selected'; ?>
+								<option value="<?php echo $classe['id_classificacao']; ?>" <?php echo $selected; ?>><?php echo $classe['nome_classificacao']; ?></option>
+<?php 		} ?>
+							</select>
 						</div>
 <?php 	} else { ?>
-						<div class="input-field col s6" style="margin-top: 50px;">
-							<input id="classificacao" name="classificacao" type="text" class="autoupdate-input validate" disabled>
-						    <label for="classificacao">Classificação Indisponível</label>
+						<div class="input-field col s6" style="margin-top: 3em;">
+							<input id="classificacao" name="fk_classificacao" type="text" class="autoupdate-producao validate" disabled>
+						    <label for="fk_classificacao">Classificação Indisponível</label>
 						</div>
 <?php 	} ?>
+						</form>
+
+<?php 	for ($i = 0; $i < $producao['ndecorrentes']; $i++) { 
+			if (isset($producao['decorrentes'][$i])) {
+				$formid = "producaodecorrente-".$producao['decorrentes'][$i]['id_decorrencia'];
+			}
+			else {
+				$formid = "producaodecorrente-";
+			} ?>
+						<form id="<?php echo $formid; ?>" name="regradecorrente">
+						<input type="hidden" id="fk_producao_principal" name="fk_producao_principal" value="<?php echo $producao['id_producao']; ?>">
+						<div class="input-field col s12">
+							<select name="fk_producao_decorrente" class="autoupdate-producao">
+								<option value="">Escolha uma Produção</option>
+<?php 		foreach ($producao['associaveis'] as $associavel) { 
+				$selected = '';
+				if ($producao['decorrentes'][$i]['id_producao'] == $associavel['id_producao']){
+					$selected='selected';
+				}?>
+								<option value="<?php echo $associavel['id_producao'] ?>" <?php echo $selected; ?> ><?php echo $associavel['nome_producao'] ?></option>
+<?php 		} ?>
+							</select>
+						</div>
+						</form>
+<?php 	} ?>
+
+						<div class="col s12 file-field input-field">
+					    	<div class="btn">
+					        	<span>Anexar Documentação Comprobatória</span>
+					        	<input type="file" name="fileToUpload" id="fileToUpload">
+					      	</div>
+					      	<div class="file-path-wrapper">
+					        	<input class="file-path validate" type="text">
+					      	</div>
+					    </div>
+
+					    <div class="col s12" style="margin-bottom: 1em;" id="submit-button">
+				    		<button class="btn waves-effect waves-light green darken-4" type="submit" name="action">Enviar Comprovante
+								<i class="material-icons right">send</i>
+							</button>
+						</div>
+					
 			      	</div>
 			    </li>
 			
 <?php } ?>
 		  </ul>
 		</div>
-
-		<div class="row">
-			<table class="highlight">
-		        <thead>
-		          <tr>
-		              <th data-field="data">Data</th>
-		              <th data-field="eixo">Eixo</th>
-		              <th data-field="subeixo">Subeixo</th>
-		              <th data-field="item">Item</th>
-		              <th data-field="nome">Alias</th>
-		              <th data-field="documentacao">Documentacao</th>
-		          </tr>
-		        </thead>
-
-		        <tbody>
-<?php foreach ($producoes as $producao) {?>
-					<tr>
-					<td><?php echo $producao['data_producao']; ?></td>
-					<td><?php echo $producao['nome_eixo']; ?></td>
-					<td><?php echo $producao['nome_subeixo']; ?></td>
-					<td><?php echo $producao['nome_item']; ?></td>
-					<td><?php echo $producao['nome_producao']; ?></td>
-					<td><?php echo $producao['documento_producao']; ?></td>
-					</tr>
-<?php } ?>
-				</tbody>
-	        </table>	
-		</div>	
-
 	</main>
 
 
@@ -135,4 +156,8 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('input#input_text, textarea#textarea1').characterCounter();
   });
+
+$(document).ready(function(){
+	$('.quickfit').quickfit({ max: 20, min: 8, truncate: true }); 
+});
 </script>
