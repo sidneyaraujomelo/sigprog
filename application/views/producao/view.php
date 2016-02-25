@@ -10,12 +10,12 @@
 			</div>
 
 			<div class="input-field col s6">
-				<input type="date" class="datepicker" id="inicio_intersticio" name="inicio_intersticio">
+				<input type="date" class="datepicker limit_intersticio" id="inicio_intersticio" name="inicio_intersticio">
 				<label for="inicio_intersticio">Início do Interstício</label>
 			</div>
 
 			<div class="input-field col s6">
-				<input type="date" class="datepicker" id="fim_intersticio" name="fim_intersticio">
+				<input type="date" class="datepicker limit_intersticio" id="fim_intersticio" name="fim_intersticio">
 				<label for="fim_intersticio">Fim do Interstício</label>
 			</div>
 
@@ -38,12 +38,18 @@
 				
 			    <li>
 			      	<div class="collapsible-header col s12">
-			      		<div class="col s1"><p class="quickfit"><?php echo $producao['data_producao']; ?></p></div>
+			      		<div class="col s1"><p class="quickfit data-selector"><?php echo $producao['data_producao']; ?></p></div>
 			      		<div class="col s1"><p class="truncate"><?php echo $producao['nome_eixo']; ?></p></div>
 			      		<div class="col s2"><p class="truncate"><?php echo $producao['nome_subeixo']; ?></p></div>
 			      		<div class="col s3"><p class="truncate"><?php echo $producao['nome_item']; ?></p></div>
-			      		<div class="col s3"><p class="truncate"><?php echo $producao['nome_producao']; ?></p></div>
-			      		<div class="col s2"><p class="truncate"><?php echo (isset($producao['documento_producao']) ? $producao['documento_producao'] : 'pendente');?></p></div>
+			      		<div class="col s3"><p id="nome_producao_<?php echo $producao['id_producao']; ?>" class="truncate"><?php echo $producao['nome_producao']; ?></p></div>
+			      		<div class="col s2">
+			      			<p id="documento_producao_<?php echo $producao['id_producao']; ?>" class="truncate">
+			      				<?php echo (isset($producao['documento_producao']) ? 
+			      					'<a href="'.uploads_url().'/'.$producao['documento_producao'].'">'.$producao['documento_producao'].'</a>' : 
+			      					'Pendente');?>
+	      					</p>
+      					</div>
 			      	</div>
 			      	<div class="collapsible-body col s12 blue lighten-5">
 			      		<form id="<?php echo $formid;?>" class="editProducao">
@@ -105,6 +111,8 @@
 						</form>
 <?php 	} ?>
 
+<?php 	$formid = "producao-".$producao['id_producao'];?>
+						<form id="<?php echo $formid; ?>" class="editDocumento" method="post" name="documento" action="<?php echo base_url().'/index.php/producao/addDocumento/'.$producao['id_producao'];?>" enctype="multipart/form-data">
 						<div class="col s12 file-field input-field">
 					    	<div class="btn">
 					        	<span>Anexar Documentação Comprobatória</span>
@@ -120,7 +128,7 @@
 								<i class="material-icons right">send</i>
 							</button>
 						</div>
-					
+						</form>
 			      	</div>
 			    </li>
 			

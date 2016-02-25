@@ -10,6 +10,11 @@
 		return asset_url().'/img/profile';
 	}
 
+	function uploads_url()
+	{
+		return base_url().'uploads';
+	}
+
 	function breakLine($num = null)
 	{
 		if (!isset($num)) $num = 1;

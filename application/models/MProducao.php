@@ -18,6 +18,7 @@ Class MProducao extends CI_Model
 		$this->db->select('*');
 		$this->db->from('view_producao');
 		$this->db->where('fk_professor', $id);
+		$this->db->order_by('data_producao','DESC');
 
 		$query = $this->db->get();
 

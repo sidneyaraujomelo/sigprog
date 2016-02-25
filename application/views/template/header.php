@@ -33,7 +33,7 @@
 				
 			</li>
 			<li class="li-option">
-				<a href="<?php echo base_url();?>index.php/usuario" class="vertical-aligned"><p class="truncate">Minhas Produções</p></a>
+				<a href="<?php echo base_url();?>index.php/producao/" class="vertical-aligned"><p class="truncate">Minhas Produções</p></a>
 			</li>
 			<li class="li-option">
 				<a href="<?php echo base_url();?>index.php/producao/create"><p class="truncate">Adicionar Nova Produção</p></a>

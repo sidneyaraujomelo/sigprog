@@ -215,6 +215,36 @@ class Producao extends CI_Controller {
 		}
 	}
 
+	public function addDocumento($id)
+	{
+		if (!empty($_FILES['fileToUpload']['name']))
+		{
+			$config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'pdf';
+            $config['max_size']             = 100000;
+            chmod($config['upload_path'], 777);
+
+            $this->load->library('upload', $config);
+
+            if ( ! $this->upload->do_upload('fileToUpload'))
+            {
+                    $error = array('error' => $this->upload->display_errors());
+                    echo json_encode($error);
+                    return;
+            }
+            else
+            {
+                    $upload_data = $this->upload->data();
+                    $this->mproducao->updatefield($id, 'documento_producao', $upload_data['file_name']);
+                    redirect('producao', 'refresh');
+            }
+		}
+		else
+		{
+			echo "Nenhum arquivo foi adicionado.";
+		}
+	}
+
 	function update()
 	{
 		$tabela = "tb_".$_POST["tabela"];

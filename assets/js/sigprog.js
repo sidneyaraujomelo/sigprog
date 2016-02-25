@@ -16,6 +16,11 @@ $.fn.serializeObject = function()
     return o;
 };
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 $.ajaxSetup ({
 	// Disable caching of AJAX responses
 	cache: false
@@ -95,7 +100,11 @@ $(document).on('change', '.autoupdate-producao', function(){
 		  		'val' : val
 		  	}, function (response)
 		  	{
-		  		console.log(response);
+		  		if (col=="nome_producao")
+		  		{
+		  			form.parent().parent().find("#nome_producao_"+id).html(val);
+		  		}
+		  		//console.log(response);
 		  		Materialize.toast('Atualizado com sucesso!', 4000);
 		  		//alert("Atualização realizada com sucesso!");
 		  	});
@@ -118,6 +127,7 @@ $(document).on('change', '.autoupdate-producao', function(){
 
 $(document).on('change', '.autoupdate-input', function(){
     //alert( this.value ); // or $(this).val()
+    var form = $(this).closest("form");
 	  var attrId = $(this).closest("form").attr("id");
 	  var tabela = attrId.split('-')[0];
 	  var id = attrId.split('-')[1];
@@ -297,7 +307,50 @@ $(document).on("click", ".delete-button", function (event)
 			}
 		});
 			
-	})
+	});
+
+$(document).on("change", ".limit_intersticio", function(){
+	var prods = $(".data-selector");
+	var filterDateInicio = $("#inicio_intersticio").parent().find("input:hidden").val().replaceAll("/","-");
+	var filterDateFim = $("#fim_intersticio").parent().find("input:hidden").val().replaceAll("/","-");
+	prods.each(function(){
+		var prodDate = $(this).html();
+		//console.log(prodDate+' '+filterDate+' '+prodDate.localeCompare(filterDate));
+		if (filterDateInicio!='' && filterDateFim != '')
+		{
+			if (prodDate.localeCompare(filterDateInicio) < 0 || prodDate.localeCompare(filterDateFim) > 0)
+			{
+				$(this).closest("li").css("display","none");
+			}
+			else
+			{
+				$(this).closest("li").css("display","block");
+			}
+		}
+		else if (filterDateInicio=='')
+		{
+			if (prodDate.localeCompare(filterDateFim) > 0)
+			{
+				$(this).closest("li").css("display","none");
+			}
+			else
+			{
+				$(this).closest("li").css("display","block");
+			}
+		}
+		else if (filterDateFim=='')
+		{
+			if (prodDate.localeCompare(filterDateInicio) < 0 )
+			{
+				$(this).closest("li").css("display","none");
+			}
+			else
+			{
+				$(this).closest("li").css("display","block");
+			}
+		}
+	});
+});
 
 jQuery(document).ready(function($) 
 {
