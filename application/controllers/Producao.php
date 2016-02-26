@@ -267,5 +267,10 @@ class Producao extends CI_Controller {
 			'fk_producao_decorrente' => $_POST['fk_producao_decorrente'] );
 		echo $this->mproducaodecorrente->insert($data);
 	}
+
+	function delete($id)
+	{
+		echo $this->mproducao->delete($id);
+	}
 }
 ?>

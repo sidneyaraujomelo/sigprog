@@ -131,7 +131,7 @@
 						</form>
 						<hr>
 						<div class="col s12" style="margin-bottom: 1em;">
-				    		<button id="delete-producao-button" class="btn waves-effect waves-light red darken-4" style="width:100%;" type="submit" name="<?php echo $producao['id_producao']; ?>">Deletar Produção
+				    		<button id="delete-producao-button" class="btn waves-effect waves-light red darken-4" style="width:100%;" type="submit" name="<?php echo $producao['id_producao']; ?>">Remover Produção
 								<i class="material-icons right">delete</i>
 							</button>
 						</div>

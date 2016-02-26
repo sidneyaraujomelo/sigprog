@@ -55,5 +55,10 @@ Class MProducao extends CI_Model
 		$this->db->where('id_producao', $key);
 		$this->db->update('tb_producao');
 	}
+
+	public function delete($id)
+	{
+		return $this->db->delete('tb_producao', array('id_producao' => $id ));
+	}
 }
 ?>

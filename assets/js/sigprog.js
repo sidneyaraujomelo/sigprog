@@ -311,10 +311,12 @@ $(document).on("click", ".delete-button", function (event)
 
 $(document).on("click", "#delete-producao-button", function(){
 	var id=$(this).attr("name");
-	$.post("http://localhost/sigprog/index.php/producao/delete"+id, {
+	var button = $(this);
+	$.post("http://localhost/sigprog/index.php/producao/delete/"+id, {
 
 	}, function(response){
-
+		console.log(response);
+		location.reload(true);
 	});
 });
 
