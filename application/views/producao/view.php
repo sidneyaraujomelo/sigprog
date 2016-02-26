@@ -46,7 +46,7 @@
 			      		<div class="col s2">
 			      			<p id="documento_producao_<?php echo $producao['id_producao']; ?>" class="truncate">
 			      				<?php echo (isset($producao['documento_producao']) ? 
-			      					'<a href="'.uploads_url().'/'.$producao['documento_producao'].'">'.$producao['documento_producao'].'</a>' : 
+			      					'<a target="_blank" href="'.uploads_url().'/'.$producao['documento_producao'].'">Comprovante</a>' : 
 			      					'Pendente');?>
 	      					</p>
       					</div>
@@ -130,6 +130,11 @@
 						</div>
 						</form>
 						<hr>
+						<div class="col s12" style="margin-bottom: 1em;" id="fake-button">
+				    		<button class="btn waves-effect waves-light green darken-4" style="width:100%;" type="submit" name="action">Salvar Alterações
+								<i class="material-icons right">save</i>
+							</button>
+						</div>
 						<div class="col s12" style="margin-bottom: 1em;">
 				    		<button id="delete-producao-button" class="btn waves-effect waves-light red darken-4" style="width:100%;" type="submit" name="<?php echo $producao['id_producao']; ?>">Remover Produção
 								<i class="material-icons right">delete</i>

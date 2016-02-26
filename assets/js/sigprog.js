@@ -320,6 +320,10 @@ $(document).on("click", "#delete-producao-button", function(){
 	});
 });
 
+$(document).on("click", "#fake-button", function(){
+	Materialize.toast('Salvo com sucesso!', 2000);
+});
+
 $(document).on("change", ".limit_intersticio", function(){
 	var prods = $(".data-selector");
 	var filterDateInicio = $("#inicio_intersticio").parent().find("input:hidden").val().replaceAll("/","-");

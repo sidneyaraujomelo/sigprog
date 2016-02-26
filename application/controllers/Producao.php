@@ -163,6 +163,7 @@ class Producao extends CI_Controller {
 							$config['upload_path']          = './uploads/';
 			                $config['allowed_types']        = 'pdf';
 			                $config['max_size']             = 100000;
+			                $config['encrypt_name']			= TRUE;
 			                chmod($config['upload_path'], 777);
 
 			                $this->load->library('upload', $config);
@@ -194,7 +195,7 @@ class Producao extends CI_Controller {
 								var_dump($producaoAssociada);
 								if (isset($producaoAssociada['id_producao']))
 								{
-									$data = array('producao_principal' => $idproducao, 'select_producoes_decorrentes' => $producaoAssociada['id_producao'] );
+									$data = array('fk_producao_principal' => $idproducao, 'fk_producao_decorrente' => $producaoAssociada['id_producao'] );
 									$this->mproducaodecorrente->insert($data);
 								}
 								$ndecorrente++;
@@ -222,6 +223,7 @@ class Producao extends CI_Controller {
 			$config['upload_path']          = './uploads/';
             $config['allowed_types']        = 'pdf';
             $config['max_size']             = 100000;
+            $config['encrypt_name']			= TRUE;
             chmod($config['upload_path'], 777);
 
             $this->load->library('upload', $config);
