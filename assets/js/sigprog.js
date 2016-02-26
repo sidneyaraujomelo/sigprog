@@ -309,13 +309,22 @@ $(document).on("click", ".delete-button", function (event)
 			
 	});
 
+$(document).on("click", "#delete-producao-button", function(){
+	var id=$(this).attr("name");
+	$.post("http://localhost/sigprog/index.php/producao/delete"+id, {
+
+	}, function(response){
+
+	});
+});
+
 $(document).on("change", ".limit_intersticio", function(){
 	var prods = $(".data-selector");
 	var filterDateInicio = $("#inicio_intersticio").parent().find("input:hidden").val().replaceAll("/","-");
 	var filterDateFim = $("#fim_intersticio").parent().find("input:hidden").val().replaceAll("/","-");
 	prods.each(function(){
 		var prodDate = $(this).html();
-		//console.log(prodDate+' '+filterDate+' '+prodDate.localeCompare(filterDate));
+		console.log(prodDate+' '+filterDateInicio+' '+filterDateFim);
 		if (filterDateInicio!='' && filterDateFim != '')
 		{
 			if (prodDate.localeCompare(filterDateInicio) < 0 || prodDate.localeCompare(filterDateFim) > 0)
@@ -326,6 +335,10 @@ $(document).on("change", ".limit_intersticio", function(){
 			{
 				$(this).closest("li").css("display","block");
 			}
+		}
+		else if (filterDateInicio=='' && filterDateFim == '')
+		{
+			$(this).closest("li").css("display","block");
 		}
 		else if (filterDateInicio=='')
 		{

@@ -124,11 +124,17 @@
 					    </div>
 
 					    <div class="col s12" style="margin-bottom: 1em;" id="submit-button">
-				    		<button class="btn waves-effect waves-light green darken-4" type="submit" name="action">Enviar Comprovante
+				    		<button class="btn waves-effect waves-light green darken-4" style="width:100%;" type="submit" name="action">Enviar Comprovante
 								<i class="material-icons right">send</i>
 							</button>
 						</div>
 						</form>
+						<hr>
+						<div class="col s12" style="margin-bottom: 1em;">
+				    		<button id="delete-producao-button" class="btn waves-effect waves-light red darken-4" style="width:100%;" type="submit" name="<?php echo $producao['id_producao']; ?>">Deletar Produção
+								<i class="material-icons right">delete</i>
+							</button>
+						</div>
 			      	</div>
 			    </li>
 			
