@@ -30,7 +30,8 @@
 			      		<div class="col s2"><span class="truncate">Subeixo</span></div>
 			      		<div class="col s3"><span class="truncate">Item</span></div>
 			      		<div class="col s3"><span class="truncate">Alias</span></div>
-			      		<div class="col s2"><span class="truncate">Documentacao</span></div>
+			      		<div class="col s1"><span class="truncate">Pontos</span></div>
+			      		<div class="col s1"><span class="truncate">Documentacao</span></div>
 		      		</div>
 			    </li>
 <?php foreach ($producoes as $producao) {
@@ -38,12 +39,13 @@
 				
 			    <li>
 			      	<div class="collapsible-header col s12">
-			      		<div class="col s1"><p class="quickfit data-selector"><?php echo $producao['data_producao']; ?></p></div>
+			      		<div class="col s1"><p class="truncate data-selector"><?php echo $producao['data_producao']; ?></p></div>
 			      		<div class="col s1"><p class="truncate"><?php echo $producao['nome_eixo']; ?></p></div>
 			      		<div class="col s2"><p class="truncate"><?php echo $producao['nome_subeixo']; ?></p></div>
 			      		<div class="col s3"><p class="truncate"><?php echo $producao['nome_item']; ?></p></div>
 			      		<div class="col s3"><p id="nome_producao_<?php echo $producao['id_producao']; ?>" class="truncate"><?php echo $producao['nome_producao']; ?></p></div>
-			      		<div class="col s2">
+			      		<div class="col s1"><p id="pontuacao_producao_<?php echo $producao['id_producao']; ?>" class="truncate"><?php echo $producao['pontuacao_producao']; ?></p></div>
+			      		<div class="col s1">
 			      			<p id="documento_producao_<?php echo $producao['id_producao']; ?>" class="truncate">
 			      				<?php echo (isset($producao['documento_producao']) ? 
 			      					'<a target="_blank" href="'.uploads_url().'/'.$producao['documento_producao'].'">Comprovante</a>' : 

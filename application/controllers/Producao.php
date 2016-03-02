@@ -19,6 +19,7 @@ class Producao extends CI_Controller {
 		$this->load->model('mtipoclass','', TRUE);
 		$this->load->model('mclassificacao','',TRUE);
 		$this->load->model('mregradecorrente','', TRUE);
+		$this->load->model('mregraclassificacao','', TRUE);
 		$this->load->model('mproducaodecorrente','', TRUE);
 	}
 
@@ -131,14 +132,14 @@ class Producao extends CI_Controller {
 			if (isset($session_token))
 			{
 				if (isset($post_token))
-				{
+				{/*
 					if ($session_token!=$post_token)
 					{
 						echo "Formulário já enviado!";
 						return;
 					}
 					else
-					{
+					{*/
 						$token = md5(session_id().time());
 						$this->session->set_userdata('token', $token);
 						$infoProducao = array();
@@ -150,13 +151,18 @@ class Producao extends CI_Controller {
 						$subeixo = $_POST['sub-de-'.$eixo];
 						$infoProducao['fk_item'] = $_POST['item-de-'.$subeixo];
 
+						$infoPontos = array();
+
 						if (isset($_POST['quantidade']))
 						{
 							$infoProducao['quantidade_producao'] = $_POST['quantidade'];
+							$infoPontos['valor_informado'] = $infoProducao['quantidade_producao'];
 						}
 						if (isset($_POST['classificacao']))
 						{
 							$infoProducao['fk_classificacao'] = $_POST['classificacao'];
+							$valorClassif = $this->mregraclassificacao->getValor($infoProducao['fk_item'], $infoProducao['fk_classificacao']);
+							$infoPontos['classif_informado'] = $valorClassif['valor'];
 						}
 						if (!empty($_FILES['fileToUpload']['name']))
 						{
@@ -197,6 +203,7 @@ class Producao extends CI_Controller {
 								{
 									$data = array('fk_producao_principal' => $idproducao, 'fk_producao_decorrente' => $producaoAssociada['id_producao'] );
 									$this->mproducaodecorrente->insert($data);
+									$infoPontos['decorrente_informado'][$ndecorrente] = $producaoAssociada['pontuacao_producao'];
 								}
 								$ndecorrente++;
 							}
@@ -206,9 +213,17 @@ class Producao extends CI_Controller {
 							}
 						}
 
+						$regra = $this->mregra->get($infoProducao['fk_item']);
+						$formula = $regra['formula_regra'];
+						$pontuacao = calculatePoints($formula, $infoPontos);
+
+						$this->mproducao->updatefield($idproducao, 'pontuacao_producao', $pontuacao);
+
+						//var_dump($pontuacao);
+
 						redirect('producao', 'refresh');
 						//echo json_encode($_FILES)." ".$idproducao;
-					}
+					//}
 				}
 			}
 
