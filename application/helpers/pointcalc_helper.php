@@ -39,7 +39,7 @@
 		$exp = str_replace(' ', '', $exp);
 		while (!$finished)
 		{
-			echo $exp;
+			echo $exp.' -> ';
 			$iParentese = 0;
 			$fParentese = 0;
 			for ($i=0; $i < strlen($exp) && $fParentese == 0; $i++) { 

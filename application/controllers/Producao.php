@@ -103,7 +103,7 @@ class Producao extends CI_Controller {
 				}
 			}
 
-			//var_dump($eixoData);
+			////var_dump($eixoData);
 
 			$data['professor'] = $professorData;
 			$data['admin'] = $session_data['admin'];
@@ -135,7 +135,7 @@ class Producao extends CI_Controller {
 				{/*
 					if ($session_token!=$post_token)
 					{
-						echo "Formulário já enviado!";
+						//echo "Formulário já enviado!";
 						return;
 					}
 					else
@@ -177,7 +177,7 @@ class Producao extends CI_Controller {
 			                if ( ! $this->upload->do_upload('fileToUpload'))
 			                {
 			                        $error = array('error' => $this->upload->display_errors());
-			                        echo $error;
+			                        //echo $error;
 			                        return;
 			                }
 			                else
@@ -196,9 +196,9 @@ class Producao extends CI_Controller {
 							if (isset($_POST['decorrente-'.$ndecorrente]))
 							{
 								$infoProducao['decorrente-'.$ndecorrente] = $_POST['decorrente-'.$ndecorrente];
-								var_dump($infoProducao);
+								//var_dump($infoProducao);
 								$producaoAssociada = $this->mproducao->get($infoProducao['decorrente-'.$ndecorrente]);
-								var_dump($producaoAssociada);
+								//var_dump($producaoAssociada);
 								if (isset($producaoAssociada['id_producao']))
 								{
 									$data = array('fk_producao_principal' => $idproducao, 'fk_producao_decorrente' => $producaoAssociada['id_producao'] );
@@ -219,10 +219,10 @@ class Producao extends CI_Controller {
 
 						$this->mproducao->updatefield($idproducao, 'pontuacao_producao', $pontuacao);
 
-						//var_dump($pontuacao);
+						////var_dump($pontuacao);
 
 						redirect('producao', 'refresh');
-						//echo json_encode($_FILES)." ".$idproducao;
+						////echo json_encode($_FILES)." ".$idproducao;
 					//}
 				}
 			}
@@ -246,7 +246,7 @@ class Producao extends CI_Controller {
             if ( ! $this->upload->do_upload('fileToUpload'))
             {
                     $error = array('error' => $this->upload->display_errors());
-                    echo json_encode($error);
+                    //echo json_encode($error);
                     return;
             }
             else
@@ -258,7 +258,7 @@ class Producao extends CI_Controller {
 		}
 		else
 		{
-			echo "Nenhum arquivo foi adicionado.";
+			//echo "Nenhum arquivo foi adicionado.";
 		}
 	}
 
@@ -275,6 +275,83 @@ class Producao extends CI_Controller {
 		elseif ($tabela == "tb_producaodecorrente"){
 			$this->mproducaodecorrente->updatefield($id, $col, $val);
 		}
+
+		$this->updatePontuacao($tabela, $id, $col);
+	}
+
+	function updatePontuacao($tabela, $id, $col)
+	{
+		if ($col == 'quantidade_producao'  || $col == 'fk_classificacao' || $col == 'recalculate' || $tabela == "tb_producaodecorrente")
+		{
+			//echo $tabela.' '.$id.' '.$col."\n";
+			$infoPontos = array();
+			$updatedProducao = array();
+			if ($tabela != "tb_producaodecorrente")
+			{
+				$updatedProducao = $this->mproducao->get($id);
+				if ($col == "recalculate")
+				{
+					$producoesAssociadas = $this->mproducaodecorrente->getDecorrentes($id);
+				}
+			}
+			else
+			{
+				if ($col!="recalculate")
+				{
+					$decorrencia = $this->mproducaodecorrente->get($id);
+					if (count($decorrencia)>0)
+					{
+						$updatedProducao = $this->mproducao->get($decorrencia[0]['fk_producao_principal']);
+						$producoesAssociadas = $this->mproducaodecorrente->getDecorrentes($updatedProducao['id_producao']);
+					}
+					else
+					{
+						echo "Erro inesperado.";
+					}
+				}
+				else
+				{
+					$updatedProducao = $this->mproducao->get($id);
+					$producoesAssociadas = $this->mproducaodecorrente->getDecorrentes($id);
+				}
+			}
+			$regra = $this->mregra->get($updatedProducao['id_item']);
+			$formula = $regra['formula_regra'];
+			//echo $updatedProducao['id_producao'].' '.$regra['id_item'].' '.$formula;
+
+			if (isset($updatedProducao['quantidade_producao']))
+			{
+				$infoPontos['valor_informado'] = $updatedProducao['quantidade_producao'];
+			}
+			if (isset($updatedProducao['id_classificacao']))
+			{
+				$valorClassif = $this->mregraclassificacao->getValor($updatedProducao['id_item'], $updatedProducao['id_classificacao']);
+				$infoPontos['classif_informado'] = $valorClassif['valor'];
+			}
+
+			if ($regra['quantidade_decorrente'] > 0)
+			{
+				//echo "oi";
+				
+				//var_dump($producoesAssociadas);
+				for ($i=0; $i < count($producoesAssociadas); $i++) { 
+
+					$infoPontos['decorrente_informado'][$i] = $producoesAssociadas[$i]['pontuacao_producao'];
+				}
+			}
+
+			
+			$pontuacao = calculatePoints($formula, $infoPontos);
+
+			$this->mproducao->updatefield($updatedProducao['id_producao'], 'pontuacao_producao', $pontuacao);
+
+			$producoesInfluenciadas = $this->mproducaodecorrente->getPrincipais($updatedProducao['id_producao']);
+			foreach ($producoesInfluenciadas as $producaoInfluenciada) {
+				//var_dump($producaoInfluenciada);
+				$this->updatePontuacao($tabela, $producaoInfluenciada['fk_producao_principal'], "recalculate");
+				//echo "Influencia terminada\n";
+			}
+		}
 	}
 
 	function addDecorrente()
@@ -282,7 +359,9 @@ class Producao extends CI_Controller {
 		$data = array(
 			'fk_producao_principal' => $_POST['fk_producao_principal'],
 			'fk_producao_decorrente' => $_POST['fk_producao_decorrente'] );
-		echo $this->mproducaodecorrente->insert($data);
+		$id = $this->mproducaodecorrente->insert($data);
+
+		$this->updatePontuacao('tb_producao',$_POST['fk_producao_principal'],'recalculate');
 	}
 
 	function delete($id)

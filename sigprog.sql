@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Mar-2016 às 02:23
+-- Generation Time: 02-Mar-2016 às 14:26
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao` (
   `pontuacao_producao` float NOT NULL,
   `documento_producao` text CHARACTER SET utf8,
   `nome_producao` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_producao`
@@ -359,36 +359,37 @@ INSERT INTO `tb_producao` (`id_producao`, `fk_item`, `fk_professor`, `data_produ
 (4, 19, 12345678, '0000-00-00', 50, NULL, 0, NULL, ''),
 (5, 18, 12345678, '2016-02-23', 60, NULL, 0, 'Banco_de_Dados_Dedutivos.pdf', 'Aula de Algoritmos I'),
 (6, 19, 12345678, '0000-00-00', 50, NULL, 0, 'An_Analysis_of_the_contributions_of_the_Agent_Paradigm_(1)1.pdf', ''),
-(8, 18, 12345678, '2016-02-24', 90, NULL, 0, NULL, 'Aula de Calculo'),
-(9, 18, 12345678, '2016-02-06', 60, NULL, 0, NULL, 'Aulas de Algebra'),
+(8, 18, 12345678, '2016-02-24', 60, NULL, 6, NULL, 'Aula de Calculo'),
+(9, 18, 12345678, '2016-02-06', 60, NULL, 6, NULL, 'Aulas de Algebra'),
 (10, 18, 12345678, '2016-02-10', 60, NULL, 0, NULL, 'Aula de SIG'),
-(11, 18, 12345678, '2016-02-23', 60, NULL, 0, 'Data_Mining1.pdf', 'Aula de CG'),
+(11, 18, 12345678, '2016-02-23', 60, NULL, 6, 'Data_Mining1.pdf', 'Aula de CG'),
 (12, 26, 12345678, '2016-02-25', 6, NULL, 0, NULL, 'Tutoria no PET'),
-(13, 26, 12345678, '2016-02-23', 6, NULL, 0, 'Boxing_glove.png', 'Tutoria no PET'),
+(13, 26, 12345678, '2016-02-23', 6, NULL, 12, 'Boxing_glove.png', 'Tutoria no PET'),
 (14, 18, 12345678, '2016-02-22', 50, NULL, 0, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas1.pdf', 'Macaco'),
-(16, 18, 12345678, '2016-02-24', 90, NULL, 0, NULL, 'Aula de LP'),
-(17, 134, 12345678, '2016-02-18', NULL, NULL, 0, NULL, 'Orientação do José'),
-(18, 134, 12345678, '2016-02-18', NULL, NULL, 0, NULL, 'Orientação da Maria 2'),
-(19, 134, 12345678, '2016-02-24', NULL, NULL, 0, NULL, 'Orientação do Pedro'),
-(20, 134, 12345678, '2016-02-24', NULL, NULL, 0, NULL, 'Orientação do Antonio'),
-(21, 134, 12345678, '2016-02-24', NULL, NULL, 0, NULL, 'Orientação do Henrique'),
+(16, 18, 12345678, '2016-02-24', 120, NULL, 12, NULL, 'Aula de LP'),
+(17, 134, 12345678, '2016-02-18', NULL, NULL, 32, NULL, 'Orientação do José'),
+(18, 134, 12345678, '2016-02-18', NULL, NULL, 32, NULL, 'Orientação da Maria 2'),
+(19, 134, 12345678, '2016-02-24', NULL, NULL, 32, NULL, 'Orientação do Pedro'),
+(20, 134, 12345678, '2016-02-24', NULL, NULL, 32, NULL, 'Orientação do Antonio'),
+(21, 134, 12345678, '2016-02-24', NULL, NULL, 32, NULL, 'Orientação do Henrique'),
 (22, 134, 12345678, '2016-02-24', NULL, NULL, 0, 'Data_Mining2.pdf', 'Orientação da Anita'),
 (24, 134, 12345678, '2016-02-10', NULL, NULL, 0, NULL, 'Orientação da Roberta'),
-(25, 109, 12345678, '2016-02-27', NULL, 7, 0, NULL, 'Artigo Maneiro'),
-(26, 18, 12345678, '2016-02-26', 630, NULL, 0, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas.pdf', 'Disciplinas  ministradas'),
-(27, 109, 12345678, '2014-02-04', NULL, 4, 0, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas2.pdf', 'Artigo  A2'),
-(28, 132, 12345678, '2016-03-04', NULL, NULL, 0, '5d1819fc165d606710b94e456eed51a8.pdf', 'Orientação  da valeria ;  mestrado'),
-(29, 132, 12345678, '2016-02-26', NULL, NULL, 0, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas4.pdf', 'Orientação  da valeria ;  mestrado'),
-(30, 18, 12345678, '2016-02-26', 35, NULL, 0, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas5.pdf', 'TEste'),
-(31, 133, 12345678, '2016-02-26', NULL, NULL, 0, NULL, 'Coorientação de Fulano'),
-(32, 134, 12345678, '0000-00-00', NULL, NULL, 0, NULL, 'TEste'),
+(25, 109, 12345678, '2016-02-27', NULL, 4, 26, NULL, 'Artigo Maneiro'),
+(26, 18, 12345678, '2016-02-26', 60, NULL, 6, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas.pdf', 'Disciplinas  ministradas'),
+(27, 109, 12345678, '2014-02-04', NULL, 12, 17, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas2.pdf', 'Artigo  A2'),
+(28, 132, 12345678, '2016-03-04', NULL, NULL, 17, '5d1819fc165d606710b94e456eed51a8.pdf', 'Orientação  da valeria ;  mestrado'),
+(30, 18, 12345678, '2016-02-26', 90, NULL, 9, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas5.pdf', 'TEste'),
+(31, 133, 12345678, '2016-02-26', NULL, NULL, 10.5, NULL, 'Coorientação de Fulano'),
+(32, 134, 12345678, '0000-00-00', NULL, NULL, 27.5, NULL, 'TEste'),
 (33, 109, 12345678, '0000-00-00', NULL, 3, 0, NULL, 'Artigo Importante'),
 (34, 109, 12345678, '0000-00-00', NULL, 3, 30, NULL, 'Artigo sobre Processamento de Imagens'),
 (35, 43, 12345678, '0000-00-00', NULL, NULL, 35, NULL, 'Patente da ferramenta revolucionária'),
-(36, 134, 12345678, '2016-03-01', NULL, NULL, 0, NULL, 'Teste de pontuação decorrente'),
-(37, 134, 12345678, '2016-03-01', NULL, NULL, 0, NULL, 'Teste de pontuação decorrente2'),
+(36, 134, 12345678, '2016-03-01', NULL, NULL, 36.5, NULL, 'Teste de pontuação decorrente'),
+(37, 134, 12345678, '2016-03-01', NULL, NULL, 34, NULL, 'Teste de pontuação decorrente2'),
 (38, 134, 12345678, '2016-03-01', NULL, NULL, 38.5, NULL, 'Teste de pontuação decorrente3'),
-(39, 135, 12345678, '2016-03-01', NULL, NULL, 35.5, NULL, '');
+(39, 135, 12345678, '2016-03-01', NULL, NULL, 35.5, NULL, ''),
+(40, 66, 12345678, '0000-00-00', 2, 3, 30, NULL, ''),
+(44, 132, 12345678, '2016-03-02', NULL, NULL, 17, NULL, 'Orientação do Jack Sparrow');
 
 -- --------------------------------------------------------
 
@@ -400,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao_decorrente` (
 `id_decorrencia` int(11) NOT NULL,
   `fk_producao_principal` int(11) NOT NULL,
   `fk_producao_decorrente` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_producao_decorrente`
@@ -412,18 +413,19 @@ INSERT INTO `tb_producao_decorrente` (`id_decorrencia`, `fk_producao_principal`,
 (13, 19, 25),
 (15, 18, 25),
 (16, 17, 25),
-(17, 28, 27),
+(17, 28, 25),
 (18, 31, 27),
 (19, 32, 25),
 (20, 32, 27),
-(21, 36, 35),
-(22, 36, 34),
-(23, 37, 34),
-(24, 37, 35),
+(21, 36, 25),
+(22, 36, 35),
+(23, 37, 25),
+(24, 37, 34),
 (25, 38, 35),
 (26, 38, 34),
 (27, 39, 35),
-(28, 39, 34);
+(28, 39, 34),
+(33, 44, 25);
 
 -- --------------------------------------------------------
 
@@ -612,8 +614,8 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 (129, 3, 0, '=(classif_informado)', 0, 5),
 (130, 3, 0, '=(classif_informado)', 0, 5),
 (131, 3, 0, '=(2.5)', 0, 1),
-(132, 3, 0, '=(4+0.5*decorrente_informado)', 1, 1),
-(133, 3, 0, '=(2+0.5*decorrente_informado)', 1, 1),
+(132, 3, 0, '=(4+(0.5*decorrente_informado))', 1, 1),
+(133, 3, 0, '=(2+(0.5*decorrente_informado))', 1, 1),
 (134, 3, 0, '=(((6+(0.5*decorrente_informado_1))+(0.5*decorrente_informado_2))&&(decorrente_informado_1||decorrente_informado_2))', 2, 1),
 (135, 3, 0, '=((3+(0.5*decorrente_informado_1))+(0.5*decorrente_informado_2))', 2, 1),
 (136, 2, 0, '=(valor_informado*2)', 0, 1),
@@ -1105,12 +1107,12 @@ MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 -- AUTO_INCREMENT for table `tb_producao`
 --
 ALTER TABLE `tb_producao`
-MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
+MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `tb_producao_decorrente`
 --
 ALTER TABLE `tb_producao_decorrente`
-MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
+MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `tb_progressao`
 --

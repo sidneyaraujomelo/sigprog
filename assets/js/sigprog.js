@@ -104,7 +104,7 @@ $(document).on('change', '.autoupdate-producao', function(){
 		  		{
 		  			form.parent().parent().find("#nome_producao_"+id).html(val);
 		  		}
-		  		//console.log(response);
+		  		console.log(response);
 		  		Materialize.toast('Atualizado com sucesso!', 4000);
 		  		//alert("Atualização realizada com sucesso!");
 		  	});
@@ -119,6 +119,7 @@ $(document).on('change', '.autoupdate-producao', function(){
 	  		}, function (response)
 	  		{
 	  			Materialize.toast('Atualizado com sucesso!', 4000);
+	  			console.log(response);
 	  			form.attr("id", attrId+response);
 	  		});
 	  	}
@@ -322,6 +323,7 @@ $(document).on("click", "#delete-producao-button", function(){
 
 $(document).on("click", "#fake-button", function(){
 	Materialize.toast('Salvo com sucesso!', 2000);
+	location.reload(true);
 });
 
 $(document).on("change", ".limit_intersticio", function(){
