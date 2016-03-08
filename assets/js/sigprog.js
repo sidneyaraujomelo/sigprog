@@ -153,6 +153,33 @@ $(document).on('change', '.autoupdate-input', function(){
 	  }
 });
 
+$(document).on('click', '#start-progressao', function(){
+	var form = $(this).closest("form");
+
+	var siape = form.attr("id").split('-')[1];
+	var titulo = form.find("#titulo").val();
+	var nivel = form.find("#nivel").val();
+	var dataProgressao = form.find("#data_progressao").parent().find("input:hidden").val().replaceAll("/","-");
+
+	if (siape && titulo && nivel && dataProgressao)
+	{
+		$.post("http://localhost/sigprog/index.php/usuario/startprogressao",
+		{
+			'siape' : siape,
+			'titulo' : titulo,
+			'nivel' : nivel,
+			'data' : dataProgressao
+		}, function (response)
+		{
+			console.log(response);
+		});
+	}
+	else
+	{
+		Materialize.toast('Dados inválidos!', 4000);
+	}
+});
+
 $(document).on('change', '.autoupdate-regraclass', function(){
     //alert( this.value ); // or $(this).val()
 	  var attrId = $(this).closest("form").attr("id");

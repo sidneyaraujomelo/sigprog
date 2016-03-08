@@ -21,10 +21,11 @@
 					</div>
 					<div class="col s2"></div>
 					<div class="col s12">
-						<a href=""><?php echo $professor['nome']; ?></a>
+						<a href="<?php echo base_url(); ?>"><?php echo $professor['nome']; ?></a>
 					</div>
 					<div class="col s12">
-						<span>Nível Atual</span>
+						<span><?php if (isset($professor['nivel'])) echo $professor['nivel']['nome_nivel'];
+									else echo "Nível não informado"; ?></span>
 					</div>
 				</div>
 				<div>

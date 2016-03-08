@@ -20,6 +20,16 @@ Class MProgressao extends CI_Model
 		return $query->row_array();
 	}
 
+	public function getBy($column, $val)
+	{
+		$this->db->select('*');
+		$this->db->from('tb_progressao');
+		$this->db->where($column, $val);
+		$query = $this->db->get();
+
+		return $query->row_array();
+	}
+
 	public function insert($data)
 	{
 		$progressao = array(

@@ -57,7 +57,7 @@ Class MProfessor extends CI_Model
 
   public function get($siape)
   {
-    $this->db->select('siape, nome, email, foto, regime_trabalho');
+    $this->db->select('siape, nome, email, foto, regime_trabalho, fk_nivel, fk_titulo');
     $this->db->from('tb_professor');
     $this->db->where('siape', $siape);
 
@@ -70,6 +70,13 @@ Class MProfessor extends CI_Model
     else{
       return false;
     }
+  }
+
+  public function updatefield($key, $col, $val)
+  {
+    $this->db->set($col, $val);
+    $this->db->where("siape", $key);
+    $this->db->update('tb_professor');
   }
 }
 ?>
