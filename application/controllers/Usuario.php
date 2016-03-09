@@ -125,7 +125,7 @@ class Usuario extends CI_Controller {
 			}
 			else
 			{
-				$this->load->view('usuario/view.php', $data);
+				$this->load->view('usuario/progress.php', $data);
 			}
 		}
 		else
