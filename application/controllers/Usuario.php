@@ -65,7 +65,67 @@ class Usuario extends CI_Controller {
 			}
 			else
 			{
+				$this->load->view('usuario/view.php', $data);
+			}
+		}
+		else
+		{
+			redirect('login', 'refresh');
+		}
+	}
 
+	function progress()
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$siape = $session_data['id'];
+			
+			$professorData = $this->mprofessor->get($siape);
+			$tituloData = $this->mtitulo->getAll();
+			$nivelData = $this->mnivel->get();
+			$progressoesData = $this->mprogressaocorrente->getBy('fk_professor', $siape);
+
+			$incompleteData = false;
+
+			if ($professorData['fk_titulo'] != 0)
+			{
+				foreach ($tituloData as $titulo) {
+					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if ($professorData['fk_nivel'] != 0)
+			{
+				foreach ($nivelData as $nivel) {
+					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
+					{
+						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			$data['professor'] = $professorData;
+			$data['admin'] = $session_data['admin'];
+			$data['niveis'] = $nivelData;
+			$data['titulos'] = $tituloData;
+			$data['minhasprogressoes'] = $progressoesData;
+			$this->load->view('template/header.php', $data);
+			if ($incompleteData)
+			{
+				$this->load->view('usuario/update.php', $data);
+			}
+			else
+			{
+				$this->load->view('usuario/view.php', $data);
 			}
 		}
 		else

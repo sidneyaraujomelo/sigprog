@@ -12,5 +12,16 @@ Class MProgressaoCorrente extends CI_Model
 			return false;
 		}
 	}
+
+	public function getBy($col, $val)
+	{
+		$this->db->select('*');
+		$this->db->from('tb_progressao_corrente');
+		$this->db->where($col,$val);
+		$query = $this->db->get();
+
+		return $query->result_array();
+
+	}
 }
 ?>
