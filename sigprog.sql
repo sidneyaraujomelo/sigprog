@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Mar-2016 às 14:26
--- Versão do servidor: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: 10-Mar-2016 às 23:34
+-- Versão do servidor: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -44,7 +44,7 @@ INSERT INTO `tb_admin` (`fk_professor`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_classificacao` (
-`id_classificacao` int(11) NOT NULL,
+  `id_classificacao` int(11) NOT NULL,
   `nome_classificacao` varchar(50) NOT NULL,
   `fk_tipoclassificacao` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
@@ -97,7 +97,7 @@ INSERT INTO `tb_classificacao` (`id_classificacao`, `nome_classificacao`, `fk_ti
 --
 
 CREATE TABLE IF NOT EXISTS `tb_departamento` (
-`id_depto` int(11) NOT NULL,
+  `id_depto` int(11) NOT NULL,
   `nome_depto` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -116,7 +116,7 @@ INSERT INTO `tb_departamento` (`id_depto`, `nome_depto`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_eixo` (
-`id_eixo` int(11) NOT NULL,
+  `id_eixo` int(11) NOT NULL,
   `nome_eixo` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
@@ -139,7 +139,7 @@ INSERT INTO `tb_eixo` (`id_eixo`, `nome_eixo`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_item` (
-`id_item` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL,
   `nome_item` text CHARACTER SET utf8 NOT NULL,
   `pontmax_item` float DEFAULT NULL,
   `quantmax_item` int(11) DEFAULT NULL,
@@ -272,7 +272,7 @@ INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, 
 --
 
 CREATE TABLE IF NOT EXISTS `tb_metrica` (
-`id_metrica` int(11) NOT NULL,
+  `id_metrica` int(11) NOT NULL,
   `nome_metrica` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -293,7 +293,7 @@ INSERT INTO `tb_metrica` (`id_metrica`, `nome_metrica`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_nivel` (
-`id_nivel` int(11) NOT NULL,
+  `id_nivel` int(11) NOT NULL,
   `cod_nivel` varchar(5) NOT NULL,
   `nome_nivel` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
@@ -332,6 +332,25 @@ CREATE TABLE IF NOT EXISTS `tb_nivel_titulo` (
   `fk_titulo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tb_nivel_titulo`
+--
+
+INSERT INTO `tb_nivel_titulo` (`fk_nivel`, `fk_titulo`) VALUES
+(1, 3),
+(2, 2),
+(3, 1),
+(3, 4),
+(4, 3),
+(5, 2),
+(6, 1),
+(6, 4),
+(13, 3),
+(14, 3),
+(15, 3),
+(16, 3),
+(17, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -339,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `tb_nivel_titulo` (
 --
 
 CREATE TABLE IF NOT EXISTS `tb_producao` (
-`id_producao` int(11) NOT NULL,
+  `id_producao` int(11) NOT NULL,
   `fk_item` int(11) NOT NULL,
   `fk_professor` int(11) NOT NULL,
   `data_producao` date NOT NULL,
@@ -398,7 +417,7 @@ INSERT INTO `tb_producao` (`id_producao`, `fk_item`, `fk_professor`, `data_produ
 --
 
 CREATE TABLE IF NOT EXISTS `tb_producao_decorrente` (
-`id_decorrencia` int(11) NOT NULL,
+  `id_decorrencia` int(11) NOT NULL,
   `fk_producao_principal` int(11) NOT NULL,
   `fk_producao_decorrente` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
@@ -450,7 +469,7 @@ CREATE TABLE IF NOT EXISTS `tb_professor` (
 --
 
 INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `regime_trabalho`, `fk_nivel`, `fk_titulo`, `fk_depto`, `senha`) VALUES
-(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 0, 0, 0, 0, '25f9e794323b453885f5181f1b624d0b');
+(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 0, 4, 4, 0, '25f9e794323b453885f5181f1b624d0b');
 
 -- --------------------------------------------------------
 
@@ -459,7 +478,7 @@ INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `regime_trabalho`,
 --
 
 CREATE TABLE IF NOT EXISTS `tb_progressao` (
-`id_progressao` int(11) NOT NULL,
+  `id_progressao` int(11) NOT NULL,
   `fk_nivel_anterior` int(11) NOT NULL,
   `fk_nivel_seguinte` int(11) NOT NULL,
   `duracao_intersticio` int(11) NOT NULL,
@@ -487,6 +506,48 @@ INSERT INTO `tb_progressao` (`id_progressao`, `fk_nivel_anterior`, `fk_nivel_seg
 (71, 14, 15, 5, 150),
 (72, 15, 16, 5, 150),
 (73, 16, 17, 13, 660);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_progressao_corrente`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
+  `id_prog_corrente` int(11) NOT NULL,
+  `fk_progressao` int(11) NOT NULL,
+  `fk_professor` int(11) NOT NULL,
+  `data_inicio` date NOT NULL,
+  `data_fim` date NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_progressao_corrente`
+--
+
+INSERT INTO `tb_progressao_corrente` (`id_prog_corrente`, `fk_progressao`, `fk_professor`, `data_inicio`, `data_fim`) VALUES
+(1, 58, 12345678, '2014-09-09', '2016-03-09'),
+(2, 61, 12345678, '2016-03-10', '2018-09-10');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_progressao_producao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_progressao_producao` (
+  `id_prog_prod` int(11) NOT NULL,
+  `fk_prog_finalizada` int(11) NOT NULL,
+  `fk_producao` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_progressao_producao`
+--
+
+INSERT INTO `tb_progressao_producao` (`id_prog_prod`, `fk_prog_finalizada`, `fk_producao`) VALUES
+(1, 1, 4),
+(2, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -629,7 +690,7 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regra_classificacao` (
-`id_regra_classificacao` int(11) NOT NULL,
+  `id_regra_classificacao` int(11) NOT NULL,
   `fk_regra` int(11) NOT NULL,
   `fk_classificacao` int(11) NOT NULL,
   `valor` float NOT NULL,
@@ -825,7 +886,7 @@ INSERT INTO `tb_regra_classificacao` (`id_regra_classificacao`, `fk_regra`, `fk_
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regra_decorrente` (
-`id_decorrencia` int(11) NOT NULL,
+  `id_decorrencia` int(11) NOT NULL,
   `fk_item_principal` int(11) NOT NULL,
   `fk_item_decorrente` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
@@ -863,7 +924,7 @@ INSERT INTO `tb_regra_decorrente` (`id_decorrencia`, `fk_item_principal`, `fk_it
 --
 
 CREATE TABLE IF NOT EXISTS `tb_subeixo` (
-`id_subeixo` int(11) NOT NULL,
+  `id_subeixo` int(11) NOT NULL,
   `nome_subeixo` varchar(60) NOT NULL,
   `pontmax_subeixo` int(11) NOT NULL,
   `fk_eixo` int(11) NOT NULL
@@ -896,7 +957,7 @@ INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_e
 --
 
 CREATE TABLE IF NOT EXISTS `tb_tipoclassificacao` (
-`id_tipoclass` int(11) NOT NULL,
+  `id_tipoclass` int(11) NOT NULL,
   `nome_tipoclass` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
@@ -918,7 +979,7 @@ INSERT INTO `tb_tipoclassificacao` (`id_tipoclass`, `nome_tipoclass`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_titulo` (
-`id_titulo` int(11) NOT NULL,
+  `id_titulo` int(11) NOT NULL,
   `nome_titulo` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -954,6 +1015,24 @@ CREATE TABLE IF NOT EXISTS `view_producao` (
 ,`nome_classificacao` varchar(50)
 ,`fk_professor` int(11)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_progressao_corrente`
+--
+CREATE TABLE IF NOT EXISTS `view_progressao_corrente` (
+`id_prog_corrente` int(11)
+,`fk_progressao` int(11)
+,`fk_professor` int(11)
+,`data_inicio` date
+,`data_fim` date
+,`cod_nivel_anterior` varchar(5)
+,`nome_nivel_anterior` varchar(20)
+,`cod_nivel_seguinte` varchar(5)
+,`nome_nivel_seguinte` varchar(20)
+);
+
 -- --------------------------------------------------------
 
 --
@@ -963,6 +1042,15 @@ DROP TABLE IF EXISTS `view_producao`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_producao` AS select `a`.`id_producao` AS `id_producao`,`a`.`data_producao` AS `data_producao`,`a`.`pontuacao_producao` AS `pontuacao_producao`,`d`.`id_eixo` AS `id_eixo`,`d`.`nome_eixo` AS `nome_eixo`,`c`.`id_subeixo` AS `id_subeixo`,`c`.`nome_subeixo` AS `nome_subeixo`,`b`.`id_item` AS `id_item`,`b`.`nome_item` AS `nome_item`,`a`.`nome_producao` AS `nome_producao`,`a`.`documento_producao` AS `documento_producao`,`a`.`quantidade_producao` AS `quantidade_producao`,`e`.`id_classificacao` AS `id_classificacao`,`e`.`nome_classificacao` AS `nome_classificacao`,`a`.`fk_professor` AS `fk_professor` from ((((`tb_producao` `a` join `tb_item` `b` on((`a`.`fk_item` = `b`.`id_item`))) join `tb_subeixo` `c` on((`b`.`fk_subeixo` = `c`.`id_subeixo`))) join `tb_eixo` `d` on((`c`.`fk_eixo` = `d`.`id_eixo`))) left join `tb_classificacao` `e` on((`e`.`id_classificacao` = `a`.`fk_classificacao`)));
 
+-- --------------------------------------------------------
+
+--
+-- Structure for view `view_progressao_corrente`
+--
+DROP TABLE IF EXISTS `view_progressao_corrente`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_progressao_corrente` AS select `a`.`id_prog_corrente` AS `id_prog_corrente`,`a`.`fk_progressao` AS `fk_progressao`,`a`.`fk_professor` AS `fk_professor`,`a`.`data_inicio` AS `data_inicio`,`a`.`data_fim` AS `data_fim`,`c`.`cod_nivel` AS `cod_nivel_anterior`,`c`.`nome_nivel` AS `nome_nivel_anterior`,`d`.`cod_nivel` AS `cod_nivel_seguinte`,`d`.`nome_nivel` AS `nome_nivel_seguinte` from (((`tb_progressao_corrente` `a` join `tb_progressao` `b` on((`a`.`fk_progressao` = `b`.`id_progressao`))) join `tb_nivel` `c` on((`b`.`fk_nivel_anterior` = `c`.`id_nivel`))) join `tb_nivel` `d` on((`b`.`fk_nivel_seguinte` = `d`.`id_nivel`)));
+
 --
 -- Indexes for dumped tables
 --
@@ -971,103 +1059,115 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `tb_admin`
 --
 ALTER TABLE `tb_admin`
- ADD PRIMARY KEY (`fk_professor`);
+  ADD PRIMARY KEY (`fk_professor`);
 
 --
 -- Indexes for table `tb_classificacao`
 --
 ALTER TABLE `tb_classificacao`
- ADD PRIMARY KEY (`id_classificacao`);
+  ADD PRIMARY KEY (`id_classificacao`);
 
 --
 -- Indexes for table `tb_departamento`
 --
 ALTER TABLE `tb_departamento`
- ADD PRIMARY KEY (`id_depto`);
+  ADD PRIMARY KEY (`id_depto`);
 
 --
 -- Indexes for table `tb_eixo`
 --
 ALTER TABLE `tb_eixo`
- ADD PRIMARY KEY (`id_eixo`), ADD UNIQUE KEY `nome_eixo` (`nome_eixo`);
+  ADD PRIMARY KEY (`id_eixo`), ADD UNIQUE KEY `nome_eixo` (`nome_eixo`);
 
 --
 -- Indexes for table `tb_item`
 --
 ALTER TABLE `tb_item`
- ADD PRIMARY KEY (`id_item`);
+  ADD PRIMARY KEY (`id_item`);
 
 --
 -- Indexes for table `tb_metrica`
 --
 ALTER TABLE `tb_metrica`
- ADD PRIMARY KEY (`id_metrica`);
+  ADD PRIMARY KEY (`id_metrica`);
 
 --
 -- Indexes for table `tb_nivel`
 --
 ALTER TABLE `tb_nivel`
- ADD PRIMARY KEY (`id_nivel`);
+  ADD PRIMARY KEY (`id_nivel`);
 
 --
 -- Indexes for table `tb_producao`
 --
 ALTER TABLE `tb_producao`
- ADD PRIMARY KEY (`id_producao`);
+  ADD PRIMARY KEY (`id_producao`);
 
 --
 -- Indexes for table `tb_producao_decorrente`
 --
 ALTER TABLE `tb_producao_decorrente`
- ADD PRIMARY KEY (`id_decorrencia`), ADD KEY `fk_producao_principal` (`fk_producao_principal`), ADD KEY `fk_producao_decorrente` (`fk_producao_decorrente`);
+  ADD PRIMARY KEY (`id_decorrencia`), ADD KEY `fk_producao_principal` (`fk_producao_principal`), ADD KEY `fk_producao_decorrente` (`fk_producao_decorrente`);
 
 --
 -- Indexes for table `tb_professor`
 --
 ALTER TABLE `tb_professor`
- ADD PRIMARY KEY (`siape`), ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`siape`), ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `tb_progressao`
 --
 ALTER TABLE `tb_progressao`
- ADD PRIMARY KEY (`id_progressao`), ADD UNIQUE KEY `fk_nivel_anterior` (`fk_nivel_anterior`,`fk_nivel_seguinte`);
+  ADD PRIMARY KEY (`id_progressao`), ADD UNIQUE KEY `fk_nivel_anterior` (`fk_nivel_anterior`,`fk_nivel_seguinte`);
+
+--
+-- Indexes for table `tb_progressao_corrente`
+--
+ALTER TABLE `tb_progressao_corrente`
+  ADD PRIMARY KEY (`id_prog_corrente`);
+
+--
+-- Indexes for table `tb_progressao_producao`
+--
+ALTER TABLE `tb_progressao_producao`
+  ADD PRIMARY KEY (`id_prog_prod`);
 
 --
 -- Indexes for table `tb_regra`
 --
 ALTER TABLE `tb_regra`
- ADD PRIMARY KEY (`id_item`);
+  ADD PRIMARY KEY (`id_item`);
 
 --
 -- Indexes for table `tb_regra_classificacao`
 --
 ALTER TABLE `tb_regra_classificacao`
- ADD PRIMARY KEY (`id_regra_classificacao`), ADD UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`);
+  ADD PRIMARY KEY (`id_regra_classificacao`), ADD UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`);
 
 --
 -- Indexes for table `tb_regra_decorrente`
 --
 ALTER TABLE `tb_regra_decorrente`
- ADD PRIMARY KEY (`id_decorrencia`), ADD UNIQUE KEY `fk_item_principal` (`fk_item_principal`,`fk_item_decorrente`);
+  ADD PRIMARY KEY (`id_decorrencia`), ADD UNIQUE KEY `fk_item_principal` (`fk_item_principal`,`fk_item_decorrente`);
 
 --
 -- Indexes for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
- ADD PRIMARY KEY (`id_subeixo`);
+  ADD PRIMARY KEY (`id_subeixo`);
 
 --
 -- Indexes for table `tb_tipoclassificacao`
 --
 ALTER TABLE `tb_tipoclassificacao`
- ADD PRIMARY KEY (`id_tipoclass`);
+  ADD PRIMARY KEY (`id_tipoclass`);
 
 --
 -- Indexes for table `tb_titulo`
 --
 ALTER TABLE `tb_titulo`
- ADD PRIMARY KEY (`id_titulo`);
+  ADD PRIMARY KEY (`id_titulo`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1077,72 +1177,82 @@ ALTER TABLE `tb_titulo`
 -- AUTO_INCREMENT for table `tb_classificacao`
 --
 ALTER TABLE `tb_classificacao`
-MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+  MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `tb_departamento`
 --
 ALTER TABLE `tb_departamento`
-MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_eixo`
 --
 ALTER TABLE `tb_eixo`
-MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tb_item`
 --
 ALTER TABLE `tb_item`
-MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=139;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=139;
 --
 -- AUTO_INCREMENT for table `tb_metrica`
 --
 ALTER TABLE `tb_metrica`
-MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_nivel`
 --
 ALTER TABLE `tb_nivel`
-MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tb_producao`
 --
 ALTER TABLE `tb_producao`
-MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
+  MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `tb_producao_decorrente`
 --
 ALTER TABLE `tb_producao_decorrente`
-MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+  MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `tb_progressao`
 --
 ALTER TABLE `tb_progressao`
-MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
+  MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
+--
+-- AUTO_INCREMENT for table `tb_progressao_corrente`
+--
+ALTER TABLE `tb_progressao_corrente`
+  MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tb_progressao_producao`
+--
+ALTER TABLE `tb_progressao_producao`
+  MODIFY `id_prog_prod` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_regra_classificacao`
 --
 ALTER TABLE `tb_regra_classificacao`
-MODIFY `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=194;
+  MODIFY `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=194;
 --
 -- AUTO_INCREMENT for table `tb_regra_decorrente`
 --
 ALTER TABLE `tb_regra_decorrente`
-MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+  MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `tb_subeixo`
 --
 ALTER TABLE `tb_subeixo`
-MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+  MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `tb_tipoclassificacao`
 --
 ALTER TABLE `tb_tipoclassificacao`
-MODIFY `id_tipoclass` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id_tipoclass` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_titulo`
 --
 ALTER TABLE `tb_titulo`
-MODIFY `id_titulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id_titulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --

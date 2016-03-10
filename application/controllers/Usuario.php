@@ -14,6 +14,8 @@ class Usuario extends CI_Controller {
 		$this->load->model('mnivel','', TRUE);
 		$this->load->model('mprogressao','', TRUE);
 		$this->load->model('mprogressaocorrente','', TRUE);
+		$this->load->model('mproducao','', TRUE);
+		$this->load->model('msubeixo','',TRUE);
 	}
 
 	function index()
@@ -65,6 +67,13 @@ class Usuario extends CI_Controller {
 			}
 			else
 			{
+				$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+				$subeixos = $this->msubeixo->getAll();
+
+				$data['progressaoAtual'] = $progressaoAtual;
+				$data['dadosProgressao'] = $this->mprogressao->get($progressaoAtual['fk_progressao']);
+				$data['subeixos'] = $subeixos;
+
 				$this->load->view('usuario/view.php', $data);
 			}
 		}
@@ -84,7 +93,15 @@ class Usuario extends CI_Controller {
 			$professorData = $this->mprofessor->get($siape);
 			$tituloData = $this->mtitulo->getAll();
 			$nivelData = $this->mnivel->get();
-			$progressoesData = $this->mprogressaocorrente->getBy('fk_professor', $siape);
+			$progressoesData = $this->mprogressaocorrente->getComplete($siape);
+			for ($i = 0; $i < count($progressoesData); $i++) {
+				$progressoesData[$i]['producoes'] = array();
+				$progProds = $this->mprogressaocorrente->getProducoes($progressoesData[$i]['id_prog_corrente']);
+				for($j = 0; $j < count($progProds); $j++)
+				{
+					$progressoesData[$i]['producoes'][$j] = $this->mproducao->get($progProds[$j]['fk_producao']);
+				}
+			}
 
 			$incompleteData = false;
 

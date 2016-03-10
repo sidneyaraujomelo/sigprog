@@ -25,9 +25,9 @@
 			<ul class="collapsible" data-collapsible="accordion" style="line-height: 3rem; width:auto;">
 		    	<li>
 		    		<div class="collapsible-header blue darken-4" style="line-height: 3rem; font-weight: bold; color:white">
-			      		<div class="col s1"><span class="truncate">Data</span></div>
+			      		<div class="col s2"><span class="truncate">Data</span></div>
 			      		<div class="col s1"><span class="truncate">Eixo</span></div>
-			      		<div class="col s2"><span class="truncate">Subeixo</span></div>
+			      		<div class="col s1"><span class="truncate">Subeixo</span></div>
 			      		<div class="col s3"><span class="truncate">Item</span></div>
 			      		<div class="col s3"><span class="truncate">Alias</span></div>
 			      		<div class="col s1"><span class="truncate">Pontos</span></div>
@@ -39,9 +39,9 @@
 				
 			    <li>
 			      	<div class="collapsible-header col s12">
-			      		<div class="col s1"><p class="truncate data-selector"><?php echo $producao['data_producao']; ?></p></div>
+			      		<div class="col s2"><p class="truncate data-selector"><?php echo $producao['data_producao']; ?></p></div>
 			      		<div class="col s1"><p class="truncate"><?php echo $producao['nome_eixo']; ?></p></div>
-			      		<div class="col s2"><p class="truncate"><?php echo $producao['nome_subeixo']; ?></p></div>
+			      		<div class="col s1"><p class="truncate"><?php echo $producao['nome_subeixo']; ?></p></div>
 			      		<div class="col s3"><p class="truncate"><?php echo $producao['nome_item']; ?></p></div>
 			      		<div class="col s3"><p id="nome_producao_<?php echo $producao['id_producao']; ?>" class="truncate"><?php echo $producao['nome_producao']; ?></p></div>
 			      		<div class="col s1"><p id="pontuacao_producao_<?php echo $producao['id_producao']; ?>" class="truncate"><?php echo $producao['pontuacao_producao']; ?></p></div>
