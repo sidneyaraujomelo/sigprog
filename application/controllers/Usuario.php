@@ -74,6 +74,9 @@ class Usuario extends CI_Controller {
 				$data['dadosProgressao'] = $this->mprogressao->get($progressaoAtual['fk_progressao']);
 				$data['subeixos'] = $subeixos;
 
+				$producoes = $this->mproducao->getFromInterval($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
+				$data['producoes'] = $producoes;
+
 				$this->load->view('usuario/view.php', $data);
 			}
 		}

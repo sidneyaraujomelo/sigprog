@@ -25,6 +25,19 @@ Class MProducao extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getFromInterval($idprofessor, $iniciodata, $fimdata)
+	{
+		$this->db->select('*');
+		$this->db->from('view_producao');
+		$this->db->where('fk_professor', $idprofessor);
+		$this->db->where('data_producao >', $iniciodata);
+		$this->db->where('data_producao <', $fimdata);
+		$query = $this->db->get();
+
+		return $query->result_array();
+		
+	}
+
 	public function getAllByItem($idprofessor, $iditem)
 	{
 		$this->db->select('*');

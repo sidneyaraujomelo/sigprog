@@ -62,6 +62,6 @@
 <?php endforeach ?>
 		</div>
 	
-
+		<?php var_dump($producoes); ?>
 		
 	</main>
