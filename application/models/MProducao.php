@@ -32,6 +32,7 @@ Class MProducao extends CI_Model
 		$this->db->where('fk_professor', $idprofessor);
 		$this->db->where('data_producao >', $iniciodata);
 		$this->db->where('data_producao <', $fimdata);
+		$this->db->order_by('pontuacao_producao','desc');
 		$query = $this->db->get();
 
 		return $query->result_array();

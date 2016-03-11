@@ -16,6 +16,8 @@ class Usuario extends CI_Controller {
 		$this->load->model('mprogressaocorrente','', TRUE);
 		$this->load->model('mproducao','', TRUE);
 		$this->load->model('msubeixo','',TRUE);
+		$this->load->model('mitem','', TRUE);
+		$this->load->model('mprogressaoproducao','', TRUE);
 	}
 
 	function index()
@@ -68,13 +70,70 @@ class Usuario extends CI_Controller {
 			else
 			{
 				$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
-				$subeixos = $this->msubeixo->getAll();
+				$subeixosData = $this->msubeixo->getAll();
+				$subeixos = array();
+				foreach ($subeixosData as $subeixo) {
+					$subeixos[$subeixo['id_subeixo']]=$subeixo;
+					$itensData = $this->mitem->getFromParent($subeixo['id_subeixo']);
+					$itens = array();
+					foreach ($itensData as $item) {
+						$itens[$item['id_item']]=$item;
+						$itens[$item['id_item']]['producoes'] = array();
+					}
+					$subeixos[$subeixo['id_subeixo']]['itens']=$itens;
+				}
+
+				$producoes = $this->mproducao->getFromInterval($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
+				foreach ($producoes as $prod) {
+					$fksubeixo = $prod['id_subeixo'];
+					$fkitem = $prod['id_item'];
+					array_push($subeixos[$fksubeixo]['itens'][$fkitem]['producoes'], $prod);
+				}	
+
+				$totalPoints = 0;
+				foreach ($subeixos as $key => $subeixo) {
+					$subeixos[$key]['subeixoPoints'] = 0;
+					$maxPointSubeixo = $subeixo['pontmax_subeixo'];
+					foreach ($subeixos[$key]['itens'] as $key2 => $item) {
+						$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] = 0;
+						$maxQuant = $item['quantmax_item'];
+						$maxPoint = $item['pontmax_item'];
+						$i = 0;
+						foreach ($subeixos[$key]['itens'][$key2]['producoes'] as $key3 => $prod) {
+							if (isset($maxQuant))
+							{
+								if ($i < $maxQuant)
+								{
+									$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] += $prod['pontuacao_producao'];
+									$i++;
+								}
+							}
+							else
+							{
+								$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] += $prod['pontuacao_producao'];
+							}
+							if (isset($maxPoint))
+							{
+								if ($subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] > $maxPoint)
+								{
+									$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] = $maxPoint;
+								}
+							}
+						}
+						$subeixos[$key]['subeixoPoints']+=$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'];
+						if ($subeixos[$key]['subeixoPoints'] > $maxPointSubeixo)
+						{
+							$subeixos[$key]['subeixoPoints'] = $maxPointSubeixo;
+						}
+					}
+					$totalPoints+=$subeixos[$key]['subeixoPoints'];
+				}			
+				$subeixos['totalPoints']=$totalPoints;
 
 				$data['progressaoAtual'] = $progressaoAtual;
 				$data['dadosProgressao'] = $this->mprogressao->get($progressaoAtual['fk_progressao']);
 				$data['subeixos'] = $subeixos;
 
-				$producoes = $this->mproducao->getFromInterval($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
 				$data['producoes'] = $producoes;
 
 				$this->load->view('usuario/view.php', $data);
@@ -200,6 +259,168 @@ class Usuario extends CI_Controller {
 			{
 				echo 'Siape inválido!';
 			}
+		}
+	}
+
+	function finishprogressao()
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$siape = $session_data['id'];
+			
+			$professorData = $this->mprofessor->get($siape);
+			$tituloData = $this->mtitulo->getAll();
+			$nivelData = $this->mnivel->get();
+
+			$incompleteData = false;
+
+			if ($professorData['fk_titulo'] != 0)
+			{
+				foreach ($tituloData as $titulo) {
+					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if ($professorData['fk_nivel'] != 0)
+			{
+				foreach ($nivelData as $nivel) {
+					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
+					{
+						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			$data['professor'] = $professorData;
+			$data['admin'] = $session_data['admin'];
+			$data['niveis'] = $nivelData;
+			$data['titulos'] = $tituloData;
+			//$this->load->view('template/header.php', $data);
+			if ($incompleteData)
+			{
+				$this->load->view('usuario/update.php', $data);
+			}
+			else
+			{
+				$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+				$subeixosData = $this->msubeixo->getAll();
+				$subeixos = array();
+				foreach ($subeixosData as $subeixo) {
+					$subeixos[$subeixo['id_subeixo']]=$subeixo;
+					$itensData = $this->mitem->getFromParent($subeixo['id_subeixo']);
+					$itens = array();
+					foreach ($itensData as $item) {
+						$itens[$item['id_item']]=$item;
+						$itens[$item['id_item']]['producoes'] = array();
+					}
+					$subeixos[$subeixo['id_subeixo']]['itens']=$itens;
+				}
+
+				$producoes = $this->mproducao->getFromInterval($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
+				foreach ($producoes as $prod) {
+					$fksubeixo = $prod['id_subeixo'];
+					$fkitem = $prod['id_item'];
+					array_push($subeixos[$fksubeixo]['itens'][$fkitem]['producoes'], $prod);
+				}	
+
+				$totalPoints = 0;
+				foreach ($subeixos as $key => $subeixo) {
+					$subeixos[$key]['subeixoPoints'] = 0;
+					$maxPointSubeixo = $subeixo['pontmax_subeixo'];
+					foreach ($subeixos[$key]['itens'] as $key2 => $item) {
+						$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] = 0;
+						$maxQuant = $item['quantmax_item'];
+						$maxPoint = $item['pontmax_item'];
+						$i = 0;
+						foreach ($subeixos[$key]['itens'][$key2]['producoes'] as $key3 => $prod) {
+							if (isset($maxQuant))
+							{
+								if ($i < $maxQuant)
+								{
+									$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] += $prod['pontuacao_producao'];
+									$i++;
+								}
+							}
+							else
+							{
+								$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] += $prod['pontuacao_producao'];
+							}
+							if (isset($maxPoint))
+							{
+								if ($subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] > $maxPoint)
+								{
+									$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'] = $maxPoint;
+								}
+							}
+						}
+						$subeixos[$key]['subeixoPoints']+=$subeixos[$key]['itens'][$key2]['producoes']['itemPoints'];
+						if ($subeixos[$key]['subeixoPoints'] > $maxPointSubeixo)
+						{
+							$subeixos[$key]['subeixoPoints'] = $maxPointSubeixo;
+						}
+					}
+					$totalPoints+=$subeixos[$key]['subeixoPoints'];
+				}
+				$subeixos['totalPoints']=$totalPoints;
+				$dadosProgressao = $this->mprogressao->get($progressaoAtual['fk_progressao']);
+				if ($totalPoints > $dadosProgressao['pontuacao'])
+				{
+					echo "Vamos progredir<br>";
+					$prazoFinal = $progressaoAtual['data_fim'];
+					$prazoInicial = date("Y-m-d", strtotime($progressaoAtual['data_fim']."-6 months"));
+					$agora = date("Y-m-d");
+
+					$this->mprofessor->updatefield($siape, 'fk_nivel', $dadosProgressao['fk_nivel_seguinte']);
+
+					$data = array();
+					$data['fk_professor'] = $siape;
+
+					if ($agora < $prazoInicial)
+					{
+						$data['data_inicio']=$prazoInicial;
+					}
+					else
+					{
+						$data['data_inicio']=$agora;
+					}
+					//Agora, vou pegar os dados da progressao baseado no nível anterior do cara!
+					$prog = $this->mprogressao->getBy('fk_nivel_anterior', $dadosProgressao['fk_nivel_seguinte']);
+					$data['fk_progressao'] = $prog['id_progressao'];
+
+					$data['data_fim'] = date("Y-m-d", strtotime($data['data_inicio']."+".($prog['duracao_intersticio']*6)." months"));
+
+					$prog_real = $this->mprogressaocorrente->insert($data);
+
+					echo $prog_real;
+
+					foreach ($subeixos as $subeixo) {
+						if (!is_array($subeixo))	continue;
+						foreach ($subeixo['itens'] as $item) {
+							if (!is_array($item))	continue;
+							foreach ($item['producoes'] as $producao) {
+								if (!is_array($producao))	continue;
+								$this->mprogressaoproducao->insert(array('fk_prog_finalizada' => $progressaoAtual['id_prog_corrente'] ,
+																		'fk_producao'=> $producao['id_producao'] ));
+							}
+						}
+					}
+				}
+
+				redirect('usuario', 'refresh');
+			}
+		}
+		else
+		{
+			redirect('login', 'refresh');
 		}
 	}
 }

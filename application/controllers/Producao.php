@@ -21,6 +21,9 @@ class Producao extends CI_Controller {
 		$this->load->model('mregradecorrente','', TRUE);
 		$this->load->model('mregraclassificacao','', TRUE);
 		$this->load->model('mproducaodecorrente','', TRUE);
+		$this->load->model('mnivel','',TRUE);
+		$this->load->model('mtitulo','',TRUE);
+
 	}
 
 	public function index()
@@ -32,6 +35,35 @@ class Producao extends CI_Controller {
 
 			$professorData = $this->mprofessor->get($siape);
 			$producaoData = $this->mproducao->getByProfessor($siape);	
+			$tituloData = $this->mtitulo->getAll();
+			$nivelData = $this->mnivel->get();
+
+			$incompleteData = false;
+
+			if ($professorData['fk_titulo'] != 0)
+			{
+				foreach ($tituloData as $titulo) {
+					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if ($professorData['fk_nivel'] != 0)
+			{
+				foreach ($nivelData as $nivel) {
+					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
+					{
+						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
 
 			for ($i = 0; $i < count($producaoData); $i++)
 			{
@@ -88,7 +120,35 @@ class Producao extends CI_Controller {
 			$this->session->set_userdata('token', $token);
 			
 			$professorData = $this->mprofessor->get($siape);
+			$tituloData = $this->mtitulo->getAll();
+			$nivelData = $this->mnivel->get();
 
+			$incompleteData = false;
+
+			if ($professorData['fk_titulo'] != 0)
+			{
+				foreach ($tituloData as $titulo) {
+					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if ($professorData['fk_nivel'] != 0)
+			{
+				foreach ($nivelData as $nivel) {
+					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
+					{
+						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
 			//recebo a informação de todos os eixos!
 			$eixoData = $this->meixo->getReducedAll();
 
