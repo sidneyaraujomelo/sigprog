@@ -15,7 +15,7 @@
 				</div>
 
 				<div class="input-field col s4">
-					<input type="text" class="datepicker" id="data_producao" name="data_producao">
+					<input type="text" class="datepicker" id="data_producao" name="data_producao" required>
 					<label for="data_producao">Data da Produção</label>
 				</div>
 

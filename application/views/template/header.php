@@ -16,12 +16,15 @@
 		<ul class="side-nav fixed leftside-navigation ps-container ps-active-y collapsible" data-collapsible="expandable" style="width: 240px">
 			<li class="professor-details center-align li-no-hover" style="padding-bottom: 0">
 				<div class="row">
+					<div class="col s12">
+						<a href="<?php echo base_url(); ?>">SIGPROG</a>
+					</div>
 					<div class="col s8 offset-s2">
 						<img src="<?php echo profile_foto_url().'/'.$professor['foto']; ?>" alt="" class="circle responsive-img profile-picture">
 					</div>
 					<div class="col s2"></div>
 					<div class="col s12">
-						<a href="<?php echo base_url(); ?>"><?php echo $professor['nome']; ?></a>
+						<a href="<?php echo base_url(); ?>index.php/usuario/profile"><?php echo $professor['nome']; ?></a>
 					</div>
 					<div class="col s12">
 						<span><?php if (isset($professor['nivel'])) echo $professor['nivel']['nome_nivel'];

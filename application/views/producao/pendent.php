@@ -1,7 +1,7 @@
 	<main>
 		<div class="row">
 			<div class="col s12">
-				<h4 class="center-align">Lista de Produções</h4>
+				<h4 class="center-align">Documentação Pendente</h4>
 			</div>
 			
 			<div class="col s12">
@@ -9,14 +9,16 @@
 				<h5>Interstício</h5>
 			</div>
 
-			<div class="input-field col s6">
-				<input type="date" class="datepicker limit_intersticio" id="inicio_intersticio" name="inicio_intersticio">
-				<label for="inicio_intersticio">Início do Interstício</label>
+			<div class="col s6">
+				<div class="center-align">
+					<span>Início do Interstício: <?php echo date("d/m/Y", strtotime($progressaoAtual['data_inicio']));?> </span>
+				</div>
 			</div>
 
-			<div class="input-field col s6">
-				<input type="date" class="datepicker limit_intersticio" id="fim_intersticio" name="fim_intersticio">
-				<label for="fim_intersticio">Fim do Interstício</label>
+			<div class="col s6">
+				<div class="center-align">
+					<span>Fim do Interstício : <?php echo date("d/m/Y", strtotime($progressaoAtual['data_fim']));?> </span>
+				</div>
 			</div>
 
 		</div> 

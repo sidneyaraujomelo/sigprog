@@ -21,6 +21,7 @@ class Producao extends CI_Controller {
 		$this->load->model('mregradecorrente','', TRUE);
 		$this->load->model('mregraclassificacao','', TRUE);
 		$this->load->model('mproducaodecorrente','', TRUE);
+		$this->load->model('mprogressaocorrente','', TRUE);
 		$this->load->model('mnivel','',TRUE);
 		$this->load->model('mtitulo','',TRUE);
 
@@ -99,13 +100,101 @@ class Producao extends CI_Controller {
 				$classesData[$tipoclass['id_tipoclass']] = $this->mclassificacao->getAllFrom($tipoclass['id_tipoclass']);
 			}
 
+			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+
 			$data['professor'] = $professorData;
 			$data['admin'] = $session_data['admin'];
 			$data['producoes'] = $producaoData;
 			$data['classes'] = $classesData;
-			
+			$data['progressaoAtual'] = $progressaoAtual;
+
 			$this->load->view('template/header.php', $data);
 			$this->load->view('producao/view.php', $data);
+		}
+	}
+
+	public function pendent()
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+			$session_data = $this->session->userdata('logged_in');
+			$siape = $session_data['id'];
+
+			$professorData = $this->mprofessor->get($siape);
+			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+			$producaoData = $this->mproducao->getPendentDocument($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
+			$tituloData = $this->mtitulo->getAll();
+			$nivelData = $this->mnivel->get();
+
+			$incompleteData = false;
+
+			if ($professorData['fk_titulo'] != 0)
+			{
+				foreach ($tituloData as $titulo) {
+					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if ($professorData['fk_nivel'] != 0)
+			{
+				foreach ($nivelData as $nivel) {
+					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
+					{
+						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			for ($i = 0; $i < count($producaoData); $i++)
+			{
+				if ($producaoData[$i]['id_classificacao']!=NULL)
+				{
+					$producaoData[$i]['id_tipoclass'] = $this->mclassificacao->getTipoClassificacao($producaoData[$i]['id_classificacao'])["fk_tipoclassificacao"];
+				}
+
+				$regraData = $this->mregra->get($producaoData[$i]['id_item']);
+				$producaoData[$i]['ndecorrentes'] = $regraData['quantidade_decorrente'];
+
+				$producoes_associaveis = array();
+				$j = 0;
+				$regras_decorrentes = $this->mregradecorrente->getDecorrentes($producaoData[$i]['id_item']);
+				if (count($regras_decorrentes) > 0)
+				{
+					foreach ($regras_decorrentes as $regra_decorrente) {
+						$producoes_da_regra = $this->mproducao->getAllByItem($siape, $regra_decorrente['id_item']);
+						foreach ($producoes_da_regra as $producao_associavel) {
+							$producoes_associaveis[$j] = $producao_associavel;
+							$j++;
+						}
+					}
+				}
+				$producaoData[$i]['associaveis'] = $producoes_associaveis;
+
+				$producaoData[$i]['decorrentes'] = $this->mproducaodecorrente->getDecorrentes($producaoData[$i]['id_producao']);
+			}
+
+			$tipoClassData = $this->mtipoclass->getAll();
+			$classesData = array();
+			foreach ($tipoClassData as $tipoclass) {
+				$classesData[$tipoclass['id_tipoclass']] = $this->mclassificacao->getAllFrom($tipoclass['id_tipoclass']);
+			}
+
+			$data['professor'] = $professorData;
+			$data['admin'] = $session_data['admin'];
+			$data['producoes'] = $producaoData;
+			$data['classes'] = $classesData;
+			$data['progressaoAtual'] = $progressaoAtual;
+
+			$this->load->view('template/header.php', $data);
+			$this->load->view('producao/pendent.php', $data);
 		}
 	}
 

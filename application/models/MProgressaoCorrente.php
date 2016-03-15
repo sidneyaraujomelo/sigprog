@@ -44,7 +44,11 @@ Class MProgressaoCorrente extends CI_Model
 		return $query->result_array();
 	}
 
-
+	public function deleteMostRecent($idprofessor)
+	{
+		$sql = "DELETE FROM tb_progressao_corrente WHERE fk_professor=".$idprofessor." ORDER BY id_prog_corrente DESC LIMIT 1";
+		$this->db->query($sql);
+	}
 
 	/*SELECT A.id_prog_corrente, A.fk_progressao, A.fk_professor, A.data_inicio, A.data_fim, C.cod_nivel as cod_nivel_anterior, C.nome_nivel as nome_nivel_anterior, D.cod_nivel as cod_nivel_seguinte, D.nome_nivel as nome_nivel_seguinte
 FROM tb_progressao_corrente as A 

@@ -57,6 +57,7 @@ $route['admin/eixo/(:num)/(:num)'] = 'item/show/$1/$2';
 $route['admin/eixo/(:num)'] = 'subeixo/show/$1';
 $route['admin/eixo'] = 'eixo';
 $route['admin/progressao'] = 'progressao';
+$route['admin/metrica'] = 'metrica';
 $route['admin/logout'] = 'usuario';
 $route['home'] = 'usuario';
 $route['404_override'] = '';

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 11-Mar-2016 às 17:35
+-- Generation Time: 15-Mar-2016 às 23:09
 -- Versão do servidor: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -274,7 +274,7 @@ INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, 
 CREATE TABLE IF NOT EXISTS `tb_metrica` (
   `id_metrica` int(11) NOT NULL,
   `nome_metrica` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_metrica`
@@ -284,7 +284,8 @@ INSERT INTO `tb_metrica` (`id_metrica`, `nome_metrica`) VALUES
 (1, 'Hora(s)-aula'),
 (2, 'Ano(s)'),
 (3, 'Unidade'),
-(4, 'Semestre(s)');
+(4, 'Semestre(s)'),
+(5, 'Quantidade');
 
 -- --------------------------------------------------------
 
@@ -367,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao` (
   `pontuacao_producao` float NOT NULL,
   `documento_producao` text CHARACTER SET utf8,
   `nome_producao` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_producao`
@@ -384,7 +385,13 @@ INSERT INTO `tb_producao` (`id_producao`, `fk_item`, `fk_professor`, `data_produ
 (28, 132, 12345678, '2016-03-04', NULL, NULL, 17, '5d1819fc165d606710b94e456eed51a8.pdf', 'Orientação  da valeria ;  mestrado'),
 (30, 18, 12345678, '2016-02-26', 90, NULL, 9, 'Sistema_Integrado_de_Gestão_de_Atividades_Acadêmicas5.pdf', 'TEste'),
 (31, 133, 12345678, '2016-02-26', NULL, NULL, 10.5, NULL, 'Coorientação de Fulano'),
-(44, 132, 12345678, '2016-03-02', NULL, NULL, 17, NULL, 'Orientação do Jack Sparrow');
+(44, 132, 12345678, '2016-03-02', NULL, NULL, 17, NULL, 'Orientação do Jack Sparrow'),
+(47, 22, 12345678, '2016-03-15', 90, NULL, 180, NULL, ''),
+(49, 43, 12345678, '2016-03-15', 5, NULL, 175, NULL, ''),
+(51, 22, 12345678, '2017-07-11', 2, NULL, 4, '04a53398ec83f148c3fbc72d3a331b75.pdf', ''),
+(53, 43, 12345678, '2018-08-08', 2, NULL, 70, '3bacac7e5ed541519735ca56ef41f3a4.pdf', ''),
+(54, 18, 12345678, '2019-03-14', 900, NULL, 90, '3ab7f3d8433f333921ece76689ee726a.pdf', ''),
+(55, 43, 12345678, '2019-03-13', 10, NULL, 350, '89bc0faa76011f110aa606733f54a478.pdf', '');
 
 -- --------------------------------------------------------
 
@@ -396,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao_decorrente` (
   `id_decorrencia` int(11) NOT NULL,
   `fk_producao_principal` int(11) NOT NULL,
   `fk_producao_decorrente` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_producao_decorrente`
@@ -428,7 +435,7 @@ CREATE TABLE IF NOT EXISTS `tb_professor` (
 --
 
 INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `regime_trabalho`, `fk_nivel`, `fk_titulo`, `fk_depto`, `senha`) VALUES
-(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 0, 1, 4, 0, '25f9e794323b453885f5181f1b624d0b');
+(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 0, 14, 2, 0, '25f9e794323b453885f5181f1b624d0b');
 
 -- --------------------------------------------------------
 
@@ -478,14 +485,17 @@ CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
   `fk_professor` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_progressao_corrente`
 --
 
 INSERT INTO `tb_progressao_corrente` (`id_prog_corrente`, `fk_progressao`, `fk_professor`, `data_inicio`, `data_fim`) VALUES
-(1, 58, 12345678, '2014-09-09', '2016-03-09');
+(5, 67, 12345678, '2015-02-03', '2017-08-03'),
+(6, 68, 12345678, '2017-02-03', '2019-08-03'),
+(9, 69, 12345678, '2019-02-03', '2021-08-03'),
+(10, 70, 12345678, '2021-02-03', '2023-08-03');
 
 -- --------------------------------------------------------
 
@@ -497,7 +507,37 @@ CREATE TABLE IF NOT EXISTS `tb_progressao_producao` (
   `id_prog_prod` int(11) NOT NULL,
   `fk_prog_finalizada` int(11) NOT NULL,
   `fk_producao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_progressao_producao`
+--
+
+INSERT INTO `tb_progressao_producao` (`id_prog_prod`, `fk_prog_finalizada`, `fk_producao`) VALUES
+(1, 5, 16),
+(2, 5, 30),
+(3, 5, 8),
+(4, 5, 9),
+(5, 5, 11),
+(6, 5, 26),
+(7, 5, 47),
+(8, 5, 28),
+(9, 5, 44),
+(10, 5, 31),
+(11, 5, 20),
+(12, 5, 49),
+(13, 6, 50),
+(14, 6, 51),
+(15, 6, 52),
+(16, 6, 51),
+(17, 6, 53),
+(18, 6, 54),
+(19, 6, 51),
+(20, 6, 53),
+(21, 9, 54),
+(22, 9, 55),
+(23, 10, 56),
+(24, 10, 57);
 
 -- --------------------------------------------------------
 
@@ -523,49 +563,49 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 (19, 1, 0, '=(valor_informado/15)*2)', 0, 1),
 (20, 2, 0, '=(valor_informado*3)', 0, 1),
 (21, 2, 0, '=(valor_informado*3)', 0, 1),
-(22, 3, 0, '=(2)', 0, 1),
-(23, 3, 0, '=(1)', 0, 1),
+(22, 5, 0, '=(valor_informado*2)', 0, 1),
+(23, 3, 0, '=(valor_informado*1)', 0, 1),
 (24, 4, 0, '=(valor_informado*1)', 0, 1),
 (25, 4, 0, '=(valor_informado*2)', 0, 1),
 (26, 4, 0, '=(valor_informado*2)', 0, 1),
-(27, 3, 0, '=(valor_informado*2)', 0, 1),
-(28, 3, 0, '=(valor_informado*2)', 0, 1),
+(27, 5, 0, '=(valor_informado*2)', 0, 1),
+(28, 5, 0, '=(valor_informado*2)', 0, 1),
 (29, 4, 0, '=(valor_informado*1.5)', 0, 1),
 (30, 4, 0, '=(valor_informado)', 0, 1),
-(31, 3, 0, '=(4)', 0, 1),
-(32, 3, 0, '=(3)', 0, 1),
-(33, 3, 0, '=(1.5)', 0, 1),
-(34, 3, 0, '=(8)', 0, 1),
-(35, 3, 0, '=(6)', 0, 1),
-(36, 3, 0, '=(3)', 0, 1),
+(31, 5, 0, '=(valor_informado*4)', 0, 1),
+(32, 5, 0, '=(valor_informado*3)', 0, 1),
+(33, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(34, 5, 0, '=(valor_informado*8)', 0, 1),
+(35, 5, 0, '=(valor_informado*6)', 0, 1),
+(36, 5, 0, '=(valor_informado*3)', 0, 1),
 (37, 3, 0, '=(8)', 0, 4),
 (38, 3, 0, '=(4)', 0, 1),
 (39, 3, 0, '=(6)', 0, 1),
 (40, 3, 0, '=(3)', 0, 1),
 (41, 3, 0, '=(3)', 0, 1),
 (42, 3, 0, '=(1.5)', 0, 1),
-(43, 3, 0, '35', 0, 1),
-(44, 3, 0, '10', 0, 1),
-(45, 3, 0, '15', 0, 1),
-(46, 3, 0, '=(1.5)', 0, 1),
-(47, 3, 0, '=(2)', 0, 1),
-(48, 3, 0, '=(2)', 0, 1),
-(49, 3, 0, '=(3)', 0, 1),
-(50, 3, 0, '=(3)', 0, 1),
-(51, 3, 0, '=(3)', 0, 1),
-(52, 3, 0, '=(1.5)', 0, 1),
-(53, 3, 0, '=(1.5)', 0, 1),
-(54, 3, 0, '=(1.5)', 0, 1),
-(55, 3, 0, '=(1.5)', 0, 1),
-(56, 3, 0, '=(1.5)', 0, 1),
-(57, 3, 0, '=(1.5)', 0, 1),
+(43, 5, 0, '=(valor_informado*35)', 0, 1),
+(44, 5, 0, '=(valor_informado*10)', 0, 1),
+(45, 5, 0, '=(valor_informado*15)', 0, 1),
+(46, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(47, 5, 0, '=(valor_informado*2)', 0, 1),
+(48, 5, 0, '=(valor_informado*2)', 0, 1),
+(49, 5, 0, '=(valor_informado*3)', 0, 1),
+(50, 5, 0, '=(valor_informado*3)', 0, 1),
+(51, 5, 0, '=(valor_informado*3)', 0, 1),
+(52, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(53, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(54, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(55, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(56, 5, 0, '=(valor_informado*1.5)', 0, 1),
+(57, 5, 0, '=(valor_informado*1.5)', 0, 1),
 (58, 4, 0, '=(valor_informado*2)', 0, 1),
 (59, 4, 0, '=(valor_informado)', 0, 1),
 (60, 4, 0, '=(valor_informado)', 0, 1),
 (61, 4, 0, '=(valor_informado)', 0, 1),
 (62, 4, 0, '=(valor_informado)', 0, 1),
 (63, 4, 0, '=(valor_informado)', 0, 1),
-(64, 3, 0, '=(1.5)', 0, 1),
+(64, 5, 0, '=(valor_informado*1.5)', 0, 1),
 (65, 3, 0, '=(qualis_informado/2)', 0, 4),
 (66, 2, 0, '=((valor_informado*classif_informado)/2)', 0, 4),
 (67, 3, 0, '=(classif_informado/2)', 0, 4),
@@ -576,7 +616,7 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 (72, 4, 0, '=(valor_informado*8.5)', 0, 1),
 (73, 4, 0, '=(valor_informado*4)', 0, 1),
 (74, 4, 0, '=(valor_informado*4)', 0, 1),
-(75, 3, 0, '=(1.5)', 0, 1),
+(75, 5, 0, '=(valor_informado*1.5)', 0, 1),
 (76, 4, 0, '=(valor_informado*3)', 0, 1),
 (77, 4, 0, '=(valor_informado*4)', 0, 1),
 (78, 4, 0, '=(valor_informado*15)', 0, 1),
@@ -624,7 +664,7 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 (128, 3, 0, '=(classif_informado)', 0, 5),
 (129, 3, 0, '=(classif_informado)', 0, 5),
 (130, 3, 0, '=(classif_informado)', 0, 5),
-(131, 3, 0, '=(2.5)', 0, 1),
+(131, 5, 0, '=(valor_informado*2.5)', 0, 1),
 (132, 3, 0, '=(4+(0.5*decorrente_informado))', 1, 1),
 (133, 3, 0, '=(2+(0.5*decorrente_informado))', 1, 1),
 (134, 3, 0, '=(((6+(0.5*decorrente_informado_1))+(0.5*decorrente_informado_2))&&(decorrente_informado_1||decorrente_informado_2))', 2, 1),
@@ -632,6 +672,19 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 (136, 2, 0, '=(valor_informado*2)', 0, 1),
 (137, 4, 0, '=(valor_informado)', 0, 1),
 (138, 1, 0, '=(valor_informado)', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_regraprog_espec`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_regraprog_espec` (
+  `id_regraprog_espec` int(11) NOT NULL,
+  `fk_progressao` int(11) NOT NULL,
+  `fk_subeixo` int(11) NOT NULL,
+  `pontuacao` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1090,6 +1143,12 @@ ALTER TABLE `tb_regra`
   ADD PRIMARY KEY (`id_item`);
 
 --
+-- Indexes for table `tb_regraprog_espec`
+--
+ALTER TABLE `tb_regraprog_espec`
+  ADD PRIMARY KEY (`id_regraprog_espec`);
+
+--
 -- Indexes for table `tb_regra_classificacao`
 --
 ALTER TABLE `tb_regra_classificacao`
@@ -1147,7 +1206,7 @@ ALTER TABLE `tb_item`
 -- AUTO_INCREMENT for table `tb_metrica`
 --
 ALTER TABLE `tb_metrica`
-  MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_nivel`
 --
@@ -1157,12 +1216,12 @@ ALTER TABLE `tb_nivel`
 -- AUTO_INCREMENT for table `tb_producao`
 --
 ALTER TABLE `tb_producao`
-  MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
+  MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `tb_producao_decorrente`
 --
 ALTER TABLE `tb_producao_decorrente`
-  MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+  MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tb_progressao`
 --
@@ -1172,12 +1231,17 @@ ALTER TABLE `tb_progressao`
 -- AUTO_INCREMENT for table `tb_progressao_corrente`
 --
 ALTER TABLE `tb_progressao_corrente`
-  MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tb_progressao_producao`
 --
 ALTER TABLE `tb_progressao_producao`
-  MODIFY `id_prog_prod` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_prog_prod` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `tb_regraprog_espec`
+--
+ALTER TABLE `tb_regraprog_espec`
+  MODIFY `id_regraprog_espec` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tb_regra_classificacao`
 --

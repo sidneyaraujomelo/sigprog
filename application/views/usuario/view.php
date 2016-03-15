@@ -32,8 +32,8 @@
 <?php 
 $conclusion = $subeixos['totalPoints']/$dadosProgressao['pontuacao']*100;
 if ($conclusion < 100){	 ?>
-			<div class="col s8 offset-s2 progress">
-				<div class="determinate" style="width: <?php echo $conclusion ; ?>%"></div>
+			<div class="col s8 offset-s2 progress grey" style="min-height:20px;">
+				<div class="determinate green" style="width: <?php echo $conclusion ; ?>%"></div>
 			</div>
 <?php } else {?> 
 			<div class="col s8 offset-s2">

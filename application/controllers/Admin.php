@@ -32,7 +32,8 @@ class Admin extends CI_Controller {
 
 			$itensMenu = array(
 				array( "url" => "eixo", "nome" => "Eixos" ),
-				array( "url" => "progressao", "nome" => "Regras de Progressao" ));
+				array( "url" => "progressao", "nome" => "Regras de Progressao" ),
+				array( "url" => "metrica", "nome" => "Métricas"));
 
 			$data['nivel'] = $nivelData;
 			$data['progressoes'] = $progressaoData;

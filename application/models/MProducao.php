@@ -25,6 +25,20 @@ Class MProducao extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getPendentDocument($id, $iniciodata, $fimdata)
+	{
+		$this->db->select('*');
+		$this->db->from('view_producao');
+		$this->db->where('fk_professor', $id);
+		$this->db->where('data_producao >', $iniciodata);
+		$this->db->where('data_producao <', $fimdata);
+		$this->db->order_by('data_producao','DESC');
+
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
 	public function getFromInterval($idprofessor, $iniciodata, $fimdata)
 	{
 		$this->db->select('*');
