@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Mar-2016 às 23:09
+-- Generation Time: 18-Mar-2016 às 17:57
 -- Versão do servidor: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -368,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao` (
   `pontuacao_producao` float NOT NULL,
   `documento_producao` text CHARACTER SET utf8,
   `nome_producao` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_producao`
@@ -435,7 +435,7 @@ CREATE TABLE IF NOT EXISTS `tb_professor` (
 --
 
 INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `regime_trabalho`, `fk_nivel`, `fk_titulo`, `fk_depto`, `senha`) VALUES
-(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 0, 14, 2, 0, '25f9e794323b453885f5181f1b624d0b');
+(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 0, 13, 2, 1, '25f9e794323b453885f5181f1b624d0b');
 
 -- --------------------------------------------------------
 
@@ -485,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
   `fk_professor` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_progressao_corrente`
@@ -1216,7 +1216,7 @@ ALTER TABLE `tb_nivel`
 -- AUTO_INCREMENT for table `tb_producao`
 --
 ALTER TABLE `tb_producao`
-  MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
+  MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT for table `tb_producao_decorrente`
 --
@@ -1231,7 +1231,7 @@ ALTER TABLE `tb_progressao`
 -- AUTO_INCREMENT for table `tb_progressao_corrente`
 --
 ALTER TABLE `tb_progressao_corrente`
-  MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tb_progressao_producao`
 --

@@ -15,13 +15,16 @@ class Usuario extends CI_Controller {
 		$this->load->model('mprogressao','', TRUE);
 		$this->load->model('mprogressaocorrente','', TRUE);
 		$this->load->model('mproducao','', TRUE);
+		$this->load->model('meixo','',TRUE);
 		$this->load->model('msubeixo','',TRUE);
 		$this->load->model('mitem','', TRUE);
 		$this->load->model('mprogressaoproducao','', TRUE);
+		$this->load->library('pdf');
 	}
 
 	function index()
 	{
+
 		if ($this->session->userdata('logged_in'))
 		{
 			$session_data = $this->session->userdata('logged_in');
@@ -60,8 +63,6 @@ class Usuario extends CI_Controller {
 			{
 				$incompleteData = true;
 			}
-
-
 
 			$data['professor'] = $professorData;
 			$data['admin'] = $session_data['admin'];
@@ -520,5 +521,157 @@ class Usuario extends CI_Controller {
 		$val = $_POST["val"];
 
 		$this->mprofessor->updatefield($id, $col, $val);
+	}
+
+	function testPdf()
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+			$pdfData = array();
+			$session_data = $this->session->userdata('logged_in');
+			$siape = $session_data['id'];
+			
+			$professorData = $this->mprofessor->get($siape);
+			$tituloData = $this->mtitulo->getAll();
+			$nivelData = $this->mnivel->get();
+			$progressoesCorrentesData = $this->mprogressaocorrente->getBy('fk_professor', $siape);
+			
+			$incompleteData = false;
+
+			
+
+			if ($professorData['fk_titulo'] != 0)
+			{
+				foreach ($tituloData as $titulo) {
+					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if ($professorData['fk_nivel'] != 0)
+			{
+				foreach ($nivelData as $nivel) {
+					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
+					{
+						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			$pdfData['professor'] = $professorData;
+
+			
+
+			$mult = 1;
+			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+			$progressaoData = $this->mprogressao->get($progressaoAtual['fk_progressao']);
+			if ($progressaoData['fk_nivel_seguinte']==17)	$mult = 3;
+			$eixosData = $this->meixo->getAll();
+			$eixos = array();
+			foreach ($eixosData as $eixo) {
+				$id_eixo = $eixo['id_eixo'];
+				$eixos[$id_eixo] = $eixo;
+				$subeixosData = $this->msubeixo->getFromParent($id_eixo);
+				$subeixos = array();
+				foreach ($subeixosData as $subeixo) {
+					$subeixos[$subeixo['id_subeixo']]=$subeixo;
+					$subeixos[$subeixo['id_subeixo']]['pontmax_subeixo']*=$mult;
+					$itensData = $this->mitem->getFromParent($subeixo['id_subeixo']);
+					$itens = array();
+					foreach ($itensData as $item) {
+						$itens[$item['id_item']]=$item;
+						$itens[$item['id_item']]['producoes'] = array();
+					}
+					$subeixos[$subeixo['id_subeixo']]['itens']=$itens;
+				}
+				$eixos[$id_eixo]['subeixos'] = $subeixos;
+			}
+
+			$pdfData['estruturaProducoes'] = $eixos;
+
+			$producoes = $this->mproducao->getFromInterval($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
+			foreach ($producoes as $prod) {
+				$fksubeixo = $prod['id_subeixo'];
+				$fkitem = $prod['id_item'];
+				array_push($subeixos[$fksubeixo]['itens'][$fkitem]['producoes'], $prod);
+			}	
+
+
+			$data['progressaoAtual'] = $progressaoAtual;
+			$data['dadosProgressao'] = $this->mprogressao->get($progressaoAtual['fk_progressao']);
+			$data['subeixos'] = $subeixos;
+
+			$data['producoes'] = $producoes;
+
+			$pdfData['progressao'] = $progressaoAtual;
+			//var_dump($pdfData['estruturaProducoes']);
+			$this->makePdf($pdfData);
+			
+		}
+		else
+		{
+			redirect('login', 'refresh');
+		}
+	}
+
+	function makePdf($data)
+	{
+		$this->pdf = new Pdf();
+		$this->pdf->AddPage();
+		$this->pdf->AliasNbPages();
+
+		$this->pdf->SetTitle("Relatorio Progressao");
+    	$this->pdf->SetLeftMargin(15);
+    	$this->pdf->SetRightMargin(15);
+   		$this->pdf->SetFillColor(200,200,200);
+   		$this->pdf->SetFont('Arial', 'B', 9);
+   		$this->pdf->Cell(0,7,'RELATORIO INDIVIDUAL DE TRABALHO DOCENTE',0,0,'C');
+   		$this->pdf->Ln();
+
+   		$initFormArray = array( 
+   			array('campo' => 'Processo no.' , 'valor' => '' ),
+   			array('campo' => 'Nome do docente' , 'valor' => $data['professor']['nome'] ),
+   			array('campo' => 'Subunidade Academica' , 'valor' => '' ),
+   			array('campo' => 'Unidade Academica' , 'valor' => '' ),
+   			array('campo' => 'Matricula SIAPE' , 'valor' => $data['professor']['siape'] ),
+   			array('campo' => 'Classe e Nivel Atual' , 'valor' => $data['professor']['nivel']['nome_nivel'] ),
+   			array('campo' => 'Classe e Nivel Requerido' , 'valor' => $data['progressao']['nome_nivel_seguinte']));
+   		
+   		foreach ($initFormArray as $linha) {
+   			$this->pdf->Cell(50,7,$linha['campo'],'TBLR',0,'L');
+   			$this->pdf->Cell(0,7,$linha['valor'],'TBR',0,'L');
+   			$this->pdf->Ln();
+   		}
+   		
+   		$isPromo = (substr($data['professor']['nivel']['nome_nivel'], -1) > substr($data['progressao']['nome_nivel_seguinte'], -1)) ?
+   			'[X] Promocao [] Progressao' : '[] Promocao [X] Progressao';
+
+   		$this->pdf->Cell(50,7,'Objetivo do processo','TBLR',0,'L');
+		$this->pdf->Cell(0,7,$isPromo,'TBR',0,'C');
+   		$this->pdf->Ln(14);
+
+   		foreach ($data['estruturaProducoes'] as $eixo) {
+   			$this->pdf->Cell(15,7);
+   			$this->pdf->Cell(0,7,specialChars($eixo['nome_eixo']),0,0,'L');
+   			$this->pdf->Ln(7);
+   		}
+
+   		$this->pdf->Cell(15,7,'NUM','TBL',0,'C','1');
+	    $this->pdf->Cell(25,7,'PATERNO','TB',0,'L','1');
+	    $this->pdf->Cell(25,7,'MATERNO','TB',0,'L','1');
+	    $this->pdf->Cell(25,7,'NOMBRE','TB',0,'L','1');
+	    $this->pdf->Cell(40,7,'FECHA DE NACIMIENTO','TB',0,'C','1');
+	    $this->pdf->Cell(25,7,'GRADO','TB',0,'L','1');
+	    $this->pdf->Cell(25,7,'GRUPO','TBR',0,'C','1');
+	    $this->pdf->Ln(7);
+	    ob_end_clean();
+	    $this->pdf->Output("Lista de alumnos.pdf", 'D', 'relatorio.pdf');
 	}
 }

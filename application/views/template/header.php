@@ -45,6 +45,9 @@
 			<li class="li-option">
 				<a href="<?php echo base_url();?>index.php/usuario/progress"><p class="truncate">Minhas Progressões</p></a>
 			</li>
+			<li class="li-option">
+				<a href="<?php echo base_url();?>index.php/usuario/testPdf"><p class="truncate">Teste Relatorio</p></a>
+			</li>
 			<li><a href="<?php echo base_url(); ?>index.php/usuario/logout"><p class="truncate">Logout</p></a></li>
 <?php if ($admin) {?>
 			<li><a href="<?php echo base_url(); ?>index.php/admin"><p class="truncate">Administrador</p></a></li>
