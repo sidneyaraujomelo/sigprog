@@ -18,4 +18,4 @@
            $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
       }
     }
-?>;
+?>

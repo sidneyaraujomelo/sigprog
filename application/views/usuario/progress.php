@@ -11,8 +11,34 @@
 <?php endforeach ?>
 				</ul>
 			</div>
-<?php foreach ($minhasprogressoes as $progressao) : ?>
+		</div>
+		<div class="row">
+<?php foreach ($minhasprogressoes as $key => $progressao) : ?>
 			<div id="<?php echo $progressao['id_prog_corrente']; ?>" class="col s12">
+				<div class="row">
+<?php 		if(isset($progressao['documento_prog_corrente'])) {?>
+					<div class= "col s6">
+						<a class="btn waves-effect waves-light green darken-4" href="<?php echo asset_url().'\\docs\\'.$progressao['documento_prog_corrente'];?>" download="<?php echo $progressao['documento_prog_corrente'];?>" style="width:100%;">Baixar Relatório
+							<i class="material-icons right">file_download</i>
+						</a>
+					</div>
+<?php 		} else { ?>
+					<div class= "col s6"></div>
+<?php 		}?>
+
+<?php 		if($key==0 && isset($progressao['documento_prog_corrente'])) {?>
+					<div  class= "col s6">
+						<a class="btn waves-effect waves-light green darken-4" href="<?php echo base_url().'index.php/usuario/realizeprogressao';?>" style="width:100%;">Confirmar Progressão
+							<i class="material-icons right">forward</i>
+						</a>
+					</div>
+				
+<?php 		} else { ?>
+					<div class= "col s6"></div>
+<?php 		}?>
+				</div>
+
+				<div class="col s12">
 				<ul style="line-height: 3rem; width:auto;">
 			    	<li>
 			    		<div class="collapsible-header blue darken-4" style="line-height: 3rem; font-weight: bold; color:white">
@@ -26,6 +52,8 @@
 			      		</div>
 				    </li>
 				</ul>
+				</div>
+
 <?php 	foreach ($progressao['producoes'] as $producao):?>
 				<ul>
 					<li>

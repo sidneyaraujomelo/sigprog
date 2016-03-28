@@ -50,6 +50,13 @@ Class MProgressaoCorrente extends CI_Model
 		$this->db->query($sql);
 	}
 
+	public function updatefield($key, $col, $val)
+	{
+		$this->db->set($col, $val);
+		$this->db->where('id_prog_corrente', $key);
+		$this->db->update('tb_progressao_corrente');
+	}
+
 	/*SELECT A.id_prog_corrente, A.fk_progressao, A.fk_professor, A.data_inicio, A.data_fim, C.cod_nivel as cod_nivel_anterior, C.nome_nivel as nome_nivel_anterior, D.cod_nivel as cod_nivel_seguinte, D.nome_nivel as nome_nivel_seguinte
 FROM tb_progressao_corrente as A 
 	JOIN tb_progressao as B

@@ -5,14 +5,29 @@
 		return base_url().'assets';
 	}
 
-	function profile_foto_url()
-	{
-		return asset_url().'/img/profile';
-	}
-
 	function uploads_url()
 	{
 		return base_url().'uploads';
+	}
+
+	function image_url()
+	{
+		return asset_url().'/img';
+	}
+
+	function profile_foto_url()
+	{
+		return image_url().'/profile';
+	}
+
+	function docs_url()
+	{
+		return FCPATH.'assets\docs';
+	}
+
+	function uploads_path()
+	{
+		return FCPATH.'\uploads';
 	}
 
 	function breakLine($num = null)

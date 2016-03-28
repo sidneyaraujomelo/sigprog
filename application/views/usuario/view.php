@@ -74,7 +74,7 @@ if ($conclusion < 100){	 ?>
 							<div class="col s2"><span class="truncate">Valor/Classificação</span></div>
 	<?php foreach ($subeixo['itens'] as $item): ?>
 		<?php foreach ($item['producoes'] as $prod): ?>
-							<div class="col s4"><span class="truncate"><?php echo $prod['nome_producao'];?></span></div>
+							<div class="col s4"><span class="truncate"><?php echo $prod['nome_producao']?></span></div>
 							<div class="col s4"><span class="truncate"><?php echo $prod['nome_item'];?></span></div>
 							<div class="col s2"><span class="truncate"><?php echo $prod['pontuacao_producao'];?></span></div>
 			<?php if (isset($prod['quantidade_producao'])){ ?>

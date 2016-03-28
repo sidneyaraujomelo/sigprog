@@ -10,7 +10,7 @@
 
 				<hr>
 				<div class="input-field col s8">
-		            <input id="nome" name="nome" type="text" class="validate">
+		            <input id="nome" name="nome" type="text" class="validate" required>
 		            <label for="nome">Alias</label>
 				</div>
 

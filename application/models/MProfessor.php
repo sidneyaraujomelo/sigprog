@@ -57,8 +57,8 @@ Class MProfessor extends CI_Model
 
   public function get($siape)
   {
-    $this->db->select('siape, nome, email, foto, regime_trabalho, fk_nivel, fk_titulo');
-    $this->db->from('tb_professor');
+    $this->db->select('*');
+    $this->db->from('view_professor');
     $this->db->where('siape', $siape);
 
     $query = $this->db->get();
