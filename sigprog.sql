@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 27-Mar-2016 às 23:14
+-- Generation Time: 07-Abr-2016 às 19:57
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -215,15 +215,15 @@ INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, 
 (61, 'E2.4 Representação em Conselhos de Educação, de Ciência e Tecnologia e outros relacionados com o campo de atuação do docente, no âmbito do nível administrativo do Estado do Maranhão ou municipal (por semestre)', NULL, NULL, 16),
 (62, 'E2.5 Representação em diretorias de entidades sindicais (por semestre)', NULL, NULL, 16),
 (63, 'E2.6 Representação em diretoria de entidades profissionais e científicas (por semestre)', NULL, NULL, 16),
-(64, 'C4.1 Consultor “ad hoc” ou assessor técnico das agências de fomento para análise de projetos/editais (por produção/assessoria técnica)', 10.5, NULL, 11),
+(64, 'C4.1 Consultor ad hoc ou assessor técnico das agências de fomento para análise de projetos/editais (por produção/assessoria técnica)', 10.5, NULL, 11),
 (65, 'C4.2 Atuação como parecerista/revisor de revistas indexadas (por análise)', NULL, NULL, 11),
 (66, 'C4.3 Atuação como editor em revistas indexadas (por ano)', NULL, NULL, 11),
 (67, 'C4.4 Atuação como parecerista/revisor de editoras universitárias (por análise)', NULL, NULL, 11),
-(68, 'E1.1 Cargos de direção – CD1 – reitor (por semestre)', NULL, NULL, 15),
-(69, 'E1.2 Cargos de direção – CD 2, Vice-Reitor e Pró-Reitores (por semestre)', NULL, NULL, 15),
-(70, 'E1.3 Cargos de direção – CD 3 (por semestre)', NULL, NULL, 15),
-(71, 'E1.4 Cargos de direção – CD 4 (por semestre)', NULL, NULL, 15),
-(72, 'E1.5 Cargos de direção – FG 1 (por semestre)', NULL, NULL, 15),
+(68, 'E1.1 Cargos de direção CD1, reitor (por semestre)', NULL, NULL, 15),
+(69, 'E1.2 Cargos de direção CD 2, Vice-Reitor e Pró-Reitores (por semestre)', NULL, NULL, 15),
+(70, 'E1.3 Cargos de direção CD 3 (por semestre)', NULL, NULL, 15),
+(71, 'E1.4 Cargos de direção CD 4 (por semestre)', NULL, NULL, 15),
+(72, 'E1.5 Cargos de direção FG 1 (por semestre)', NULL, NULL, 15),
 (73, 'E1.6 Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nos Ministérios de Educação, de Cultura e de Ciência, Tecnologia e Inovação, ou outro na esfera federal/internacional relacionado à área de atuação do docente (por semestre)', NULL, NULL, 15),
 (74, 'E1.7 Exercício de função de direção, coordenação, assessoramento, chefia ou assistência, nas Secretarias de Educação, de Cultura e de Ciência e Tecnologia, ou outro na esfera estadual ou municipal relacionado à área de atuação do docente (por semestre)', NULL, NULL, 15),
 (75, 'E1.8 Participação em Comissões Provisórias', 12, NULL, 15),
@@ -440,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `tb_professor` (
   `siape` int(8) NOT NULL,
   `nome` varchar(60) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `foto` varchar(20) NOT NULL,
+  `foto` varchar(20) NOT NULL DEFAULT 'profile_default.png',
   `fk_regime_trabalho` int(11) NOT NULL,
   `fk_nivel` int(11) NOT NULL,
   `fk_titulo` int(11) NOT NULL,
@@ -454,7 +454,9 @@ CREATE TABLE IF NOT EXISTS `tb_professor` (
 --
 
 INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `fk_regime_trabalho`, `fk_nivel`, `fk_titulo`, `fk_depto`, `fk_unid_academica`, `senha`) VALUES
-(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 1, 12, 2, 1, 1, '25f9e794323b453885f5181f1b624d0b');
+(12312312, 'Beltrano', 'Beltrano@gmail.com', 'profile_default.png', 1, 1, 1, 1, 1, 'f5bb0c8de146c67b44babbf4e6584cc0'),
+(12345678, 'Sidney Melo', 'sidneyaraujomelo@gmail.com', 'profile_default.png', 1, 11, 2, 1, 1, '25f9e794323b453885f5181f1b624d0b'),
+(15915915, 'Fulano', 'fulano@beltrano.com', '', 1, 7, 2, 1, 1, '548af13bdd5fc92c120491aef92f9a22');
 
 -- --------------------------------------------------------
 
@@ -505,7 +507,7 @@ CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
   `documento_prog_corrente` varchar(100) CHARACTER SET utf8 DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_progressao_corrente`
@@ -513,8 +515,9 @@ CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
 
 INSERT INTO `tb_progressao_corrente` (`id_prog_corrente`, `fk_progressao`, `fk_professor`, `data_inicio`, `data_fim`, `documento_prog_corrente`) VALUES
 (5, 67, 12345678, '2015-02-03', '2017-08-03', NULL),
-(6, 68, 12345678, '2017-02-03', '2019-08-03', '12345678627-03-2016-04-29-42.pdf'),
-(15, 69, 12345678, '2019-02-03', '2021-08-03', NULL);
+(6, 68, 12345678, '2017-02-03', '2019-08-03', '12345678601-04-2016-05-54-35.pdf'),
+(17, 64, 15915915, '2016-04-24', '2018-10-24', NULL),
+(18, 58, 12312312, '2016-04-01', '2018-10-01', NULL);
 
 -- --------------------------------------------------------
 
@@ -1125,7 +1128,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_professor`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_professor` AS select `a`.`siape` AS `siape`,`a`.`nome` AS `nome`,`a`.`email` AS `email`,`a`.`foto` AS `foto`,`b`.`nome_regime` AS `nome_regime`,`c`.`nome_depto` AS `nome_depto`,`d`.`nome_unid_academica` AS `nome_unid_academica`,`a`.`fk_nivel` AS `fk_nivel`,`a`.`fk_titulo` AS `fk_titulo` from (((`tb_professor` `a` join `tb_regime` `b` on((`a`.`fk_regime_trabalho` = `b`.`id_regime`))) join `tb_depto` `c` on((`a`.`fk_depto` = `c`.`id_depto`))) join `tb_unid_academica` `d` on((`a`.`fk_unid_academica` = `d`.`id_unid_academica`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_professor` AS select `a`.`siape` AS `siape`,`a`.`nome` AS `nome`,`a`.`email` AS `email`,`a`.`foto` AS `foto`,`b`.`nome_regime` AS `nome_regime`,`c`.`nome_depto` AS `nome_depto`,`d`.`nome_unid_academica` AS `nome_unid_academica`,`a`.`fk_nivel` AS `fk_nivel`,`a`.`fk_titulo` AS `fk_titulo` from (((`tb_professor` `a` left join `tb_regime` `b` on((`a`.`fk_regime_trabalho` = `b`.`id_regime`))) left join `tb_depto` `c` on((`a`.`fk_depto` = `c`.`id_depto`))) left join `tb_unid_academica` `d` on((`a`.`fk_unid_academica` = `d`.`id_unid_academica`)));
 
 -- --------------------------------------------------------
 
@@ -1336,7 +1339,7 @@ MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
 -- AUTO_INCREMENT for table `tb_progressao_corrente`
 --
 ALTER TABLE `tb_progressao_corrente`
-MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tb_progressao_producao`
 --
