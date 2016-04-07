@@ -72,6 +72,23 @@ Class MProfessor extends CI_Model
     }
   }
 
+  public function getRaw($siape)
+  {
+    $this->db->select('*');
+    $this->db->from('tb_professor');
+    $this->db->where('siape', $siape);
+
+    $query = $this->db->get();
+
+    if ($query->num_rows() == 1)
+    {
+      return $query->row_array();
+    }
+    else{
+      return false;
+    }
+  }
+
   public function updatefield($key, $col, $val)
   {
     $this->db->set($col, $val);

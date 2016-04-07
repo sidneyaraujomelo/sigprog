@@ -193,15 +193,21 @@ $(document).on('click', '#start-progressao', function(){
 	var siape = form.attr("id").split('-')[1];
 	var titulo = form.find("#titulo").val();
 	var nivel = form.find("#nivel").val();
+	var unidade = form.find("#unidadeacademica").val();
+	var depto = form.find("#depto").val();
+	var regime = form.find("#regime").val();
 	var dataProgressao = form.find("#data_progressao").parent().find("input:hidden").val().replaceAll("/","-");
 
-	if (siape && titulo && nivel && dataProgressao)
+	if (siape && titulo && nivel && dataProgressao && unidade && depto && regime)
 	{
 		$.post("http://localhost/sigprog/index.php/usuario/startprogressao",
 		{
 			'siape' : siape,
 			'titulo' : titulo,
 			'nivel' : nivel,
+			'unidade' : unidade,
+			'depto' : depto,
+			'regime' : regime,
 			'data' : dataProgressao
 		}, function (response)
 		{

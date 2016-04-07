@@ -14,10 +14,12 @@
 
 				<div class="input-field col s12">
 	            	<input class="autoupdate-general" name="nome" value="<?php echo $professor['nome'];?>" type="text" class="validate">
+	            	<label for="nome">Nome</label>
 				</div>
 
 				<div class="input-field col s12">
 	            	<input class="autoupdate-general" name="email" value="<?php echo $professor['email'];?>" type="text" class="validate">
+	            	<label for="email">E-mail</label>
 				</div>
 
 			</form>
@@ -34,6 +36,42 @@
 			<div class="col s12">
 			<?php $formid='professorprog-'.$professor['siape'] ;?>
 			<form id="<?php echo $formid;?>" action="<?php echo base_url().'index.php/usuario/startprogressao'; ?>" name="professor">
+			
+			<div class="input-field col s12">
+				<select id="unidadeacademica" name="fk_unid_academica" form="<?php echo $formid; ?>" required>
+			    	<option value="" disabled selected>Informe sua Unidade Acadêmica</option>
+<?php foreach ($unidadesAcademicas as $unidade): 
+		$status = '';
+		if (isset($professor['unidAcad']) && ($unidade['id_unid_academica']==$professor['fk_unid_academica'])) $status='selected'; ?>
+					<option  value="<?php echo $unidade['id_unid_academica']; ?>" <?php echo $status;?>><?php echo $unidade['nome_unid_academica'];?></option>
+<?php endforeach ?>
+					<label>Unidade Acadêmica Atual</label>
+			    </select>
+			</div>
+
+			<div class="input-field col s12">
+				<select id="depto" name="fk_depto" form="<?php echo $formid; ?>" required>
+			    	<option value="" disabled selected>Informe seu Departamento</option>
+<?php foreach ($departamentos as $depto): 
+		$status = '';
+		if (isset($professor['depto']) && ($depto['id_depto']==$professor['fk_depto'])) $status='selected'; ?>
+					<option  value="<?php echo $depto['id_depto']; ?>" <?php echo $status;?>><?php echo $depto['nome_depto'];?></option>
+<?php endforeach ?>
+					<label>Departamento</label>
+			    </select>
+			</div>
+
+			<div class="input-field col s12">
+				<select id="regime" name="fk_regime_trabalho" form="<?php echo $formid; ?>" required>
+			    	<option value="" disabled selected>Informe seu Regime</option>
+<?php foreach ($regimes as $regime): 
+		$status = '';
+		if (isset($professor['regime']) && ($regime['id_regime']==$professor['fk_regime_trabalho'])) $status='selected'; ?>
+					<option  value="<?php echo $regime['id_regime']; ?>" <?php echo $status;?>><?php echo $regime['nome_regime'];?></option>
+<?php endforeach ?>
+					<label>Regime de Trabalho</label>
+			    </select>
+			</div>
 
 			<div class="input-field col s12">
 				<select id="titulo" name="fk_titulo" form="<?php echo $formid; ?>" required>

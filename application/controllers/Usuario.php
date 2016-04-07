@@ -22,8 +22,10 @@ class Usuario extends CI_Controller {
 		$this->load->model('mregra','',TRUE);
 		$this->load->model('mclassificacao','',TRUE);
 		$this->load->model('mregraclassificacao','',TRUE);
+		$this->load->model('mdepartamento','',TRUE);
+		$this->load->model('munidadeacademica','',TRUE);
+		$this->load->model('mregime','',TRUE);
 		$this->load->library('pdf');
-		$this->load->library('excel');
 		$this->load->library('pdf_mc_table');
 	}
 
@@ -35,16 +37,17 @@ class Usuario extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$siape = $session_data['id'];
 			
-			$professorData = $this->mprofessor->get($siape);
+			$professorData = $this->mprofessor->getRaw($siape);
 			$tituloData = $this->mtitulo->getAll();
 			$nivelData = $this->mnivel->get();
+			$deptoData = $this->mdepartamento->getAll();
+			$unidAcademicaData = $this->munidadeacademica->getAll();
+			$regimeData = $this->mregime->getAll();
 			$progressoesCorrentesData = $this->mprogressaocorrente->getBy('fk_professor', $siape);
 			
 			$incompleteData = false;
 
-			
-
-			if ($professorData['fk_titulo'] != 0)
+			if (isset($professorData['fk_titulo']) && $professorData['fk_titulo'] != 0)
 			{
 				foreach ($tituloData as $titulo) {
 					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
@@ -55,7 +58,7 @@ class Usuario extends CI_Controller {
 				$incompleteData = true;
 			}
 
-			if ($professorData['fk_nivel'] != 0)
+			if (isset($professorData['fk_nivel']) && $professorData['fk_nivel'] != 0)
 			{
 				foreach ($nivelData as $nivel) {
 					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
@@ -69,10 +72,56 @@ class Usuario extends CI_Controller {
 				$incompleteData = true;
 			}
 
+			if (isset($professorData['fk_depto']) && $professorData['fk_depto'] != 0)
+			{
+				foreach ($deptoData as $depto) {
+					if ($professorData['fk_depto'] == $depto['id_depto'])
+					{
+						$professorData['depto'] = $depto;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_unid_academica']) && $professorData['fk_unid_academica'] != 0)
+			{
+				foreach ($unidAcademicaData as $unidAcad) {
+					if ($professorData['fk_unid_academica'] == $unidAcad['id_unid_academica'])
+					{
+						$professorData['unidAcad'] = $unidAcad;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_regime_trabalho']) && $professorData['fk_regime_trabalho'] != 0)
+			{
+				foreach ($regimeData as $regime) {
+					if ($professorData['fk_regime_trabalho'] == $regime['id_regime'])
+					{
+						$professorData['regime'] = $regime;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
 			$data['professor'] = $professorData;
 			$data['admin'] = $session_data['admin'];
 			$data['niveis'] = $nivelData;
 			$data['titulos'] = $tituloData;
+			$data['unidadesAcademicas'] = $unidAcademicaData;
+			$data['departamentos'] = $deptoData;
+			$data['regimes'] = $regimeData;
+			$data['incomplete'] = $incompleteData;
 			$this->load->view('template/header.php', $data);
 			if ($incompleteData)
 			{
@@ -167,24 +216,18 @@ class Usuario extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$siape = $session_data['id'];
 			
-			$professorData = $this->mprofessor->get($siape);
+			$professorData = $this->mprofessor->getRaw($siape);
 			$tituloData = $this->mtitulo->getAll();
 			$nivelData = $this->mnivel->get();
+			$deptoData = $this->mdepartamento->getAll();
+			$unidAcademicaData = $this->munidadeacademica->getAll();
+			$regimeData = $this->mregime->getAll();
 			$progressoesCorrentesData = $this->mprogressaocorrente->getBy('fk_professor', $siape);
 
 			
 			$incompleteData = false;
 
-			if (count($progressoesCorrentesData) <= 1)
-			{
-				$incompleteData=true;
-				if ($progressoesCorrentesData == 1)
-				{
-					$professorData['ultimaProgressao'] = date("Y-m-d", $progressoesCorrentesData['data_inicio']);
-				}
-			}
-			
-			if ($professorData['fk_titulo'] != 0)
+			if (isset($professorData['fk_titulo']) && $professorData['fk_titulo'] != 0)
 			{
 				foreach ($tituloData as $titulo) {
 					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
@@ -195,12 +238,54 @@ class Usuario extends CI_Controller {
 				$incompleteData = true;
 			}
 
-			if ($professorData['fk_nivel'] != 0)
+			if (isset($professorData['fk_nivel']) && $professorData['fk_nivel'] != 0)
 			{
 				foreach ($nivelData as $nivel) {
 					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
 					{
 						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_depto']) && $professorData['fk_depto'] != 0)
+			{
+				foreach ($deptoData as $depto) {
+					if ($professorData['fk_depto'] == $depto['id_depto'])
+					{
+						$professorData['depto'] = $depto;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_unid_academica']) && $professorData['fk_unid_academica'] != 0)
+			{
+				foreach ($unidAcademicaData as $unidAcad) {
+					if ($professorData['fk_unid_academica'] == $unidAcad['id_unid_academica'])
+					{
+						$professorData['unidAcad'] = $unidAcad;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_regime_trabalho']) && $professorData['fk_regime_trabalho'] != 0)
+			{
+				foreach ($regimeData as $regime) {
+					if ($professorData['fk_regime_trabalho'] == $regime['id_regime'])
+					{
+						$professorData['regime'] = $regime;
 					}
 				}
 			}
@@ -230,9 +315,12 @@ class Usuario extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$siape = $session_data['id'];
 			
-			$professorData = $this->mprofessor->get($siape);
+			$professorData = $this->mprofessor->getRaw($siape);
 			$tituloData = $this->mtitulo->getAll();
 			$nivelData = $this->mnivel->get();
+			$deptoData = $this->mdepartamento->getAll();
+			$unidAcademicaData = $this->munidadeacademica->getAll();
+			$regimeData = $this->mregime->getAll();
 			$progressoesData = $this->mprogressaocorrente->getComplete($siape);
 			for ($i = 0; $i < count($progressoesData); $i++) {
 				$progressoesData[$i]['producoes'] = array();
@@ -253,7 +341,7 @@ class Usuario extends CI_Controller {
 
 			$incompleteData = false;
 
-			if ($professorData['fk_titulo'] != 0)
+			if (isset($professorData['fk_titulo']) && $professorData['fk_titulo'] != 0)
 			{
 				foreach ($tituloData as $titulo) {
 					if ($professorData['fk_titulo'] == $titulo['id_titulo'])	$professorData['titulo'] = $titulo;
@@ -264,12 +352,54 @@ class Usuario extends CI_Controller {
 				$incompleteData = true;
 			}
 
-			if ($professorData['fk_nivel'] != 0)
+			if (isset($professorData['fk_nivel']) && $professorData['fk_nivel'] != 0)
 			{
 				foreach ($nivelData as $nivel) {
 					if ($professorData['fk_nivel'] == $nivel['id_nivel'])
 					{
 						$professorData['nivel'] = $nivel;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_depto']) && $professorData['fk_depto'] != 0)
+			{
+				foreach ($deptoData as $depto) {
+					if ($professorData['fk_depto'] == $depto['id_depto'])
+					{
+						$professorData['depto'] = $depto;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_unid_academica']) && $professorData['fk_unid_academica'] != 0)
+			{
+				foreach ($unidAcademicaData as $unidAcad) {
+					if ($professorData['fk_unid_academica'] == $unidAcad['id_unid_academica'])
+					{
+						$professorData['unidAcad'] = $unidAcad;
+					}
+				}
+			}
+			else
+			{
+				$incompleteData = true;
+			}
+
+			if (isset($professorData['fk_regime_trabalho']) && $professorData['fk_regime_trabalho'] != 0)
+			{
+				foreach ($regimeData as $regime) {
+					if ($professorData['fk_regime_trabalho'] == $regime['id_regime'])
+					{
+						$professorData['regime'] = $regime;
 					}
 				}
 			}
@@ -323,9 +453,15 @@ class Usuario extends CI_Controller {
 				$titulo = $_POST['titulo'];
 				$nivel = $_POST['nivel'];
 				$date = $_POST['data'];
+				$unidade = $_POST['unidade'];
+				$depto = $_POST['depto'];
+				$regime = $_POST['regime'];
 
 				$this->mprofessor->updatefield($siape, 'fk_titulo', $titulo);
 				$this->mprofessor->updatefield($siape, 'fk_nivel', $nivel);
+				$this->mprofessor->updatefield($siape, 'fk_unid_academica', $unidade);
+				$this->mprofessor->updatefield($siape, 'fk_depto', $depto);
+				$this->mprofessor->updatefield($siape, 'fk_regime_trabalho', $regime);
 
 				$data = array();
 				$data['fk_professor'] = $siape;
@@ -815,7 +951,7 @@ Chefia imediata
 		$this->pdf->Cell(0,7,specialChars('Assinatura do Docente'),0,0,'C');
 		$this->pdf->Ln();
 
-		$this->pdf->AddPage();
+		$this->pdf->AddPage('L');
 		$this->pdf->SetTitle("Relatorio Progressao");
     	$this->pdf->SetLeftMargin(15);
     	$this->pdf->SetRightMargin(15);
@@ -862,9 +998,9 @@ Chefia imediata
    		$this->pdf->SetFont('Arial', 'B', 11);
    		$this->pdf->Cell(100,7,$data['professor']['siape'],0,0,'L');
    		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(20,7,'Regime: ',0,0,'L');
+   		$this->pdf->Cell(40,7,'Regime: ',0,0,'L');
    		$this->pdf->SetFont('Arial', 'B', 11);
-   		$this->pdf->Cell(40,7,$data['professor']['nome_regime'],'R',0,'L');
+   		$this->pdf->Cell(0,7,$data['professor']['nome_regime'],'R',0,'L');
    		$this->pdf->Ln();
 
    		//demais campos
@@ -907,6 +1043,7 @@ Chefia imediata
 
 		//Hora de preencher!
 		$totalPoints = 0;
+		$numAnexos = 0;
    		foreach ($data['estruturaProducoes'] as $eixo) {
    			if (!is_array($eixo['subeixos']))	continue;
    			foreach ($eixo['subeixos'] as $subeixo) {
@@ -916,8 +1053,9 @@ Chefia imediata
    				$this->pdf->Ln(7);
 
    				//ITEM
-   				$this->pdf->SetWidths(array(15,90,25,25,25));
+   				$this->pdf->SetWidths(array(30,117,40,40,40));
    				$this->pdf->SetFont('Arial', '', 11);
+   				$this->pdf->Row(array(specialChars("Categoria"), specialChars("Descrição"), specialChars("Pontuação Autodeclarada"), specialChars("Documentação Anexada"), specialChars("Contagem da Comissão (CAD ou CIT)")));
    				$totalSubeixoPoints = 0;
    				if (!is_array($subeixo['itens']))	continue;
    				foreach ($subeixo['itens'] as $item) {
@@ -945,16 +1083,20 @@ Chefia imediata
 	   					$quantidade = 0;
 	   					if ($item['producoes']['itemPoints'] > 0)
 	   					{
+	   						$arquivos = '';
+
 	   						$pontuacao = $item['producoes']['itemPoints'];
 	   						$totalSubeixoPoints += $pontuacao;
 		   					foreach ($item['producoes'] as $prod) {
 								$quantidade+=$prod['quantidade_producao'];
 								if (isset($prod['documento_producao'])){
 									array_push($files, uploads_path().'\\'.$prod['documento_producao']);
+									$numAnexos++;
+									$arquivos .= "Anexo ".$numAnexos."\n";
 								}
 		   					}
 
-		   					$this->pdf->Row(array(specialChars($categoria),specialChars($descricao),$pontos,$quantidade,$pontuacao));
+		   					$this->pdf->Row(array(specialChars($categoria),specialChars($descricao),$pontuacao,$arquivos,''));
 	   					}
 	   					else
 	   					{
@@ -964,7 +1106,7 @@ Chefia imediata
    					else
    					{
    						//Descrição do item somente
-   						$this->pdf->SetWidths(array(15,165));
+   						$this->pdf->SetWidths(array(30,237));
    						$this->pdf->Row(array(specialChars($categoria), specialChars($descricao)));
 
    						//Pontuação para cada classificacação
@@ -978,21 +1120,25 @@ Chefia imediata
    							//Agora preciso contar quantas produções existem com exatamente esta classificação
    							$quantidade = 0;
    							$pontuacao = 0;
+   							$arquivos = '';
    							$regraId = $item['regra']['id_item'];
    							foreach ($item['producoes'] as $prod) {
    								if ($prod['id_item']==$regraId && $prod['id_classificacao']==$class['id_classificacao'])
    								{
+
    									$quantidade++;
    									if (isset($prod['documento_producao']))
    									{
    										array_push($files, uploads_path().'\\'.$prod['documento_producao']);
+   										$numAnexos++;
+										$arquivos .= "Anexo ".$numAnexos."\n";
    									}
    								}
    							}
 
    							if ($quantidade == 0)
    							{
-   								$this->pdf->SetWidths(array(15,90,25,25,25));
+   								$this->pdf->SetWidths(array(30,117,40,40,40));
 								$this->pdf->Row(array('',specialChars($class['nome_classificacao'].$limit), $class['regraclass']['valor'],'',''));
 								continue;
    							}
@@ -1004,10 +1150,10 @@ Chefia imediata
    							}
 
    							$totalSubeixoPoints += $pontuacao;
-							$this->pdf->SetWidths(array(15,90,25,25,25));
-							$this->pdf->Row(array('',specialChars($class['nome_classificacao'].$limit), $class['regraclass']['valor'],$quantidade,$pontuacao));
+							$this->pdf->SetWidths(array(30,117,40,40,40));
+							$this->pdf->Row(array('',specialChars($class['nome_classificacao'].$limit), $pontuacao, $arquivos,''));
    						}
-   						$this->pdf->SetWidths(array(15,90,25,25,25));	
+   						$this->pdf->SetWidths(array(30,117,40,40,40));	
    					}
    				}
    				if ($totalSubeixoPoints > $subeixo['pontmax_subeixo'])
@@ -1015,8 +1161,8 @@ Chefia imediata
    					$totalSubeixoPoints = $subeixo['pontmax_subeixo'];
    				}
    				$totalPoints += $totalSubeixoPoints;
-   				$this->pdf->SetWidths(array(15,140,25));
-   				$this->pdf->Row(array('',specialChars('Subtotal (máximo de '.$subeixo['pontmax_subeixo'].' pontos)'), $totalSubeixoPoints));
+   				$this->pdf->SetWidths(array(30,117,40,40,40));
+   				$this->pdf->Row(array('',specialChars('Subtotal (máximo de '.$subeixo['pontmax_subeixo'].' pontos)'), $totalSubeixoPoints,'',''));
    				$this->pdf->Ln(7);
    			}
    			
@@ -1024,16 +1170,16 @@ Chefia imediata
 
    		$this->pdf->Ln(7);
 		$this->pdf->SetFont('Arial', 'B', 14);
-   		$this->pdf->Cell(120,7,specialChars('PONTUAÇÃO TOTAL'),'TBL',0,'C');
-   		$this->pdf->Cell(60,7,$totalPoints,'TBR',0,'C');
+   		$this->pdf->Cell(180,7,specialChars('PONTUAÇÃO TOTAL'),'TBL',0,'C');
+   		$this->pdf->Cell(87,7,$totalPoints,'TBR',0,'C');
    		$this->pdf->Ln();
    		$this->pdf->SetFont('Arial', '', 11);
    		$this->pdf->Cell(0,7,specialChars('Assinatura dos membros da Comissão de Progressão Funcional:'),0,0,'C');
-   		$this->pdf->Ln(7);
-   		$this->pdf->Cell(60,7,specialChars('______________________'),0,0,'C');
-   		$this->pdf->Cell(60,7,specialChars('______________________'),0,0,'C');
-   		$this->pdf->Cell(60,7,specialChars('______________________'),0,0,'C');
-   		$this->pdf->Ln(7);
+   		$this->pdf->Ln(40);
+   		$this->pdf->Cell(86,7,specialChars('_________________________'),0,0,'C');
+   		$this->pdf->Cell(86,7,specialChars('_________________________'),0,0,'C');
+   		$this->pdf->Cell(86,7,specialChars('_________________________'),0,0,'C');
+   		$this->pdf->Ln(40);
    		$this->pdf->Cell(0,7,specialChars('Vista do Chefe do Departamento: __________________________________________'),0,0,'C');
    		$this->pdf->Ln(7);
 
@@ -1046,6 +1192,9 @@ Chefia imediata
 		        $this->pdf->AddPage();  
 		        $tplidx = $this->pdf->importPage($j+1, '/MediaBox');
 		        $this->pdf->useTemplate($tplidx, 10, 10, 200); 
+		        $this->pdf->SetFont('Arial','',13);
+		        $this->pdf->SetXY(160,10);
+		        $this->pdf->Write(0, 'Anexo '.($i+1));
 		    }
    		}
    		//var_dump($files);
