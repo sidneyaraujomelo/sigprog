@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 07-Abr-2016 às 19:57
--- Versão do servidor: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: 07-Abr-2016 às 22:27
+-- Versão do servidor: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,7 +27,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `tb_admin` (
-  `fk_professor` int(11) NOT NULL
+  `fk_professor` int(11) NOT NULL,
+  PRIMARY KEY (`fk_professor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -44,10 +45,11 @@ INSERT INTO `tb_admin` (`fk_professor`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_classificacao` (
-`id_classificacao` int(11) NOT NULL,
+  `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,
   `nome_classificacao` varchar(50) NOT NULL,
-  `fk_tipoclassificacao` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+  `fk_tipoclassificacao` int(11) NOT NULL,
+  PRIMARY KEY (`id_classificacao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Extraindo dados da tabela `tb_classificacao`
@@ -97,9 +99,10 @@ INSERT INTO `tb_classificacao` (`id_classificacao`, `nome_classificacao`, `fk_ti
 --
 
 CREATE TABLE IF NOT EXISTS `tb_departamento` (
-`id_depto` int(11) NOT NULL,
-  `nome_depto` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `id_depto` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_depto` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_depto`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Extraindo dados da tabela `tb_departamento`
@@ -116,9 +119,10 @@ INSERT INTO `tb_departamento` (`id_depto`, `nome_depto`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_depto` (
-`id_depto` int(11) NOT NULL,
-  `nome_depto` varchar(100) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id_depto` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_depto` varchar(100) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id_depto`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Extraindo dados da tabela `tb_depto`
@@ -134,9 +138,11 @@ INSERT INTO `tb_depto` (`id_depto`, `nome_depto`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_eixo` (
-`id_eixo` int(11) NOT NULL,
-  `nome_eixo` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+  `id_eixo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_eixo` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_eixo`),
+  UNIQUE KEY `nome_eixo` (`nome_eixo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Extraindo dados da tabela `tb_eixo`
@@ -157,12 +163,13 @@ INSERT INTO `tb_eixo` (`id_eixo`, `nome_eixo`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_item` (
-`id_item` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL AUTO_INCREMENT,
   `nome_item` text CHARACTER SET utf8 NOT NULL,
   `pontmax_item` float DEFAULT NULL,
   `quantmax_item` int(11) DEFAULT NULL,
-  `fk_subeixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
+  `fk_subeixo` int(11) NOT NULL,
+  PRIMARY KEY (`id_item`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=139 ;
 
 --
 -- Extraindo dados da tabela `tb_item`
@@ -290,9 +297,10 @@ INSERT INTO `tb_item` (`id_item`, `nome_item`, `pontmax_item`, `quantmax_item`, 
 --
 
 CREATE TABLE IF NOT EXISTS `tb_metrica` (
-`id_metrica` int(11) NOT NULL,
-  `nome_metrica` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `id_metrica` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_metrica` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_metrica`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Extraindo dados da tabela `tb_metrica`
@@ -312,10 +320,11 @@ INSERT INTO `tb_metrica` (`id_metrica`, `nome_metrica`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_nivel` (
-`id_nivel` int(11) NOT NULL,
+  `id_nivel` int(11) NOT NULL AUTO_INCREMENT,
   `cod_nivel` varchar(5) NOT NULL,
-  `nome_nivel` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+  `nome_nivel` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_nivel`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Extraindo dados da tabela `tb_nivel`
@@ -377,7 +386,7 @@ INSERT INTO `tb_nivel_titulo` (`fk_nivel`, `fk_titulo`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_producao` (
-`id_producao` int(11) NOT NULL,
+  `id_producao` int(11) NOT NULL AUTO_INCREMENT,
   `fk_item` int(11) NOT NULL,
   `fk_professor` int(11) NOT NULL,
   `data_producao` date NOT NULL,
@@ -385,8 +394,9 @@ CREATE TABLE IF NOT EXISTS `tb_producao` (
   `fk_classificacao` int(11) DEFAULT NULL,
   `pontuacao_producao` float NOT NULL,
   `documento_producao` text CHARACTER SET utf8,
-  `nome_producao` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+  `nome_producao` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_producao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
 -- Extraindo dados da tabela `tb_producao`
@@ -418,10 +428,13 @@ INSERT INTO `tb_producao` (`id_producao`, `fk_item`, `fk_professor`, `data_produ
 --
 
 CREATE TABLE IF NOT EXISTS `tb_producao_decorrente` (
-`id_decorrencia` int(11) NOT NULL,
+  `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,
   `fk_producao_principal` int(11) NOT NULL,
-  `fk_producao_decorrente` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `fk_producao_decorrente` int(11) NOT NULL,
+  PRIMARY KEY (`id_decorrencia`),
+  KEY `fk_producao_principal` (`fk_producao_principal`),
+  KEY `fk_producao_decorrente` (`fk_producao_decorrente`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Extraindo dados da tabela `tb_producao_decorrente`
@@ -446,7 +459,9 @@ CREATE TABLE IF NOT EXISTS `tb_professor` (
   `fk_titulo` int(11) NOT NULL,
   `fk_depto` int(11) NOT NULL,
   `fk_unid_academica` int(11) NOT NULL,
-  `senha` text NOT NULL
+  `senha` text NOT NULL,
+  PRIMARY KEY (`siape`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -465,12 +480,14 @@ INSERT INTO `tb_professor` (`siape`, `nome`, `email`, `foto`, `fk_regime_trabalh
 --
 
 CREATE TABLE IF NOT EXISTS `tb_progressao` (
-`id_progressao` int(11) NOT NULL,
+  `id_progressao` int(11) NOT NULL AUTO_INCREMENT,
   `fk_nivel_anterior` int(11) NOT NULL,
   `fk_nivel_seguinte` int(11) NOT NULL,
   `duracao_intersticio` int(11) NOT NULL,
-  `pontuacao` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+  `pontuacao` int(11) NOT NULL,
+  PRIMARY KEY (`id_progressao`),
+  UNIQUE KEY `fk_nivel_anterior` (`fk_nivel_anterior`,`fk_nivel_seguinte`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
 
 --
 -- Extraindo dados da tabela `tb_progressao`
@@ -501,13 +518,14 @@ INSERT INTO `tb_progressao` (`id_progressao`, `fk_nivel_anterior`, `fk_nivel_seg
 --
 
 CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
-`id_prog_corrente` int(11) NOT NULL,
+  `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,
   `fk_progressao` int(11) NOT NULL,
   `fk_professor` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
-  `documento_prog_corrente` varchar(100) CHARACTER SET utf8 DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `documento_prog_corrente` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id_prog_corrente`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Extraindo dados da tabela `tb_progressao_corrente`
@@ -515,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `tb_progressao_corrente` (
 
 INSERT INTO `tb_progressao_corrente` (`id_prog_corrente`, `fk_progressao`, `fk_professor`, `data_inicio`, `data_fim`, `documento_prog_corrente`) VALUES
 (5, 67, 12345678, '2015-02-03', '2017-08-03', NULL),
-(6, 68, 12345678, '2017-02-03', '2019-08-03', '12345678601-04-2016-05-54-35.pdf'),
+(6, 68, 12345678, '2017-02-03', '2019-08-03', '12345678607-04-2016-05-15-41.pdf'),
 (17, 64, 15915915, '2016-04-24', '2018-10-24', NULL),
 (18, 58, 12312312, '2016-04-01', '2018-10-01', NULL);
 
@@ -526,10 +544,13 @@ INSERT INTO `tb_progressao_corrente` (`id_prog_corrente`, `fk_progressao`, `fk_p
 --
 
 CREATE TABLE IF NOT EXISTS `tb_progressao_producao` (
-`id_prog_prod` int(11) NOT NULL,
+  `id_prog_prod` int(11) NOT NULL AUTO_INCREMENT,
   `fk_prog_finalizada` int(11) NOT NULL,
-  `fk_producao` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+  `fk_producao` int(11) NOT NULL,
+  PRIMARY KEY (`id_prog_prod`),
+  KEY `fk_producao` (`fk_producao`),
+  KEY `fk_prog_finalizada` (`fk_prog_finalizada`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Extraindo dados da tabela `tb_progressao_producao`
@@ -570,9 +591,10 @@ INSERT INTO `tb_progressao_producao` (`id_prog_prod`, `fk_prog_finalizada`, `fk_
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regime` (
-`id_regime` int(11) NOT NULL,
-  `nome_regime` varchar(20) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `id_regime` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_regime` varchar(20) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id_regime`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Extraindo dados da tabela `tb_regime`
@@ -594,7 +616,8 @@ CREATE TABLE IF NOT EXISTS `tb_regra` (
   `pontmax_regra` int(11) NOT NULL,
   `formula_regra` text NOT NULL,
   `quantidade_decorrente` int(11) NOT NULL,
-  `fk_tipoclass` int(11) NOT NULL
+  `fk_tipoclass` int(11) NOT NULL,
+  PRIMARY KEY (`id_item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -723,11 +746,12 @@ INSERT INTO `tb_regra` (`id_item`, `fk_metrica`, `pontmax_regra`, `formula_regra
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regraprog_espec` (
-`id_regraprog_espec` int(11) NOT NULL,
+  `id_regraprog_espec` int(11) NOT NULL AUTO_INCREMENT,
   `fk_progressao` int(11) NOT NULL,
   `fk_subeixo` int(11) NOT NULL,
-  `pontuacao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `pontuacao` int(11) NOT NULL,
+  PRIMARY KEY (`id_regraprog_espec`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -736,12 +760,14 @@ CREATE TABLE IF NOT EXISTS `tb_regraprog_espec` (
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regra_classificacao` (
-`id_regra_classificacao` int(11) NOT NULL,
+  `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,
   `fk_regra` int(11) NOT NULL,
   `fk_classificacao` int(11) NOT NULL,
   `valor` float NOT NULL,
-  `pontuacao_maxima` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=latin1;
+  `pontuacao_maxima` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_regra_classificacao`),
+  UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=194 ;
 
 --
 -- Extraindo dados da tabela `tb_regra_classificacao`
@@ -932,10 +958,12 @@ INSERT INTO `tb_regra_classificacao` (`id_regra_classificacao`, `fk_regra`, `fk_
 --
 
 CREATE TABLE IF NOT EXISTS `tb_regra_decorrente` (
-`id_decorrencia` int(11) NOT NULL,
+  `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,
   `fk_item_principal` int(11) NOT NULL,
-  `fk_item_decorrente` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+  `fk_item_decorrente` int(11) NOT NULL,
+  PRIMARY KEY (`id_decorrencia`),
+  UNIQUE KEY `fk_item_principal` (`fk_item_principal`,`fk_item_decorrente`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 --
 -- Extraindo dados da tabela `tb_regra_decorrente`
@@ -970,11 +998,12 @@ INSERT INTO `tb_regra_decorrente` (`id_decorrencia`, `fk_item_principal`, `fk_it
 --
 
 CREATE TABLE IF NOT EXISTS `tb_subeixo` (
-`id_subeixo` int(11) NOT NULL,
-  `nome_subeixo` varchar(60) NOT NULL,
+  `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_subeixo` varchar(90) NOT NULL,
   `pontmax_subeixo` int(11) NOT NULL,
-  `fk_eixo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+  `fk_eixo` int(11) NOT NULL,
+  PRIMARY KEY (`id_subeixo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
 -- Extraindo dados da tabela `tb_subeixo`
@@ -992,7 +1021,7 @@ INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_e
 (13, 'C6 Produção Artística por Unidade', 60, 12),
 (14, 'C7 Bancas Examinadoras por Unidade', 30, 12),
 (15, 'E1 Administração Universitária ou Equivalente', 70, 14),
-(16, 'E2 Representação Institucional ou de Categorias Universitári', 12, 14),
+(16, 'E2 Representação Institucional ou de Categorias Universitárias', 12, 14),
 (17, 'F1 Cursos', 60, 15),
 (57, 'D1 Atividades de Extensão', 30, 13);
 
@@ -1003,9 +1032,10 @@ INSERT INTO `tb_subeixo` (`id_subeixo`, `nome_subeixo`, `pontmax_subeixo`, `fk_e
 --
 
 CREATE TABLE IF NOT EXISTS `tb_tipoclassificacao` (
-`id_tipoclass` int(11) NOT NULL,
-  `nome_tipoclass` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `id_tipoclass` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_tipoclass` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_tipoclass`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Extraindo dados da tabela `tb_tipoclassificacao`
@@ -1025,9 +1055,10 @@ INSERT INTO `tb_tipoclassificacao` (`id_tipoclass`, `nome_tipoclass`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_titulo` (
-`id_titulo` int(11) NOT NULL,
-  `nome_titulo` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `id_titulo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_titulo` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_titulo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Extraindo dados da tabela `tb_titulo`
@@ -1046,9 +1077,10 @@ INSERT INTO `tb_titulo` (`id_titulo`, `nome_titulo`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tb_unid_academica` (
-`id_unid_academica` int(11) NOT NULL,
-  `nome_unid_academica` varchar(100) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id_unid_academica` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_unid_academica` varchar(100) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id_unid_academica`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Extraindo dados da tabela `tb_unid_academica`
@@ -1069,7 +1101,7 @@ CREATE TABLE IF NOT EXISTS `view_producao` (
 ,`id_eixo` int(11)
 ,`nome_eixo` varchar(50)
 ,`id_subeixo` int(11)
-,`nome_subeixo` varchar(60)
+,`nome_subeixo` varchar(90)
 ,`id_item` int(11)
 ,`nome_item` text
 ,`nome_producao` varchar(50)
@@ -1140,252 +1172,6 @@ DROP TABLE IF EXISTS `view_progressao_corrente`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_progressao_corrente` AS select `a`.`id_prog_corrente` AS `id_prog_corrente`,`a`.`fk_progressao` AS `fk_progressao`,`a`.`fk_professor` AS `fk_professor`,`a`.`data_inicio` AS `data_inicio`,`a`.`data_fim` AS `data_fim`,`a`.`documento_prog_corrente` AS `documento_prog_corrente`,`c`.`cod_nivel` AS `cod_nivel_anterior`,`c`.`nome_nivel` AS `nome_nivel_anterior`,`d`.`cod_nivel` AS `cod_nivel_seguinte`,`d`.`nome_nivel` AS `nome_nivel_seguinte` from (((`tb_progressao_corrente` `a` join `tb_progressao` `b` on((`a`.`fk_progressao` = `b`.`id_progressao`))) join `tb_nivel` `c` on((`b`.`fk_nivel_anterior` = `c`.`id_nivel`))) join `tb_nivel` `d` on((`b`.`fk_nivel_seguinte` = `d`.`id_nivel`)));
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tb_admin`
---
-ALTER TABLE `tb_admin`
- ADD PRIMARY KEY (`fk_professor`);
-
---
--- Indexes for table `tb_classificacao`
---
-ALTER TABLE `tb_classificacao`
- ADD PRIMARY KEY (`id_classificacao`);
-
---
--- Indexes for table `tb_departamento`
---
-ALTER TABLE `tb_departamento`
- ADD PRIMARY KEY (`id_depto`);
-
---
--- Indexes for table `tb_depto`
---
-ALTER TABLE `tb_depto`
- ADD PRIMARY KEY (`id_depto`);
-
---
--- Indexes for table `tb_eixo`
---
-ALTER TABLE `tb_eixo`
- ADD PRIMARY KEY (`id_eixo`), ADD UNIQUE KEY `nome_eixo` (`nome_eixo`);
-
---
--- Indexes for table `tb_item`
---
-ALTER TABLE `tb_item`
- ADD PRIMARY KEY (`id_item`);
-
---
--- Indexes for table `tb_metrica`
---
-ALTER TABLE `tb_metrica`
- ADD PRIMARY KEY (`id_metrica`);
-
---
--- Indexes for table `tb_nivel`
---
-ALTER TABLE `tb_nivel`
- ADD PRIMARY KEY (`id_nivel`);
-
---
--- Indexes for table `tb_producao`
---
-ALTER TABLE `tb_producao`
- ADD PRIMARY KEY (`id_producao`);
-
---
--- Indexes for table `tb_producao_decorrente`
---
-ALTER TABLE `tb_producao_decorrente`
- ADD PRIMARY KEY (`id_decorrencia`), ADD KEY `fk_producao_principal` (`fk_producao_principal`), ADD KEY `fk_producao_decorrente` (`fk_producao_decorrente`);
-
---
--- Indexes for table `tb_professor`
---
-ALTER TABLE `tb_professor`
- ADD PRIMARY KEY (`siape`), ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `tb_progressao`
---
-ALTER TABLE `tb_progressao`
- ADD PRIMARY KEY (`id_progressao`), ADD UNIQUE KEY `fk_nivel_anterior` (`fk_nivel_anterior`,`fk_nivel_seguinte`);
-
---
--- Indexes for table `tb_progressao_corrente`
---
-ALTER TABLE `tb_progressao_corrente`
- ADD PRIMARY KEY (`id_prog_corrente`);
-
---
--- Indexes for table `tb_progressao_producao`
---
-ALTER TABLE `tb_progressao_producao`
- ADD PRIMARY KEY (`id_prog_prod`), ADD KEY `fk_producao` (`fk_producao`), ADD KEY `fk_prog_finalizada` (`fk_prog_finalizada`);
-
---
--- Indexes for table `tb_regime`
---
-ALTER TABLE `tb_regime`
- ADD PRIMARY KEY (`id_regime`);
-
---
--- Indexes for table `tb_regra`
---
-ALTER TABLE `tb_regra`
- ADD PRIMARY KEY (`id_item`);
-
---
--- Indexes for table `tb_regraprog_espec`
---
-ALTER TABLE `tb_regraprog_espec`
- ADD PRIMARY KEY (`id_regraprog_espec`);
-
---
--- Indexes for table `tb_regra_classificacao`
---
-ALTER TABLE `tb_regra_classificacao`
- ADD PRIMARY KEY (`id_regra_classificacao`), ADD UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`);
-
---
--- Indexes for table `tb_regra_decorrente`
---
-ALTER TABLE `tb_regra_decorrente`
- ADD PRIMARY KEY (`id_decorrencia`), ADD UNIQUE KEY `fk_item_principal` (`fk_item_principal`,`fk_item_decorrente`);
-
---
--- Indexes for table `tb_subeixo`
---
-ALTER TABLE `tb_subeixo`
- ADD PRIMARY KEY (`id_subeixo`);
-
---
--- Indexes for table `tb_tipoclassificacao`
---
-ALTER TABLE `tb_tipoclassificacao`
- ADD PRIMARY KEY (`id_tipoclass`);
-
---
--- Indexes for table `tb_titulo`
---
-ALTER TABLE `tb_titulo`
- ADD PRIMARY KEY (`id_titulo`);
-
---
--- Indexes for table `tb_unid_academica`
---
-ALTER TABLE `tb_unid_academica`
- ADD PRIMARY KEY (`id_unid_academica`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tb_classificacao`
---
-ALTER TABLE `tb_classificacao`
-MODIFY `id_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
---
--- AUTO_INCREMENT for table `tb_departamento`
---
-ALTER TABLE `tb_departamento`
-MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `tb_depto`
---
-ALTER TABLE `tb_depto`
-MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `tb_eixo`
---
-ALTER TABLE `tb_eixo`
-MODIFY `id_eixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT for table `tb_item`
---
-ALTER TABLE `tb_item`
-MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=139;
---
--- AUTO_INCREMENT for table `tb_metrica`
---
-ALTER TABLE `tb_metrica`
-MODIFY `id_metrica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `tb_nivel`
---
-ALTER TABLE `tb_nivel`
-MODIFY `id_nivel` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
---
--- AUTO_INCREMENT for table `tb_producao`
---
-ALTER TABLE `tb_producao`
-MODIFY `id_producao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
---
--- AUTO_INCREMENT for table `tb_producao_decorrente`
---
-ALTER TABLE `tb_producao_decorrente`
-MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT for table `tb_progressao`
---
-ALTER TABLE `tb_progressao`
-MODIFY `id_progressao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
---
--- AUTO_INCREMENT for table `tb_progressao_corrente`
---
-ALTER TABLE `tb_progressao_corrente`
-MODIFY `id_prog_corrente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT for table `tb_progressao_producao`
---
-ALTER TABLE `tb_progressao_producao`
-MODIFY `id_prog_prod` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
---
--- AUTO_INCREMENT for table `tb_regime`
---
-ALTER TABLE `tb_regime`
-MODIFY `id_regime` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `tb_regraprog_espec`
---
-ALTER TABLE `tb_regraprog_espec`
-MODIFY `id_regraprog_espec` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tb_regra_classificacao`
---
-ALTER TABLE `tb_regra_classificacao`
-MODIFY `id_regra_classificacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=194;
---
--- AUTO_INCREMENT for table `tb_regra_decorrente`
---
-ALTER TABLE `tb_regra_decorrente`
-MODIFY `id_decorrencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
---
--- AUTO_INCREMENT for table `tb_subeixo`
---
-ALTER TABLE `tb_subeixo`
-MODIFY `id_subeixo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
---
--- AUTO_INCREMENT for table `tb_tipoclassificacao`
---
-ALTER TABLE `tb_tipoclassificacao`
-MODIFY `id_tipoclass` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `tb_titulo`
---
-ALTER TABLE `tb_titulo`
-MODIFY `id_titulo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tb_unid_academica`
---
-ALTER TABLE `tb_unid_academica`
-MODIFY `id_unid_academica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
 -- Constraints for dumped tables
 --
 
@@ -1393,15 +1179,15 @@ MODIFY `id_unid_academica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- Limitadores para a tabela `tb_producao_decorrente`
 --
 ALTER TABLE `tb_producao_decorrente`
-ADD CONSTRAINT `tb_producao_decorrente_ibfk_1` FOREIGN KEY (`fk_producao_principal`) REFERENCES `tb_producao` (`id_producao`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `tb_producao_decorrente_ibfk_2` FOREIGN KEY (`fk_producao_decorrente`) REFERENCES `tb_producao` (`id_producao`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_producao_decorrente_ibfk_1` FOREIGN KEY (`fk_producao_principal`) REFERENCES `tb_producao` (`id_producao`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_producao_decorrente_ibfk_2` FOREIGN KEY (`fk_producao_decorrente`) REFERENCES `tb_producao` (`id_producao`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tb_progressao_producao`
 --
 ALTER TABLE `tb_progressao_producao`
-ADD CONSTRAINT `tb_progressao_producao_ibfk_1` FOREIGN KEY (`fk_prog_finalizada`) REFERENCES `tb_progressao_corrente` (`id_prog_corrente`) ON DELETE CASCADE,
-ADD CONSTRAINT `tb_progressao_producao_ibfk_2` FOREIGN KEY (`fk_producao`) REFERENCES `tb_producao` (`id_producao`) ON DELETE CASCADE;
+  ADD CONSTRAINT `tb_progressao_producao_ibfk_1` FOREIGN KEY (`fk_prog_finalizada`) REFERENCES `tb_progressao_corrente` (`id_prog_corrente`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tb_progressao_producao_ibfk_2` FOREIGN KEY (`fk_producao`) REFERENCES `tb_producao` (`id_producao`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

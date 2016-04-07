@@ -1,11 +1,63 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
     // Incluimos el archivo fpdf
     require_once APPPATH."/third_party/FPDI/fpdi.php";
+    require_once APPPATH."/helpers/utility_helper.php";
 
 	class PDF_MC_Table extends FPDI
 	{
 	var $widths;
 	var $aligns;
+        
+    function SetHeader()
+    {
+        $this->SetFont('Arial', 'B', 16);
+   		$this->Image(image_url().'/ufma.png',10,10);
+   		parent::Ln(7);
+   		$this->Cell(0,7,specialChars('UNIVERSIDADE FEDERAL DO MARANHÃO'),0,0,'C');
+   		parent::Ln(7);
+        $this->SetFont('Arial', '', 11);
+        $this->Cell(0,7,specialChars('Fundação Instituída nos termos da Lei 5.152 de 21/10/1966'),0,0,'C');
+        parent::Ln(7);
+        $this->Cell(0,7,specialChars('São Luís - Maranhão'),0,0,'C');
+        parent::Ln(7);
+    }
+        /*
+    function Ln($h = NULL){
+        if ($this->GetY() < 16)
+        {
+            $this->SetHeader();   
+        }
+        if (!isset($h))
+        {
+            parent::Ln();
+            return;
+        }
+        if ($h == 0)
+        {
+            parent::Ln(0);
+            return;
+        }
+        else
+        {
+            if (isset($h))
+            {
+                parent::Ln(1);
+                $this->Ln($h-1);
+            }
+            else
+            {
+                parent::Ln();
+                return;
+            }
+        }
+    }
+        */
+    function SetTitleDoc($title)
+    {
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(0,7,$title,0,0,'C');
+        $this->Ln(7);
+    }
 
 	function SetWidths($w)
 	{
@@ -79,7 +131,10 @@
 	{
 		//If the height h would cause an overflow, add a new page immediately
 		if($this->GetY()+$h>$this->PageBreakTrigger)
+        {
 			$this->AddPage($this->CurOrientation);
+            $this->SetHeader();
+        }
 	}
 
 	function NbLines($w,$txt)

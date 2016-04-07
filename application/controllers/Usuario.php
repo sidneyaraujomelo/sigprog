@@ -920,9 +920,17 @@ class Usuario extends CI_Controller {
 		$this->pdf->AliasNbPages();
 		
 		$isPromo = (substr($data['professor']['nivel']['nome_nivel'], -1) > substr($data['progressao']['nome_nivel_seguinte'], -1)) ?
+   			'[ X ] Promoção [ ] Progressão' : '[  ] Promoção [ X ] Progressão';
+        $isPromo2 = (substr($data['professor']['nivel']['nome_nivel'], -1) > substr($data['progressao']['nome_nivel_seguinte'], -1)) ?
    			'Promoção' : 'Progressão';
 
 		//Primeira pagina
+        //HEADER
+        $this->pdf->SetHeader();
+        
+        //TITLE
+        $this->pdf->SetTitleDoc(specialChars('ANEXO IV DA RESOLUÇÃO Nº 175-CONSAD, de 09 de novembro de 2015.'));
+        $this->pdf->SetTitleDoc(specialChars('MODELO DE REQUERIMENTO'));
 		$this->pdf->SetFont('Arial', '', 11);
 		$this->pdf->Ln(28);
 		$this->pdf->SetWidths(array(180));
@@ -931,7 +939,7 @@ Chefia imediata
 
 
 
-".$data['professor']['nome'].", matrícula SIAPE nº ".$data['professor']['siape'].", requeiro a Vossa Senhoria, concessão de ".$isPromo.", conforme Resolução 161-CONSAD, de 29 de setembro de 2014 que regulamenta os procedimentos do processo de avaliação de desempenho acadêmico da Carreira de Magistério Superior na Universidade Federal do Maranhão (UFMA), anexando ao presente Requerimento:")));
+".$data['professor']['nome'].", matrícula SIAPE nº ".$data['professor']['siape'].", requeiro a Vossa Senhoria, concessão de ".$isPromo2.", conforme Resolução 175-CONSAD, de 09 de novembro de 2015   que regulamenta os procedimentos do processo de avaliação de desempenho acadêmico da Carreira de Magistério Superior na Universidade Federal do Maranhão (UFMA), anexando ao presente Requerimento:")));
 		$this->pdf->SetWidths(array(10,20,150));
 		$this->pdf->BorderlessRow(array("","I.",specialChars("Declaração do tempo de serviço expedida pelo SIstema Integrado de Gestão de Recursos Humanos (SIGRH);")));
 		$this->pdf->BorderlessRow(array("","II.",specialChars("Declaração de última progressão funcional expedida pelo SIGRH, quando houver;")));
@@ -944,7 +952,7 @@ Chefia imediata
 		$this->pdf->Ln();
 		$this->pdf->Cell(0,7,specialChars("Solicito Deferimento,"),0,0,'R');
 		$this->pdf->Ln(14);
-		$this->pdf->Cell(0,7,specialChars("São Luís, ".strftime('%d de %B de %Y', strtotime($data['progressao']['data_fim']))),0,0,'R');
+		$this->pdf->Cell(0,7,specialChars("São Luís, ".strftime('%d de %B de %Y', strtotime(date('m/d/y')))),0,0,'R');
 		$this->pdf->Ln(28);
 		$this->pdf->Cell(0,7,specialChars('_____________________________________'),0,0,'C');
 		$this->pdf->Ln();
@@ -958,104 +966,53 @@ Chefia imediata
    		$this->pdf->SetFillColor(200,200,200);
 
    		//HEADER
-   		$this->pdf->SetFont('Arial', 'B', 11);
-   		$this->pdf->Image(image_url().'/ufma.png',50,10);
-   		$this->pdf->Ln(7);
-   		$this->pdf->Cell(40,7);
-   		$this->pdf->Cell(0,7,specialChars('UNIVERSIDADE FEDERAL DO MARANHÃO'),0,0,'C');
-   		$this->pdf->Ln(4);
-   		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(40,7);
-   		$this->pdf->Cell(0,7,specialChars('CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA'),0,0,'C');
-   		$this->pdf->Ln(4);
-   		$this->pdf->Cell(40,7);
-   		$this->pdf->Cell(0,7,specialChars('DEPARTAMENTO DE INFORMÁTICA'),0,0,'C');
-   		$this->pdf->Ln(15);
-
-   		//TITLE
-   		$this->pdf->SetFont('Arial', 'B', 12);
-   		$this->pdf->Cell(0,7,specialChars('RELATÓRIO INDIVIDUAL DE TRABALHO DOCENTE'),0,0,'C');
-   		$this->pdf->Ln();
-   		$this->pdf->SetFont('Arial', '', 12);
-   		$this->pdf->Cell(0,7,specialChars('Resolução CONSAD nº 161/2014'),0,0,'C');
-   		$this->pdf->Ln(10);
-
-   		//INFO PROFESSOR
-   		$this->pdf->SetFont('Arial', 'B', 12);
-   		$this->pdf->Cell(0,7,specialChars('IDENTIFICAÇÃO DO DOCENTE AVALIADO'),1,0,'C');
-   		$this->pdf->Ln();
-
-   		//campo nome
-   		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(20,7,'Nome: ','L',0,'L');
-   		$this->pdf->SetFont('Arial', 'B', 11);
-   		$this->pdf->Cell(0,7,$data['professor']['nome'],'R',0,'L');
-   		$this->pdf->Ln();
-
-   		//campo Siape e Regime
-   		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(20,7,'Siape: ','L',0,'L');
-   		$this->pdf->SetFont('Arial', 'B', 11);
-   		$this->pdf->Cell(100,7,$data['professor']['siape'],0,0,'L');
-   		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(40,7,'Regime: ',0,0,'L');
-   		$this->pdf->SetFont('Arial', 'B', 11);
-   		$this->pdf->Cell(0,7,$data['professor']['nome_regime'],'R',0,'L');
-   		$this->pdf->Ln();
+   		$this->pdf->SetHeader();
+   		$this->pdf->SetTitleDoc(specialChars('ANEXO V DA RESOLUÇÃO Nº 175-CONSAD, de 09 de novembro de 2015.'));
+        $this->pdf->SetTitleDoc(specialChars('MODELO DE RELATÓRIO INDIVIDUAL DE TRABALHO DOCENTE'));
+        $this->pdf->SetWidths(array(267));
+        $this->pdf->SetAligns(array('C'));
+        $this->pdf->BorderlessRow(array(specialChars('Para pontuação autodeclarada do docente (com menção da página do processo composto pelos documentos comprobatórios, com coluna de validação pela CAD ou CIT')));
+        $this->pdf->Ln(7);
+   		$this->pdf->SetFont('Arial', '', 11);   		
 
    		//demais campos
    		$initFormArray = array( 
-   			array('campo' => 'Subunidade Academica:' , 'valor' => $data['professor']['nome_depto'] ),
-   			array('campo' => 'Unidade Academica:' , 'valor' => $data['professor']['nome_unid_academica'] ),
-   			array('campo' => 'Classe e Nível em exercício:' , 'valor' => $data['professor']['nivel']['nome_nivel'] ),
-   			array('campo' => 'Classe e Nível da solicitação:' , 'valor' => $data['progressao']['nome_nivel_seguinte']),
-   			array('campo' => 'Início do período de interstício:' , 'valor' => date("d-m-Y", strtotime($data['progressao']['data_inicio']))),
-   			array('campo' => 'Fim do período de interstício:' , 'valor' => date("d-m-Y", strtotime($data['progressao']['data_fim']))),
-   			array('campo' => 'Número do Processo:' , 'valor' => ''));
+   			array('campo' => 'Processo Nº' , 'valor' => ''),
+            array('campo' => 'Nome do docente', 'valor' => $data['professor']['nome']),
+            array('campo' => 'Subunidade Academica' , 'valor' => $data['professor']['nome_depto'] ),
+   			array('campo' => 'Unidade Academica' , 'valor' => $data['professor']['nome_unid_academica'] ),
+            array('campo' => 'Matrícula SIAPE', 'valor' => $data['professor']['siape']),
+   			array('campo' => 'Classe e Nível atual' , 'valor' => $data['professor']['nivel']['nome_nivel'] ),
+   			array('campo' => 'Classe e Nível requerido' , 'valor' => $data['progressao']['nome_nivel_seguinte']),
+            array('campo' => 'Objetivo do processo' , 'valor' => $isPromo));
    		
    		foreach ($initFormArray as $linha) {
    			$this->pdf->SetFont('Arial', '', 11);
-   			$this->pdf->Cell(60,7,specialChars($linha['campo']),'L',0,'L');
+   			$this->pdf->Cell(60,7,specialChars($linha['campo']),1,0,'L');
    			$this->pdf->SetFont('Arial', 'B', 11);
-   			$this->pdf->Cell(0,7,specialChars($linha['valor']),'R',0,'L');
+   			$this->pdf->Cell(0,7,specialChars($linha['valor']),1,0,'L');
    			$this->pdf->Ln();
    		}
-   		
-   		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(60,7,'Objetivo do processo: ','LB',0,'L');
-   		$this->pdf->SetFont('Arial', 'B', 11);
-		$this->pdf->Cell(0,7,specialChars($isPromo),'RB',0,'L');
-   		$this->pdf->Ln(14);
-
-   		//TITLE2
-   		$this->pdf->SetFont('Arial', 'B', 12);
-   		$this->pdf->Cell(0,7,specialChars('DISTRIBUIÇÃO DOS PONTOS EM RELAÇÃO ÀS ATIVIDADES DESENVOLVIDAS'),0,0,'C');
-   		$this->pdf->Ln(10);
-
-   		//table head
-		$this->pdf->SetFont('Arial', 'I', 8);
-		$this->pdf->CeLL(10,7,'Categoria',0,0,'C');
-		$this->pdf->CeLL(95,7,specialChars('Descrição'),0,0,'C');
-		$this->pdf->CeLL(25,7,'Pontos',0,0,'C');
-		$this->pdf->CeLL(25,7,'Quantidade',0,0,'C');
-		$this->pdf->CeLL(25,7,specialChars('Pontuação'),0,0,'C');
-		$this->pdf->Ln();
 
 		//Hora de preencher!
 		$totalPoints = 0;
 		$numAnexos = 0;
    		foreach ($data['estruturaProducoes'] as $eixo) {
    			if (!is_array($eixo['subeixos']))	continue;
+            $this->pdf->SetFont('Arial','B',11);
+            $nomeEixo =  str_replace('.', ')',$eixo['nome_eixo']);
+            $this->pdf->SetWidths(array(267));
+            $this->pdf->SetAligns(array('L'));
+            $this->pdf->BorderlessRow(array(specialChars($nomeEixo)));
+            $this->pdf->Ln(7);
    			foreach ($eixo['subeixos'] as $subeixo) {
    				//SUBEIXO
-	   			$this->pdf->SetFont('Arial', 'B', 11);
-   				$this->pdf->Cell(0,7,specialChars($subeixo['nome_subeixo']),1,0,'L');
-   				$this->pdf->Ln(7);
-
-   				//ITEM
-   				$this->pdf->SetWidths(array(30,117,40,40,40));
-   				$this->pdf->SetFont('Arial', '', 11);
-   				$this->pdf->Row(array(specialChars("Categoria"), specialChars("Descrição"), specialChars("Pontuação Autodeclarada"), specialChars("Documentação Anexada"), specialChars("Contagem da Comissão (CAD ou CIT)")));
+	   			$this->pdf->SetWidths(array(147,40,40,40));
+                $this->pdf->SetFont('Arial', 'B', 11);
+                $this->pdf->SetAligns(array('C','C','C','C'));
+   				$this->pdf->Row(array(specialChars($subeixo['nome_subeixo']), specialChars("Pontuação Autodeclarada"), specialChars("Documentação Anexada"), specialChars("Contagem da Comissão (CAD ou CIT)")));
+                $this->pdf->SetFont('Arial', '', 11);
+                $this->pdf->SetAligns(array('L','C','C','C'));
    				$totalSubeixoPoints = 0;
    				if (!is_array($subeixo['itens']))	continue;
    				foreach ($subeixo['itens'] as $item) {
@@ -1096,18 +1053,18 @@ Chefia imediata
 								}
 		   					}
 
-		   					$this->pdf->Row(array(specialChars($categoria),specialChars($descricao),$pontuacao,$arquivos,''));
+		   					$this->pdf->Row(array(specialChars($item['nome_item']),$pontuacao,$arquivos,''));
 	   					}
 	   					else
 	   					{
-	   						$this->pdf->Row(array(specialChars($categoria),specialChars($descricao),'','',''));
+	   						$this->pdf->Row(array(specialChars($item['nome_item']),'','',''));
 	   					}
    					}
    					else
    					{
    						//Descrição do item somente
-   						$this->pdf->SetWidths(array(30,237));
-   						$this->pdf->Row(array(specialChars($categoria), specialChars($descricao)));
+   						$this->pdf->SetWidths(array(267));
+   						$this->pdf->Row(array(specialChars($item['nome_item'])));
 
    						//Pontuação para cada classificacação
    						foreach ($item['regra']['classificacao'] as $keyclass => $class) {
@@ -1138,8 +1095,8 @@ Chefia imediata
 
    							if ($quantidade == 0)
    							{
-   								$this->pdf->SetWidths(array(30,117,40,40,40));
-								$this->pdf->Row(array('',specialChars($class['nome_classificacao'].$limit), $class['regraclass']['valor'],'',''));
+   								$this->pdf->SetWidths(array(147,40,40,40));
+								$this->pdf->Row(array(specialChars($class['nome_classificacao'].$limit), '','',''));
 								continue;
    							}
 
@@ -1150,10 +1107,10 @@ Chefia imediata
    							}
 
    							$totalSubeixoPoints += $pontuacao;
-							$this->pdf->SetWidths(array(30,117,40,40,40));
-							$this->pdf->Row(array('',specialChars($class['nome_classificacao'].$limit), $pontuacao, $arquivos,''));
+							$this->pdf->SetWidths(array(147,40,40,40));
+							$this->pdf->Row(array(specialChars($class['nome_classificacao'].$limit), $pontuacao, $arquivos,''));
    						}
-   						$this->pdf->SetWidths(array(30,117,40,40,40));	
+   						$this->pdf->SetWidths(array(147,40,40,40));	
    					}
    				}
    				if ($totalSubeixoPoints > $subeixo['pontmax_subeixo'])
@@ -1161,28 +1118,26 @@ Chefia imediata
    					$totalSubeixoPoints = $subeixo['pontmax_subeixo'];
    				}
    				$totalPoints += $totalSubeixoPoints;
-   				$this->pdf->SetWidths(array(30,117,40,40,40));
-   				$this->pdf->Row(array('',specialChars('Subtotal (máximo de '.$subeixo['pontmax_subeixo'].' pontos)'), $totalSubeixoPoints,'',''));
+                $codSubeixo = explode(' ',$subeixo['nome_subeixo'],2);
+   				$this->pdf->SetWidths(array(147,40,40,40));
+   				$this->pdf->Row(array(specialChars('PONTUAÇÃO TOTAL EIXO '.$codSubeixo[0]), $totalSubeixoPoints,'',''));
    				$this->pdf->Ln(7);
    			}
-   			
+   			$this->pdf->Ln(7);
    		}
 
    		$this->pdf->Ln(7);
-		$this->pdf->SetFont('Arial', 'B', 14);
-   		$this->pdf->Cell(180,7,specialChars('PONTUAÇÃO TOTAL'),'TBL',0,'C');
-   		$this->pdf->Cell(87,7,$totalPoints,'TBR',0,'C');
-   		$this->pdf->Ln();
-   		$this->pdf->SetFont('Arial', '', 11);
-   		$this->pdf->Cell(0,7,specialChars('Assinatura dos membros da Comissão de Progressão Funcional:'),0,0,'C');
-   		$this->pdf->Ln(40);
-   		$this->pdf->Cell(86,7,specialChars('_________________________'),0,0,'C');
-   		$this->pdf->Cell(86,7,specialChars('_________________________'),0,0,'C');
-   		$this->pdf->Cell(86,7,specialChars('_________________________'),0,0,'C');
-   		$this->pdf->Ln(40);
-   		$this->pdf->Cell(0,7,specialChars('Vista do Chefe do Departamento: __________________________________________'),0,0,'C');
-   		$this->pdf->Ln(7);
-
+		$this->pdf->SetFont('Arial', '', 12);
+   		$this->pdf->SetWidths(array(267));
+        $this->pdf->SetAligns('L');
+        $this->pdf->BorderlessRow(array(specialChars('Data e Local : '.date('d/m/y').', São Luís')));
+        $this->pdf->Ln(7);
+        $this->pdf->SetAligns('C');
+        $this->pdf->BorderlessRow(array(specialChars('____________________________________________')));
+        $this->pdf->Ln(4);
+        $this->pdf->BorderlessRow(array(specialChars('Assinatura do Docente')));
+        $this->pdf->Ln(7);
+        
    		//var_dump(count($files));
    		for ($i = 0; $i < count($files); $i++)
    		{
