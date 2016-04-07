@@ -28,6 +28,12 @@
 					$formula = str_replace('decorrente_informado_2', $data['decorrente_informado'][1], $formula);
 				}
 			}
+            else
+            {
+                $formula = str_replace('decorrente_informado_1', '0', $formula);
+                $formula = str_replace('decorrente_informado_2', '0', $formula);
+                $formula = str_replace('decorrente_informado', '0', $formula);
+            }
 			return solve($formula);
 		}
 		return -1;
