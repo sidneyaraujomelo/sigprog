@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 08-Abr-2016 às 00:35
+-- Generation Time: 08-Abr-2016 às 16:30
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao` (
   `documento_producao` text CHARACTER SET utf8,
   `nome_producao` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_producao`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=102 ;
 
 --
 -- Extraindo dados da tabela `tb_producao`
@@ -444,7 +444,31 @@ INSERT INTO `tb_producao` (`id_producao`, `fk_item`, `fk_professor`, `data_produ
 (64, 30, 2582240, '2016-03-01', 4, NULL, 24, '6c015a4f8d24ec8c00d35a51d5a98d98.pdf', 'Estagios obrigatorios'),
 (65, 140, 2582240, '2016-03-06', 4, NULL, 12, '6b985dfde0c960187de65d2bd5b2a7fa.pdf', 'Estagios não obrig'),
 (66, 131, 2582240, '2016-03-01', 3, NULL, 7.5, '4c670526b49050b58905f0c00300c563.pdf', 'TCC Especializa'),
-(68, 133, 2582240, '2016-03-01', NULL, NULL, 0, 'b2c46de67abef447c5a2ee51d081fe4b.pdf', 'coorient final mestrado');
+(77, 133, 2582240, '2016-03-01', NULL, NULL, 2, '91abb2fb65f9d0c15a19e407b63b970d.pdf', 'coorient final mestrado'),
+(78, 108, 2582240, '2016-03-01', NULL, 30, 8, 'f5df36837a2d766c4adfa9a4b6dfa853.pdf', 'prod. academica 1'),
+(79, 108, 2582240, '2016-03-01', NULL, 30, 8, 'f6e8be6cb898b75b149f7527b6824948.pdf', 'capitulo livro 2'),
+(80, 109, 2582240, '2016-03-01', NULL, 43, 5, '17bb3d9e41d6d8dbf23c736ac4cd58c7.pdf', 'artigo b5'),
+(81, 110, 2582240, '2016-03-01', NULL, 31, 5, '95c3f9ea51ea51cea2c3e0aeecd3fe11.pdf', 'An 1'),
+(82, 110, 2582240, '2016-03-01', NULL, 33, 4, 'c56da56030ccee22a68efa0030df3bba.pdf', 'An 2'),
+(83, 110, 2582240, '2016-03-01', NULL, 33, 4, '357b3aa0b42a06b71bd3695c8e0be577.pdf', 'an 3'),
+(84, 110, 2582240, '2016-03-01', NULL, 33, 4, '311adeddc741dfd7661dd7f503fd2d73.pdf', 'an 4'),
+(85, 110, 2582240, '2016-03-01', NULL, 33, 4, 'c1713043703355d3d5c0aad3b35fa9a1.pdf', 'an 5'),
+(86, 110, 2582240, '2016-03-01', NULL, 35, 2, '1dfb902c3fbc34db2588c501dbbc517c.pdf', 'an 6'),
+(87, 110, 2582240, '2016-03-01', NULL, 35, 2, 'e000b89af914296c65689540415cf7b8.pdf', 'an 7'),
+(88, 110, 2582240, '2016-03-01', NULL, 35, 2, '30e20b72bef4ba00c9a40370617b771d.pdf', 'an 8'),
+(89, 83, 2582240, '2016-03-01', 2, NULL, 12, 'e59b6156eee68f5842af5d90704339d4.pdf', 'coord proj pesquisa'),
+(90, 85, 2582240, '2016-03-01', 2, NULL, 5, '1e75b2c674f9a48552eb3991323aa995.pdf', 'part proj pesquisa'),
+(91, 41, 2582240, '2016-03-01', NULL, NULL, 3, 'e8abd8382c58591b0e51f0a25e63ae74.pdf', 'JIM'),
+(92, 64, 2582240, '2016-03-01', 8, NULL, 12, '0f92058a8eeecf2283081fb0d40bbff0.pdf', 'consultoria'),
+(93, 46, 2582240, '2016-03-01', 20, NULL, 30, 'd0257ce79633c8ee1f8ad1eb24b672b7.pdf', 'banca 1'),
+(94, 47, 2582240, '2016-03-01', 5, NULL, 10, '0f80f0665e4dca25b3dff77557eafded.pdf', 'qualificacoes'),
+(95, 48, 2582240, '2016-03-01', 3, NULL, 6, 'ed99fd596d9fff062a3daf9c5fe1aa09.pdf', 'dissert'),
+(96, 51, 2582240, '2016-03-01', 2, NULL, 6, '4dfb70bf0cf45a0363efb97b89771813.pdf', 'concurso'),
+(97, 52, 2582240, '2016-03-01', 1, NULL, 1.5, '528e8d49cb13fbb2c0015681cf3b0f11.pdf', 'proc seletivo'),
+(98, 57, 2582240, '2016-03-01', 1, NULL, 1.5, '0baf9e2c614c070945b355ddf09e7384.pdf', 'aval curso'),
+(99, 75, 2582240, '2016-03-01', 2, NULL, 3, 'cfdee55fc06609919b97bef30bed137a.pdf', 'comiss provis'),
+(100, 76, 2582240, '2016-03-01', 1, NULL, 3, 'b505a3498502b87c43e8691e63eafc42.pdf', 'comiss permanente'),
+(101, 59, 2582240, '2016-03-01', 8, NULL, 8, 'c87c8d569a92f3dceb009f6b13351aa3.pdf', 'conselho centro');
 
 -- --------------------------------------------------------
 
@@ -459,7 +483,7 @@ CREATE TABLE IF NOT EXISTS `tb_producao_decorrente` (
   PRIMARY KEY (`id_decorrencia`),
   KEY `fk_producao_principal` (`fk_producao_principal`),
   KEY `fk_producao_decorrente` (`fk_producao_decorrente`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Extraindo dados da tabela `tb_producao_decorrente`
@@ -562,7 +586,7 @@ INSERT INTO `tb_progressao_corrente` (`id_prog_corrente`, `fk_progressao`, `fk_p
 (6, 68, 12345678, '2017-02-03', '2019-08-03', '12345678607-04-2016-05-15-41.pdf'),
 (17, 64, 15915915, '2016-04-24', '2018-10-24', NULL),
 (18, 58, 12312312, '2016-04-01', '2018-10-01', NULL),
-(19, 66, 2582240, '2014-03-11', '2016-09-11', NULL);
+(19, 66, 2582240, '2014-03-11', '2016-09-11', '25822401908-04-2016-11-23-44.pdf');
 
 -- --------------------------------------------------------
 
@@ -802,7 +826,7 @@ CREATE TABLE IF NOT EXISTS `tb_regra_classificacao` (
   `pontuacao_maxima` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_regra_classificacao`),
   UNIQUE KEY `fk_regra` (`fk_regra`,`fk_classificacao`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=194 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=202 ;
 
 --
 -- Extraindo dados da tabela `tb_regra_classificacao`
@@ -984,7 +1008,15 @@ INSERT INTO `tb_regra_classificacao` (`id_regra_classificacao`, `fk_regra`, `fk_
 (181, 130, 34, 2, NULL),
 (182, 130, 35, 1.5, NULL),
 (183, 130, 36, 1, 2),
-(193, 100, 23, 25, NULL);
+(193, 100, 23, 25, NULL),
+(194, 109, 37, 30, NULL),
+(195, 109, 38, 26, NULL),
+(196, 109, 39, 21, NULL),
+(197, 109, 40, 16, NULL),
+(198, 109, 41, 12, NULL),
+(199, 109, 42, 8, NULL),
+(200, 109, 43, 5, 20),
+(201, 109, 44, 3, 9);
 
 -- --------------------------------------------------------
 
