@@ -7,6 +7,7 @@
 	{
 	var $widths;
 	var $aligns;
+    var $fill;
         
     function SetHeader()
     {
@@ -70,6 +71,18 @@
 		//Set the array of column alignments
 		$this->aligns=$a;
 	}
+        
+    function SetFill($a)
+    {
+        if ($a)
+        {
+            $this->fill='DF';
+        }
+        else
+        {
+            $this->fill='D';
+        }
+    }
 
 	function Row($data)
 	{
@@ -89,7 +102,7 @@
 			$x=$this->GetX();
 			$y=$this->GetY();
 			//Draw the border
-			$this->Rect($x,$y,$w,$h);
+			$this->Rect($x,$y,$w,$h,$this->fill);
 			//Print the text
 			$this->MultiCell($w,5,$data[$i],0,$a);
 			//Put the position to the right of the cell

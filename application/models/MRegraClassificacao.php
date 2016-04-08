@@ -8,7 +8,17 @@ Class MRegraClassificacao extends CI_Model
 
 		$this->db->where('fk_regra',  $idregra);
 		$this->db->where('fk_classificacao', $idclasse);
-		return($this->db->update('tb_regra_classificacao',$data));
+		$this->db->update('tb_regra_classificacao',$data);
+        
+        if ($this->db->affected_rows()==0)
+        {
+            $array = array('fk_regra' => $idregra,
+                           'fk_classificacao' => $idclasse,
+                           $col => $valor);
+            $this->db->insert('tb_regra_classificacao', $array);
+        }
+        
+        return ;
 	}
 
 	public function getValor($fk_regra, $fk_classificacao)

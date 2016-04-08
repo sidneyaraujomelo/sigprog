@@ -425,7 +425,7 @@ class Producao extends CI_Controller {
 			$this->mproducaodecorrente->updatefield($id, $col, $val);
 		}
 
-		$this->updatePontuacao($tabela, $id, $col);
+		return $this->updatePontuacao($tabela, $id, $col);
 	}
 
 	function updatePontuacao($tabela, $id, $col)
@@ -475,6 +475,7 @@ class Producao extends CI_Controller {
 			if (isset($updatedProducao['id_classificacao']))
 			{
 				$valorClassif = $this->mregraclassificacao->getValor($updatedProducao['id_item'], $updatedProducao['id_classificacao']);
+                var_dump($updatedProducao);
 				$infoPontos['classif_informado'] = $valorClassif['valor'];
 			}
 

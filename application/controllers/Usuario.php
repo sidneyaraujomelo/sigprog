@@ -924,13 +924,14 @@ class Usuario extends CI_Controller {
         $isPromo2 = (substr($data['professor']['nivel']['nome_nivel'], -1) > substr($data['progressao']['nome_nivel_seguinte'], -1)) ?
    			'Promoção' : 'Progressão';
 
+        $this->pdf->SetFill(false);
 		//Primeira pagina
         //HEADER
         $this->pdf->SetHeader();
         
         //TITLE
         $this->pdf->SetTitleDoc(specialChars('ANEXO IV DA RESOLUÇÃO Nº 175-CONSAD, de 09 de novembro de 2015.'));
-        $this->pdf->SetTitleDoc(specialChars('MODELO DE REQUERIMENTO'));
+        $this->pdf->SetTitleDoc(specialChars('REQUERIMENTO'));
 		$this->pdf->SetFont('Arial', '', 11);
 		$this->pdf->Ln(28);
 		$this->pdf->SetWidths(array(180));
@@ -968,7 +969,7 @@ Chefia imediata
    		//HEADER
    		$this->pdf->SetHeader();
    		$this->pdf->SetTitleDoc(specialChars('ANEXO V DA RESOLUÇÃO Nº 175-CONSAD, de 09 de novembro de 2015.'));
-        $this->pdf->SetTitleDoc(specialChars('MODELO DE RELATÓRIO INDIVIDUAL DE TRABALHO DOCENTE'));
+        $this->pdf->SetTitleDoc(specialChars('RELATÓRIO INDIVIDUAL DE TRABALHO DOCENTE'));
         $this->pdf->SetWidths(array(267));
         $this->pdf->SetAligns(array('C'));
         $this->pdf->BorderlessRow(array(specialChars('Para pontuação autodeclarada do docente (com menção da página do processo composto pelos documentos comprobatórios, com coluna de validação pela CAD ou CIT')));
@@ -1010,7 +1011,9 @@ Chefia imediata
 	   			$this->pdf->SetWidths(array(147,40,40,40));
                 $this->pdf->SetFont('Arial', 'B', 11);
                 $this->pdf->SetAligns(array('C','C','C','C'));
+                $this->pdf->SetFill(true);
    				$this->pdf->Row(array(specialChars($subeixo['nome_subeixo']), specialChars("Pontuação Autodeclarada"), specialChars("Documentação Anexada"), specialChars("Contagem da Comissão (CAD ou CIT)")));
+                $this->pdf->SetFill(false);
                 $this->pdf->SetFont('Arial', '', 11);
                 $this->pdf->SetAligns(array('L','C','C','C'));
    				$totalSubeixoPoints = 0;
@@ -1120,11 +1123,14 @@ Chefia imediata
    				$totalPoints += $totalSubeixoPoints;
                 $codSubeixo = explode(' ',$subeixo['nome_subeixo'],2);
    				$this->pdf->SetWidths(array(147,40,40,40));
+                $this->pdf->SetFill(true);
    				$this->pdf->Row(array(specialChars('PONTUAÇÃO TOTAL EIXO '.$codSubeixo[0]), $totalSubeixoPoints,'',''));
+                $this->pdf->SetFill(false);
    				$this->pdf->Ln(7);
    			}
    			$this->pdf->Ln(7);
    		}
+        $this->pdf->Row(array(specialChars('PONTUAÇÃO TOTAL '), $totalPoints,'',''));
 
    		$this->pdf->Ln(7);
 		$this->pdf->SetFont('Arial', '', 12);
