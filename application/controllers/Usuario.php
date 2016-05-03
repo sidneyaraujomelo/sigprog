@@ -552,10 +552,14 @@ class Usuario extends CI_Controller {
 				$producoes = $this->mproducao->getFromInterval($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
 				
 				foreach ($producoes as $prod) {
-					if (!isset($prod['documento_producao']) || $prod['documento_producao'] == '' || $prod['documento_producao']==null)
+					if (!isset($prod['documento_producao']))
 					{
-						$pendentDocument = true;
-						break;
+				        /*if($prod['documento_producao'] == '' || $prod['documento_producao']==null)
+                        {
+                            
+                        }*/
+						//break;
+                        $prod['documento_producao']='pendente';
 					}
 					$fksubeixo = $prod['id_subeixo'];
 					$fkitem = $prod['id_item'];
@@ -719,8 +723,8 @@ class Usuario extends CI_Controller {
 			foreach ($producoes as $prod) {
 				if (!isset($prod['documento_producao']) || $prod['documento_producao'] == '' || $prod['documento_producao']==null)
 				{
-					$pendentDocument = true;
-					break;
+					/*$pendentDocument = true;
+					break;*/
 				}
 				$fksubeixo = $prod['id_subeixo'];
 				$fkitem = $prod['id_item'];
@@ -998,6 +1002,8 @@ Chefia imediata
 		//Hora de preencher!
 		$totalPoints = 0;
 		$numAnexos = 0;
+        $possuiPendente = false;
+        $itensPendentes = array();
    		foreach ($data['estruturaProducoes'] as $eixo) {
    			if (!is_array($eixo['subeixos']))	continue;
             $this->pdf->SetFont('Arial','B',11);
@@ -1050,10 +1056,25 @@ Chefia imediata
 		   					foreach ($item['producoes'] as $prod) {
 								$quantidade+=$prod['quantidade_producao'];
 								if (isset($prod['documento_producao'])){
-									array_push($files, uploads_path().'\\'.$prod['documento_producao']);
-									$numAnexos++;
-									$arquivos .= "Anexo ".$numAnexos."\n";
+                                    array_push($files, array('item'=>$item['nome_item'],
+                                                             'path'=>uploads_path().'\\'.$prod['documento_producao'],
+                                                             'alias'=>$prod['nome_producao']));
+                                    $numAnexos++;
+                                    $arquivos .= "Anexo ".$numAnexos."\n";
 								}
+                                else
+                                {
+                                    if (isset($prod['quantidade_producao']))
+                                    {
+                                        array_push($files, array('item'=>$item['nome_item'],
+                                                             'path'=>'pendente',
+                                                             'alias'=>$prod['nome_producao']));
+                                        $possuiPendente = true;
+                                        $numAnexos++;
+                                        $arquivos .= "Anexo ".$numAnexos."\n";
+                                    }
+                                }
+                                
 		   					}
 
 		   					$this->pdf->Row(array(specialChars($item['nome_item']),$pontuacao,$arquivos,''));
@@ -1089,10 +1110,21 @@ Chefia imediata
    									$quantidade++;
    									if (isset($prod['documento_producao']))
    									{
-   										array_push($files, uploads_path().'\\'.$prod['documento_producao']);
-   										$numAnexos++;
-										$arquivos .= "Anexo ".$numAnexos."\n";
+   										array_push($files, array('item'=>$item['nome_item'].' '.$class['nome_classificacao'],
+                                                             'path'=>uploads_path().'\\'.$prod['documento_producao'],
+                                                             'alias'=>$prod['nome_producao']));
+                                        $numAnexos++;
+                                        $arquivos .= "Anexo ".$numAnexos."\n";
    									}
+                                    else
+                                    {
+                                        array_push($files, array('item'=>$item['nome_item'].' '.$class['nome_classificacao'],
+                                                                'path'=>'pendente',
+                                                                'alias'=>$prod['nome_producao']));
+                                        $numAnexos++;
+                                        $possuiPendente = true;
+                                        $arquivos .= "Anexo ".$numAnexos."\n";
+                                    }
    								}
    							}
 
@@ -1144,10 +1176,30 @@ Chefia imediata
         $this->pdf->BorderlessRow(array(specialChars('Assinatura do Docente')));
         $this->pdf->Ln(7);
         
+        
+        //Lista de Anexos
+        if ($possuiPendente)
+        {
+            $this->pdf->AddPage();
+            $this->pdf->SetHeader();
+            $this->pdf->SetTitleDoc(specialChars('LISTA DE ANEXOS'));
+            $this->pdf->SetFont('Arial', 'B', 12);
+            $this->pdf->SetWidths(array(15,45,110,20));
+            $this->pdf->SetAligns('L','L','L','L');
+            $this->pdf->Row(array(specialChars("Num"),specialChars("Nome"),specialChars("Item"),specialChars("Status")));
+            $this->pdf->SetFont('Arial', '', 12);
+            $this->pdf->SetAligns('L','L','L','L');
+            for ($i = 0; $i < count($files); $i++)
+            {
+                $status =  ($files[$i]['path']=="pendente") ? "pendente" : "anexado";
+                $this->pdf->Row(array(($i+1),specialChars($files[$i]['alias']), specialChars($files[$i]['item']), specialChars($status)));
+            }
+        }
    		//var_dump(count($files));
    		for ($i = 0; $i < count($files); $i++)
    		{
-   			$pagecount = $this->pdf->setSourceFile($files[$i]);
+            if ($files[$i]['path']=='pendente') continue;
+   			$pagecount = $this->pdf->setSourceFile($files[$i]['path']);
    			//var_dump($files[$i]);
 		    for($j=0; $j<$pagecount; $j++){
 		        $this->pdf->AddPage();  
