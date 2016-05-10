@@ -15,7 +15,7 @@
  *
  * This way it is possible to use FPDI for both FPDF and TCPDF with one FPDI version.
  */
-require_once APPPATH."/third_party/fpdf/fpdf.php";
+require_once APPPATH."third_party/Fpdf/Fpdf.php";
 
 if (!class_exists('TCPDF', false)) {
     /**

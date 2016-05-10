@@ -70,7 +70,8 @@ class Producao extends CI_Controller {
 			{
 				if ($producaoData[$i]['id_classificacao']!=NULL)
 				{
-					$producaoData[$i]['id_tipoclass'] = $this->mclassificacao->getTipoClassificacao($producaoData[$i]['id_classificacao'])["fk_tipoclassificacao"];
+					$aux = $this->mclassificacao->getTipoClassificacao($producaoData[$i]['id_classificacao']);
+                    $producaoData[$i]['id_tipoclass'] = $aux["fk_tipoclassificacao"];
 				}
 
 				$regraData = $this->mregra->get($producaoData[$i]['id_item']);
@@ -100,7 +101,8 @@ class Producao extends CI_Controller {
 				$classesData[$tipoclass['id_tipoclass']] = $this->mclassificacao->getAllFrom($tipoclass['id_tipoclass']);
 			}
 
-			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+			$aux = $this->mprogressaocorrente->getComplete($siape);
+            $progressaoAtual = $aux[0];
 
 			$data['professor'] = $professorData;
 			$data['admin'] = $session_data['admin'];
@@ -121,7 +123,8 @@ class Producao extends CI_Controller {
 			$siape = $session_data['id'];
 
 			$professorData = $this->mprofessor->get($siape);
-			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+			$aux = $this->mprogressaocorrente->getComplete($siape);
+            $progressaoAtual = $aux[0];
 			$producaoData = $this->mproducao->getPendentDocument($siape, $progressaoAtual['data_inicio'], $progressaoAtual['data_fim']);
 			$tituloData = $this->mtitulo->getAll();
 			$nivelData = $this->mnivel->get();
@@ -157,7 +160,8 @@ class Producao extends CI_Controller {
 			{
 				if ($producaoData[$i]['id_classificacao']!=NULL)
 				{
-					$producaoData[$i]['id_tipoclass'] = $this->mclassificacao->getTipoClassificacao($producaoData[$i]['id_classificacao'])["fk_tipoclassificacao"];
+					$aux = $this->mclassificacao->getTipoClassificacao($producaoData[$i]['id_classificacao']);
+                    $producaoData[$i]['id_tipoclass'] = $aux["fk_tipoclassificacao"];
 				}
 
 				$regraData = $this->mregra->get($producaoData[$i]['id_item']);

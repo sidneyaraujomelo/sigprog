@@ -63,7 +63,7 @@ $(document).on('change', '.addProd_item', function(){
 
 	if (val != '' && val!=null)
 	{
-		$.post("http://localhost/sigprog/index.php/regra/generateProdForm/",
+		$.post("/sigprog/index.php/regra/generateProdForm/",
 		{
 			'id' : val
 		},function(response)
@@ -92,7 +92,7 @@ $(document).on('change', '.autoupdate-producao', function(){
 	  {
 	  	if (id != '')
 	  	{
-		  	$.post("http://localhost/sigprog/index.php/producao/update",
+		  	$.post("/sigprog/index.php/producao/update",
 		  	{
 		  		'tabela' : tabela,
 		  		'id' : id,
@@ -112,7 +112,7 @@ $(document).on('change', '.autoupdate-producao', function(){
 	  	else
 	  	{
 	  		var id_principal = $(this).closest("form").find("#fk_producao_principal").val();
-	  		$.post("http://localhost/sigprog/index.php/producao/addDecorrente",
+	  		$.post("/sigprog/index.php/producao/addDecorrente",
 	  		{
 	  			'fk_producao_principal'	: id_principal,
 	  			'fk_producao_decorrente' : val
@@ -140,7 +140,7 @@ $(document).on('change', '.autoupdate-general', function(){
 	  {
 	  	if (id != '')
 	  	{
-		  	$.post("http://localhost/sigprog/index.php/"+tabela+"/update",
+		  	$.post("/sigprog/index.php/"+tabela+"/update",
 		  	{
 		  		'tabela' : tabela,
 		  		'id' : id,
@@ -172,7 +172,7 @@ $(document).on('change', '.autoupdate-input', function(){
 
 	  if (tabela!=null && id != null && col!=null && val != null)
 	  {
-	  	$.post("http://localhost/sigprog/index.php/admin/update",
+	  	$.post("/sigprog/index.php/admin/update",
 	  	{
 	  		'tabela' : tabela,
 	  		'id' : id,
@@ -200,7 +200,7 @@ $(document).on('click', '#start-progressao', function(){
 
 	if (siape && titulo && nivel && dataProgressao && unidade && depto && regime)
 	{
-		$.post("http://localhost/sigprog/index.php/usuario/startprogressao",
+		$.post("/sigprog/index.php/usuario/startprogressao",
 		{
 			'siape' : siape,
 			'titulo' : titulo,
@@ -212,7 +212,7 @@ $(document).on('click', '#start-progressao', function(){
 		}, function (response)
 		{
 			console.log(response);
-			location.replace("http://localhost/sigprog/");
+			location.replace("/sigprog/");
 		});
 	}
 	else
@@ -235,7 +235,7 @@ $(document).on('change', '.autoupdate-regraclass', function(){
 
 	  if (tabela!=null && regra != null && classe!=null && val != null)
 	  {
-	  	$.post("http://localhost/sigprog/index.php/regraclassificacao/updateregraclasse",
+	  	$.post("/sigprog/index.php/regraclassificacao/updateregraclasse",
 	  	{
 	  		'tabela' : tabela,
 	  		'regra' : regra,
@@ -287,7 +287,7 @@ $(document).on('submit', '.add-input', function(){
 		//console.log(table);
 
 		
-		$.post("http://localhost/sigprog/index.php/"+table+"/add", {
+		$.post("/sigprog/index.php/"+table+"/add", {
 			'jsonArray' : jsonArray
 		}, function ( response )
 		{
@@ -295,7 +295,7 @@ $(document).on('submit', '.add-input', function(){
 			{
 				console.log(response);
 				listItens = $("#listItens");
-				$.get("http://localhost/sigprog/index.php/"+table+"/generateForm/"+response, {
+				$.get("/sigprog/index.php/"+table+"/generateForm/"+response, {
 
 				},function (response2) {
 					//console.log(response2);
@@ -348,7 +348,7 @@ $(document).on("click", ".delete-button", function (event)
 	  	var tabela = attrId.split('-')[0];
 	  	var id = attrId.split('-')[1];
 	  	var me = $(this);
-		$.post("http://localhost/sigprog/index.php/"+tabela+"/delete", {
+		$.post("/sigprog/index.php/"+tabela+"/delete", {
 			'id' : id
 		}, function (response){
 			if (response)
@@ -381,7 +381,7 @@ $(document).on("click", ".delete-button", function (event)
 $(document).on("click", "#delete-producao-button", function(){
 	var id=$(this).attr("name");
 	var button = $(this);
-	$.post("http://localhost/sigprog/index.php/producao/delete/"+id, {
+	$.post("/sigprog/index.php/producao/delete/"+id, {
 
 	}, function(response){
 		console.log(response);

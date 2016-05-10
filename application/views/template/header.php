@@ -8,9 +8,11 @@
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/materialize.min.js"></script>
 	<script type="text/javascript" src="<?php echo asset_url();?>/js/sigprog.js"></script>
-	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery.quickfit.js"></script>
+	<script type="text/javascript" src="<?php echo asset_url();?>/js/jquery.quickfit.js"></script>    
 </head>
 
+<?php date_default_timezone_set('America/Sao_Paulo'); ?>
+    
 <body>
 	<aside>
 		<ul class="side-nav fixed leftside-navigation ps-container ps-active-y collapsible" data-collapsible="expandable" style="width: 240px">

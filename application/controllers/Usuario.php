@@ -27,6 +27,7 @@ class Usuario extends CI_Controller {
 		$this->load->model('mregime','',TRUE);
 		$this->load->library('pdf');
 		$this->load->library('pdf_mc_table');
+        date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	function index()
@@ -130,7 +131,8 @@ class Usuario extends CI_Controller {
 			else
 			{
 				$mult = 1;
-				$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+                $allProgressionData = $this->mprogressaocorrente->getComplete($siape);
+				$progressaoAtual = $allProgressionData[0];
 				$progressaoData = $this->mprogressao->get($progressaoAtual['fk_progressao']);
 				if ($progressaoData['fk_nivel_seguinte']==17)	$mult = 3;
 				$subeixosData = $this->msubeixo->getAll();
@@ -413,6 +415,7 @@ class Usuario extends CI_Controller {
 			$data['niveis'] = $nivelData;
 			$data['titulos'] = $tituloData;
 			$data['minhasprogressoes'] = $progressoesData;
+            $data['incomplete'] = $incompleteData;
 			$this->load->view('template/header.php', $data);
 			if ($incompleteData)
 			{
@@ -535,7 +538,7 @@ class Usuario extends CI_Controller {
 			}
 			else
 			{
-				$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+				$progressaoAtual = $this->mprogressaocorrente->getComplete($siape);
 				$subeixosData = $this->msubeixo->getAll();
 				$subeixos = array();
 				foreach ($subeixosData as $subeixo) {
@@ -677,7 +680,8 @@ class Usuario extends CI_Controller {
 			$pendentDocument = false;
 
 			//echo "Vamos progredir<br>";
-			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+			$aux = $this->mprogressaocorrente->getComplete($siape);
+            $progressaoAtual = $aux[0];
 			$dadosProgressao = $this->mprogressao->get($progressaoAtual['fk_progressao']);
 			$prazoFinal = $progressaoAtual['data_fim'];
 			$prazoInicial = date("Y-m-d", strtotime($progressaoAtual['data_fim']."-6 months"));
@@ -809,7 +813,8 @@ class Usuario extends CI_Controller {
 			
 
 			$mult = 1;
-			$progressaoAtual = $this->mprogressaocorrente->getComplete($siape)[0];
+			$aux = $this->mprogressaocorrente->getComplete($siape);
+            $progressaoAtual = $aux[0];
 			$progressaoData = $this->mprogressao->get($progressaoAtual['fk_progressao']);
 			if ($progressaoData['fk_nivel_seguinte']==17)	$mult = 3;
 			$eixosData = $this->meixo->getAll();
@@ -1040,9 +1045,11 @@ Chefia imediata
 	   					$pontos = str_replace('classif_informado', '', $pontos);
 	   					if (isset($pontos[0]) && $pontos[0] == '*')
 	   					{
-	   						$pontos = explode('*', $pontos,2)[1];
+                            $explodedPontos = explode('*', $pontos,2);
+	   						$pontos = $explodedPontos[1];
 	   					}else if (isset($pontos[0]) && $pontos[0] == '/'){
-	   						$pontos = explode('/', $pontos,2)[1];
+                            $explodedPontos = explode('/', $pontos,2);
+	   						$pontos = $explodedPontos[1];
 	   					}
 
 	   					$pontuacao = 0;
